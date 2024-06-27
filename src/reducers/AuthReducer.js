@@ -2,7 +2,7 @@ const initialState = {
     loading: false,
     error: null,
     isAuthenticate: false,
-    user: null
+    user: null // accessToken, refreshToken 저장(response.data)
 }
 
 const AuthReducer = (state = initialState, action) => {
@@ -20,14 +20,14 @@ const AuthReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 isAuthenticate: true,
-                user: action.payload.data
+                user: action.payload
             };
         case 'LOGIN_FAILURE':
         case 'SIGNUP_FAILURE':
             return {
                 ...state,
                 loading: false,
-                error: action.payload.error,
+                error: action.payload,
                 isAuthenticate: false,
                 user: null
             }

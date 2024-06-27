@@ -32,7 +32,7 @@ const ViewBoardPage = () => {
             window.confirm("게시물을 정말 삭제할까요? 복구되지 않습니다!")
         ){
             dispatch(deleteBoard(params.id));
-            nav('/home', {replace: true});
+            nav('/', {replace: true});
         }
     }
 
