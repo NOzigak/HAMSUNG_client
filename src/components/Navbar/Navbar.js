@@ -6,7 +6,8 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 
 export const Navbar = () => {
-    const user = useSelector(state => state.auth);
+    const user = useSelector(state => state.auth.user);
+
     const nav = useNavigate();
     const onCLickLogin = () => {
         nav("/login");
