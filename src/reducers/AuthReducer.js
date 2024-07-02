@@ -2,7 +2,7 @@ const initialState = {
     loading: false,
     error: null,
     isAuthenticate: false,
-    user: null // accessToken, refreshToken 저장(response.data)
+    user: null // accessToken 저장(response.data.access)
 }
 
 const AuthReducer = (state = initialState, action) => {

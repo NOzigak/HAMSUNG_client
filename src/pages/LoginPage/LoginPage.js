@@ -32,7 +32,7 @@ const LoginPage = () => {
     if(auth.user){
       nav('/');
       try {
-        localStorage.setItem('accessToken', JSON.stringify(auth.user.access));
+        localStorage.setItem('accessToken', JSON.stringify(auth.user));
         //setCookie("accessToken", auth.user.access, {
           //path:'/',
           //secure: true

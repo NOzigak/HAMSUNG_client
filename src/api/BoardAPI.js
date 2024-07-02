@@ -56,7 +56,16 @@ export const createBoardRequest = async (inputData) => {
 }
 
 // 모집글 모집 상태 변경
+export const toggleRecruitmentStatus = async (boardId) => {
+    try{
+        const response = await client.put(`/recruits/${boardId}/isrecruit`);
+        return response.data;
+    } catch (error) {
+        console.log("모집상태 전환에 실패했습니다.", error);
+        throw error;
+    }
 
+}
 
 //스터디 조회수 증가
 
@@ -83,3 +92,12 @@ export const getApplicants = async (recruit_id) => {
 }
 
 // 스터디 멤버 승인
+export const approveMember = async (memberId) => {
+    try {
+        const response = await client.patch(`/recruits/${memberId}/members`);
+        return response.data;
+    } catch (error) {
+        console.log("멤버 승인에 실패했습니다.", error);
+        throw error;
+    }
+}
