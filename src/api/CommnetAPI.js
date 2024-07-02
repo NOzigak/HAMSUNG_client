@@ -1,6 +1,15 @@
 import client from "./client"
 
 // 모집글 댓글 조회
+export const getCommentsRequest = async (recruitId) => {
+    try {
+        const response = await client.get(`/comments/recruits/${recruitId}`);
+        return response.data;
+    } catch (error) {
+        console.log("댓글을 가져오는데 실패했습니다.", error);
+        throw error;
+    }
+}
 
 // 댓글 작성 
 // commnetInfo : 토큰으로 추출한 유저 id + text

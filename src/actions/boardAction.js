@@ -16,7 +16,7 @@ const DELETE_BOARD_REQUEST = "DELETE_BOARD_REQUEST";
 const DELETE_BOARD_SUCCESS = "DELETE_BOARD_SUCCESS";
 const DELETE_BOARD_FAILURE = "DELETE_BOARD_FAILURE";
 
-// 모집글을 불러오는 액션
+// 모집글 리스트를 불러오는 액션
 export const getBoards = () => async (dispatch) => {
     dispatch({type: GET_BOARD_REQUEST});
     try{
