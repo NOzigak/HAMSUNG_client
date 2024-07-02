@@ -2,10 +2,10 @@ import client from "./client"
 
 
 // 로그인
-export const UserLogin = async ({email, password}) => {
+export const UserLogin = async (userInfo) => {
     try{
-        const response = await client.post("/login", {email, password});
-        return response.data;
+        const response = await client.post("/login", {userInfo}, {withCredentials: true});
+        return response.headers.access;
     } catch(error) {
         console.log("로그인 실패", error);
         throw error;
@@ -14,6 +14,7 @@ export const UserLogin = async ({email, password}) => {
 
 // 회원가입
 export const UserSignup = async (userInfo) => {
+
     try{
         const response = await client.post("/users", userInfo);
         return response.data;

@@ -1,12 +1,12 @@
 import { UserLogin, UserSignup } from "../api/AuthAPI";
 
-const SIGNUP_REQUEST = "auth/SIGNUP_REQUEST";
-const SIGNUP_SUCCESS = "auth/SIGNUP_SUCCESS";
-const SIGNUP_FAILURE = "auth/SIGNUP_FAILURE";
+const SIGNUP_REQUEST = "SIGNUP_REQUEST";
+const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
+const SIGNUP_FAILURE = "SIGNUP_FAILURE";
 
-const LOGIN_REQUEST = "auth/LOGIN_REQUEST";
-const LOGIN_SUCCESS = "auth/LOGIN_SUCCESS";
-const LOGIN_FAILURE = "auth/LOGIN_FAILURE";
+const LOGIN_REQUEST = "LOGIN_REQUEST";
+const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+const LOGIN_FAILURE = "LOGIN_FAILURE";
 
 export const login = ({email, password}) => async (dispatch) => {
     dispatch({type: LOGIN_REQUEST});

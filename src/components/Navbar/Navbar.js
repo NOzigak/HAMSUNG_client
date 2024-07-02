@@ -3,11 +3,16 @@ import "./Navbar.css";
 import icon from "./../../assets/hamsungIcon.png";
 import menu from "./../../assets/menu.png";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
-export const Navbar = ({user}) => {
+export const Navbar = () => {
+    const user = useSelector(state => state.auth);
     const nav = useNavigate();
     const onCLickLogin = () => {
         nav("/login");
+    }
+    const onClickMain = () => {
+        nav("/");
     }
     const [isOpen, setIsOpen] = useState(false);
     const onClickToggle = () => {
@@ -16,18 +21,15 @@ export const Navbar = ({user}) => {
 
     return (
         <div className="navbarWrapper">
-            <img className="hamsungIcon" src={icon} alt="icon"/>
+            <img className="hamsungIcon" src={icon} alt="icon" onClick={onClickMain}/>
 
             <div className="linkSection">
                 <ul className={`menuList ${isOpen ? 'show' : ''}`}>
-                    <NavLink to="/">
-                        <li>메인페이지</li>
-                    </NavLink>
                     <NavLink to="/mypage">
-                        <li>마이페이지</li>
+                        <li>Mypage</li>
                     </NavLink>
                     <NavLink to="/rank">
-                        <li>랭킹</li>
+                        <li>Ranking</li>
                     </NavLink>                    
                 </ul>
             </div>

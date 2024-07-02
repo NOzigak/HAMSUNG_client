@@ -97,4 +97,8 @@ li{
         padding: 8px;
         margin-left: 10px;
     }
+    .logoutBtn{
+        font-size: 9px;
+        font-weight: 800;
+    }
 }
