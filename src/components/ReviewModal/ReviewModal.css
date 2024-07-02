@@ -15,7 +15,7 @@
     padding: 5vw;
     border: 1px solid #888;
     width: 36.2vw;
-    height: 70vh;
+    height: 65vh;
     border-radius: 8px;
     box-sizing: border-box;
     text-align: center;
@@ -26,11 +26,12 @@
     position: absolute;
     left: 31vw;
     top: 26vh;
-    width: 32.9vw;
+    width: 30.45vw;
     height: 3vh;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     padding: 1.58vw;
+    padding-left: 4vw;
     font-weight: 600;
     font-size: 1.5vw;
     text-align: left;
@@ -39,13 +40,14 @@
 .close-review-button {
     position: absolute;
     top: 31.5vh;
-    margin-left: 14.5vw;
+    margin-left: 13.5vw;
     font-size: 1.5vw;
     background: none;
     border: none;
     outline: none;
     cursor: pointer;
 }
+
 
 .checkbox-container {
     display: flex;
@@ -60,13 +62,14 @@
 
 .checkbox-label {
     display: inline-block;
-    padding: 8px 16px;
-    margin: 4px;
+    padding: 0.9vh 1.2vw;
+    margin: 0.7vh;
     cursor: pointer;
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: #f0f0f0;
     flex: 0 1 auto; 
+    font-size: 2.5vh;
 }
 
 .checkbox-button:checked + .checkbox-label {
@@ -76,21 +79,44 @@
 }
 
 
-.front-button, .back-button {
-    margin-top: 1.5vw;
-    margin-left: 2vw;
+.front-button {
+    position: absolute;
+    top: 30.5vh;
+    left: 31.5vw;
     padding: 1.5vh 1.5vw;
     font-size: 1.1vw;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 2vw;
+    color:rgba(0, 0, 0, 0.4);
 }
 
-.front-button, .back-button {
-    background-color: rgb(0, 117, 0);
+.back-button {
+    position: absolute;
+    top: 30.5vh;
+    left: 42vw;
+    padding: 1.5vh 1.5vw;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 2vw;
+    color:rgba(0, 0, 0, 0.4);
+}
+
+.submit-button {
+    margin-left: 2vw;
+    margin-top: 3vh;
+    padding: 1.5vh 3vh;
+    background-color: rgb(5, 137, 5);
     color: white;
     border: none;
     cursor: pointer;
 }
 
-
-.front-button:hover {
+.submit-button:hover {
     background-color: rgb(0, 68, 0);
 }
+

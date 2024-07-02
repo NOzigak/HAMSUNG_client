@@ -7,15 +7,27 @@ import StudyCalendar from "../../components/StudyCalendar/StudyCalendar";
 import TodoBoard from "../../components/TodoBoard/TodoBoard";
 import { Navbar } from "../../components/Navbar/Navbar";
 import studyPoint from "../../assets/studyPoint.png";
+import { finishStudyAPI } from "../../api/StudyGroupAPI";
 
-const StudyPage = () => {
+const StudyGroupPage = () => {
   const [showFinishStudyModal, setShowFinishStudyModal] = useState(false);
   const [showWeeklyStudyModal, setShowWeeklyStudyModal] = useState(false);
   const [value, setValue] = useState(new Date()); 
   const [weekCount, setWeekCount] = useState(2); 
+  const studyId = 'study-id';
 
-  const handleFinishClick = () => {
-    setShowFinishStudyModal(true);
+  const handleFinishClick = async () => {
+    try {
+      const result = await finishStudyAPI(studyId);
+      if (result.status === 200) {
+        setShowFinishStudyModal(true);
+        console.log("스터디 종료 성공");
+      } else {
+        console.log("스터디 종료 실패");
+      }
+    } catch (error) {
+      console.error("Error finishing study:", error);
+    }
   };
 
   const handleCloseFinishStudyModal = () => {
@@ -89,4 +101,4 @@ const StudyPage = () => {
   );
 };
 
-export default StudyPage;
+export default StudyGroupPage;

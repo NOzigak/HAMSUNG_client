@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import ModalPage from './ModalPage';
-import { submitReview } from '../../api/ReviewAPI';
+import { ReviewAPI } from '../../api/MyPageAPI';
 import "./ReviewModal.css";
 
-const ReviewModal = ({ closeModal, currentPage, nextPage, prevPage }) => {
+const ReviewModal = ({ closeReviewModal, currentPage, nextPage, prevPage }) => {
     const totalPages = 4; 
     const [pageState, setPageState] = useState({});
     const [submissionStatus, setSubmissionStatus] = useState('');
@@ -31,7 +31,6 @@ const ReviewModal = ({ closeModal, currentPage, nextPage, prevPage }) => {
 
     const handleSubmit = async () => {
         const reviewData = {
-            userId: currentPage, // Assuming 'currentPage' is userId
             noLate: getSelectedOptions(currentPage, 'PreviewList').includes("지각하지 않아요"),
             faithful: getSelectedOptions(currentPage, 'PreviewList').includes("성실하게 참여해요"),
             kind: getSelectedOptions(currentPage, 'PreviewList').includes("친절해요"),
@@ -42,7 +41,7 @@ const ReviewModal = ({ closeModal, currentPage, nextPage, prevPage }) => {
             absent: getSelectedOptions(currentPage, 'NreviewList').includes("지각,결석,과제 미제출이 잦아요"),
         };
 
-        const result = await submitReview(reviewData);
+        const result = await ReviewAPI(currentPage, reviewData); // 사용자 ID를 전달
         setSubmissionStatus(result.message);
     };
 
@@ -55,18 +54,19 @@ const ReviewModal = ({ closeModal, currentPage, nextPage, prevPage }) => {
                     handleOptionChange={handleOptionChange}
                     getSelectedOptions={getSelectedOptions}
                 />
-                <button className="close-review-button" onClick={closeModal}>✖</button>
+                <button className="close-review-button" onClick={closeReviewModal}>✖</button>
                 <div>
                     {submissionStatus && <p>{submissionStatus}</p>}
                 </div>
                 <div>
-                    {currentPage !== 1 && <button className="front-button" onClick={prevPage}>이전</button>}
-                    {currentPage !== totalPages && <button className="back-button" onClick={nextPage}>다음</button>}
+                    {currentPage !== 1 && <button className="front-button" onClick={prevPage}>{'<'}</button>}
+                    {currentPage !== totalPages && <button className="back-button" onClick={nextPage}>{'>'}</button>}
                 </div>
-                <button onClick={handleSubmit} className="submit-button">리뷰 제출</button>
+                <button onClick={handleSubmit} className="submit-button">완료</button>
             </div>
         </div>
     );
 };
 
 export default ReviewModal;
+

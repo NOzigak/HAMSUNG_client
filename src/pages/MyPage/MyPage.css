@@ -96,11 +96,13 @@
     height: 26vh;
     overflow: hidden;
     border-radius: 50%;
+    background-color:rgb(229, 229, 229)
   }
   
   .profile-image {
     width: 100%;
     height: 100%;
+    margin-top: 2vh;
     object-fit: cover;
   }
 
@@ -171,4 +173,22 @@
   margin-left: 28.5vw;
   height: 4vh;
   width: 11vw;
+}
+
+.most-tag-item {
+  display: flex;
+  align-items: center;
+  border: 1px solid black;
+  background-color: #d5ffde;
+  border-radius: 20px;
+}
+
+.tag-name{
+ color: black;
+ padding: 1vw;
+ 
+}
+
+.tag-number{
+  color: black;
 }

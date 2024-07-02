@@ -10,13 +10,15 @@ export const Navbar = ({user}) => {
 
     return (
         <div className="navbarWrapper">
-            <img className="hamsungIcon" src={icon} alt="icon"/>
-
+            <div className="logo">
+              <NavLink to="/">
+                 <img className="hamsungIcon" src={icon} alt="icon"/>
+              </NavLink>
+            </div>
+            
+            
             <div className="linkSection">
                 <ul>
-                    <NavLink to="/">
-                        <li>메인페이지</li>
-                    </NavLink>
                     <NavLink to="/mypage">
                         <li>마이페이지</li>
                     </NavLink>
