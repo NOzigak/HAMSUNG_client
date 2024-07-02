@@ -1,8 +1,8 @@
-import { useSelector } from "react-redux";
+import base64 from "base-64";
 
 const getUserInfo = () => {
     // 액세스 토큰 정보 가져옴
-    let token = useSelector(state => state.auth.user); 
+    let token = localStorage.getItem("accessToken");
     // header . payload . signature
     let payload = token.substring(token.indexOf('.')+1, token.lastIndexOf('.'));
     let dec = JSON.parse(base64.decode(payload));
@@ -11,5 +11,3 @@ const getUserInfo = () => {
 }
 
 export default getUserInfo;
-
-
