@@ -1,7 +1,6 @@
 import React from "react";
 import "./EditProfile.css";
-import profileImage from "../../assets/profileImage.jpg";
-import cameraImage from "../../assets/camera.png";
+import profileImage from "../../assets/person.png";
 import { nickname } from "../../pages/MyPage/MyPage";
 import noLate from "../../assets/ptag.png";
 import slowAnswer from "../../assets/ntag.png";
@@ -15,7 +14,6 @@ const EditProfile = ({ show, handleEdit }) => {
         <div className="profile-image-container">
           <img className="profile-image" src={profileImage} alt="Profile" />
         </div>
-        <img className="camera-image" src={cameraImage} alt="Camera" />
         <input 
           type="text" 
           className="nickname-input" 

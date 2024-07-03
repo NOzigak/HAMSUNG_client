@@ -5,7 +5,7 @@ import { Navbar } from "../../components/Navbar/Navbar";
 import DeleteID from "../../components/DeleteID/DeleteID";
 import DeleteConfirm from "../../components/DeleteConfirm/DeleteConfirm";
 import EditProfile from "../../components/EditProfile/EditProfile";
-import profileImage from '../../assets/profileImage.jpg';
+import profileImage from '../../assets/person.png';
 import lvSilver from "../../assets/silver.png";
 import lvGold from "../../assets/gold.png";
 import noLate from "../../assets/ptag.png";

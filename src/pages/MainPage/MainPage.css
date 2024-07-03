@@ -2,10 +2,19 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-top: 7vh;
+    margin-top: 1vh;
+
+    height: 45vh;
 }
 
 .top_study {
     text-align: center;
-    font-size: 2.3vw;
+    font-size: 2.0vw;
+    height: 13vh;
+}
+
+@media only screen and (max-width: 768px) {
+    .popular_study {
+        display: none; /*모바일에서 인기스터디를 표시하지 않음*/
+    }
 }

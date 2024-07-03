@@ -10,6 +10,22 @@
     background-color: rgba(0, 0, 0, 0.4);
   }
   
+  .confirm-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 3vw;
+    border: 1px solid #888;
+    width: 36.2vw;
+    height: 44vh;
+    border-radius: 8px;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  .confirm-modal-content p{
+    margin-top: 12vh;
+  }
+
   .message-design {
     background-color: #bad9c1;
     position: absolute;
@@ -45,7 +61,7 @@
     color: white;
     border: none;
     cursor: pointer;
-    margin-top: 7vh;
+    margin-top: 9vh;
     padding: 8px 17px;
     font-size: 14px;
 }

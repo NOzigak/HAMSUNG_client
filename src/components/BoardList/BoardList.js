@@ -1,16 +1,21 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./BoardList.css";
 import RecruitBtn from "../RecruitBtn/RecruitBtn";
 import { useNavigate } from "react-router-dom";
 import BoardItem from "../BoardItem/BoardItem";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import { getBoards } from "../../actions/boardAction";
 
 export default function BoardList() {
 
     const selectList = ["전체", "어학","취업", "고시", "프로그래밍", "기타"]
     const [category, setCategory] = useState("전체");
     const [search, setSearch] = useState("");
+    // const dispatch = useDispatch();
+    //useEffect(()=> {
+    //    dispatch(getBoards()); //컴포넌트 마운트 시 게시글 목록을 가져옴
+    //}, [dispatch]);
 
     const handleOption = (e) => {
         setCategory(e.target.value);
@@ -18,6 +23,8 @@ export default function BoardList() {
     const nav = useNavigate();
     // redux state 호출
     const boardData = useSelector(state => state.boards);
+    //const boardsData = useSelector(state => state.board); // 서버 게시글 리스트 가져오기
+
     const [searchData, setSearchData] = useState(boardData);
 
     const searchClick = () => {

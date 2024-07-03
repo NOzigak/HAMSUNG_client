@@ -11,12 +11,13 @@ const ReviewModal = ({ closeModal, currentPage, nextPage, prevPage }) => {
               <ModalPage page={currentPage} />
               <button className="close-review-button" onClick={closeModal}>✖</button>
               <div>
-                 <reviewList />
+                 {currentPage !== 1 && <button className="front-button" onClick={prevPage}>{'<'}</button>}
+                 {currentPage !== totalPages && <button className="back-button" onClick={nextPage}>{'>'}</button>}
               </div>
               <div>
-                 {currentPage !== 1 && <button className="front-button" onClick={prevPage}>이전</button>}
-                 {currentPage !== totalPages && <button className="back-button" onClick={nextPage}>다음</button>}
+                 <button className="submit-button">완료</button>
               </div>
+              
             </div>
         </div>
     );

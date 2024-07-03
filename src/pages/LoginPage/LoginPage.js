@@ -3,6 +3,7 @@ import "./LoginPage.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../actions/authActions";
+import { setCookie } from "../../utils/cookies";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -11,7 +12,6 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth);
 
-  console.log(auth);
   const handleData = (e) => {
     if(e.target.type === "email"){
       setEmail(e.target.value);
@@ -22,19 +22,27 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(email, password);
     // login action
     dispatch(login({email, password}));
+    
   }
   
-  // 로그인시 토큰 정보를 로컬 스토리지에 저장.
+  // 로그인 시 토큰 정보를 쿠키에 저장.
   useEffect(() => {
     if(auth.user){
       nav('/');
       try {
-        localStorage.setItem('token', JSON.stringify(auth.user));
+        localStorage.setItem('accessToken', JSON.stringify(auth.user));
+        //setCookie("accessToken", auth.user.access, {
+          //path:'/',
+          //secure: true
+        //});
+        //setCookie("refreshToken", auth.user.refresh, {
+        //  path: '/',
+        //  secure: true
+        //})
       } catch(e){
-        console.log("localStorage is not working");
+        console.log("cookie not working", e);
       }
     }
   }, [nav, auth.user])
@@ -47,7 +55,12 @@ const LoginPage = () => {
         </div>
         <input className="Email" placeholder="이메일을 입력하세요" type="email" value={email} onChange={handleData} required/>
         <input className="Password" placeholder="비밀번호를 입력하세요" type="password" value={password} onChange={handleData} required/>
-        {auth.error && auth.error}
+        {auth.error && 
+          <div className="loginError">
+            로그인 실패: {auth.error}
+          </div>        
+        }
+
         <button className="LoginButton">로그인</button>
       </form>
       <div className="Switcher">

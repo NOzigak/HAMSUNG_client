@@ -2,7 +2,7 @@ const initialState = {
     loading: false,
     error: null,
     isAuthenticate: false,
-    user: null
+    user: null // accessToken 저장(response.data.access)
 }
 
 const AuthReducer = (state = initialState, action) => {
@@ -15,19 +15,24 @@ const AuthReducer = (state = initialState, action) => {
                 error: null
             };
         case 'LOGIN_SUCCESS':
-        case 'SIGNUP_SUCCESS':
             return {
                 ...state,
                 loading: false,
                 isAuthenticate: true,
-                user: action.payload.data
+                user: action.payload
             };
+        case 'SIGNUP_SUCCESS':
+            return{
+                ...state,
+                loading: false,
+                isAuthenticate: true,
+            }
         case 'LOGIN_FAILURE':
         case 'SIGNUP_FAILURE':
             return {
                 ...state,
                 loading: false,
-                error: action.payload.error,
+                error: action.payload,
                 isAuthenticate: false,
                 user: null
             }

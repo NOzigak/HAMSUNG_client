@@ -6,33 +6,57 @@ import Viewer from "../../components/Viewer/Viewer";
 import "./style.css";
 import useBoard from "../../hooks/useBoard";
 import { deleteBoard } from "../../actions/boardList";
-import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import RecruitModal from "../../components/RecruitModal/RecruitModal";
+import { deleteBoardRequest, getTargetBoard } from "../../api/BoardAPI";
+
 
 const ViewBoardPage = () => {
 
     const params = useParams();
     const nav = useNavigate();
     const curBoardItem = useBoard(params.id);
+    //const [curBoardItem, setCurBoardItem] = useState(null);
     const dispatch = useDispatch();
     const [modalOpen, setModalOpen] = useState(false);
-    
     const showModal = () => {
         setModalOpen(true);
     }
+
+    // 마운트될 때 게시글 상세 정보 요청 api 호출
+    // useEffect(()=> {
+    //     const fetchBoardItem = async () => {
+    //         try{
+    //             const data = await getTargetBoard(params.id);
+    //             setCurBoardItem(data); //가져온 데이터로 상태 업데이트
+    //         } catch (error) {
+    //             console.log("게시글 상세 정보 불러오기 실패", error);
+    //         }
+    //     }
+    //     fetchBoardItem();
+
+    // }, [params.id]);
 
 
     if(!curBoardItem){
         return <div>데이터 로딩중...</div>
     }
 
+
     const onClickDelete = () => {
         if (
             window.confirm("게시물을 정말 삭제할까요? 복구되지 않습니다!")
         ){
             dispatch(deleteBoard(params.id));
-            nav('/home', {replace: true});
+            nav('/', {replace: true});
+            // 삭제 api 요청
+            // try {
+            //     dispatch(deleteBoardRequest(params.id));
+            //     nav('/', {replace: true});
+            // } catch (error) {
+            //     console.log("게시글을 삭제하는데 실패했습니다.", error);
+            // }
         }
     }
 

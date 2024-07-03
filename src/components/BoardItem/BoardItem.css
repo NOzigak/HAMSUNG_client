@@ -36,3 +36,12 @@
     width: 35%;
     text-align: center;
 }
+
+@media screen and (max-width: 768px) {
+    .columnBasic {
+        font-size: 10px;
+    }
+    .columnTitle {
+        font-size: 10px;
+    }
+}

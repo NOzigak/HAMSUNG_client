@@ -1,13 +1,13 @@
 
 function validateUser(values) {
     const errors = {
-        userName : '',
+        username : '',
         email : '',
         password : '',
         passwordConfirm : '',
     }
-    if(!values.userName.trim()){
-        errors.userName = "이름을 입력하세요"
+    if(!values.username.trim()){
+        errors.username = "이름을 입력하세요"
     };
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
         errors.email = '올바른 이메일 형식이 아닙니다,';
