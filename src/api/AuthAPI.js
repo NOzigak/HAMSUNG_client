@@ -25,3 +25,14 @@ export const UserSignup = async (userInfo) => {
 }
 
 // 로그아웃
+export const UserLogout = async () => {
+    try{
+        // 로그아웃 시 토큰도 삭제
+        localStorage.removeItem("accessToken");
+        const response = await client.post("/logout");
+        return response.data;
+    } catch (error) {
+        console.log("로그아웃 실패", error);
+        throw error;
+    }
+}
