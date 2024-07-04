@@ -83,7 +83,7 @@ const ViewBoardPage = () => {
                         <BoardBtn title="신청자 리스트" onClick={showModal}/>
                         <BoardBtn title="수정하기" onClick={()=>nav(`/editBoard/${params.id}`)}/>
                         <BoardBtn title="삭제하기" onClick={onClickDelete}/>
-                        {modalOpen && <RecruitModal setModalOpen={setModalOpen}/>}
+                        {modalOpen && <RecruitModal setModalOpen={setModalOpen} boardId={params.id}/>}
                     </div> 
                     :
                     <div className="readBtn">

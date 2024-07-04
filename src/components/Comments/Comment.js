@@ -5,18 +5,19 @@ import { useDispatch } from "react-redux";
 import { addReply, deleteComment, deleteReply } from "../../actions/commentActions";
 import { addReplyRequest, deleteCommentRequest, deleteReplyRequest } from "../../api/CommentAPI";
 import getUserInfo from "../../utils/get-userInfo";
+import { useNavigate } from "react-router-dom";
 
 
-const Comment = ({comment, replies, onSubmit, currentUserId}) => {
+const Comment = ({comment, replies, boardId, onSubmit}) => {
 
-    //const canEdit = currentUserId === comment.userId
     const [activeComment, setActiveComment] = useState(null); // {type : "editing" id: "1"}
     const [text, setText] = useState();
     const isReplying = activeComment &&
         activeComment.type === "replying" &&
         activeComment.id === comment.id;
     const dispatch = useDispatch();
-    // const userInfo = getUserInfo();
+    //const userInfo = getUserInfo();
+    //const nav = useNavigate();
 
     const handleText = (e) => {
         setText(e.target.value);
@@ -41,6 +42,7 @@ const Comment = ({comment, replies, onSubmit, currentUserId}) => {
         //     const response = await addReplyRequest(comment.parentId, replyDetail);
         //     console.log("reply added:", response);
         //     setActiveComment({type:"", id:""});
+        //     nav(`/viewBoard/${boardId}`);
         // } catch (error) {
         //     console.log("대댓글 작성에 실패했습니다.", error);
         // }
@@ -54,10 +56,12 @@ const Comment = ({comment, replies, onSubmit, currentUserId}) => {
                 dispatch(deleteReply(comment.parentId, comment.id));
                 // const response = deleteReplyRequest(comment.id, userInfo.id);
                 // console.log("대댓글 삭제 성공", response);
+                // nav(`/viewBoard/${boardId}`);
             } else if (!comment.parentId){
                 dispatch(deleteComment(comment.id));
                 // const response = deleteCommentRequest(comment.id, userInfo.id);
                 // console.log("댓글 삭제 성공", response);
+                // nav(`/viewBoard/${boardId}`);
             } 
         } catch (error) {
             console.log("댓글 삭제에 실패", error);
