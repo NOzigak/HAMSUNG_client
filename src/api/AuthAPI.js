@@ -1,10 +1,18 @@
 import client from "./client"
 
 
-// 로그인
+// 로그인 폼데이터로 전송
 export const UserLogin = async (userInfo) => {
+    const formData = new FormData();
+    formData.append("email", userInfo.email);
+    formData.append("password", userInfo.password);
     try{
-        const response = await client.post("/login", {userInfo}, {withCredentials: true});
+        const response = await client.post("/login", formData,
+            {
+                headers: {"Content-Type": "multipart/form-data"},
+                withCredentials: true
+            }
+        );
         return response.headers.access;
     } catch(error) {
         console.log("로그인 실패", error);
