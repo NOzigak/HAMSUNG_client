@@ -61,7 +61,7 @@ const SignupPage = () => {
       console.log("오류 발생", auth.error);
       return;
     }
-    if(auth.isAuthenticate){
+    if(auth.isAuthenticated){
       console.log("회원가입 성공")
       showModal()
       console.log("회원가입 성공");
