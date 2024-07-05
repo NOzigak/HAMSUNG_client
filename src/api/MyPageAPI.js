@@ -1,5 +1,31 @@
 import axios from 'axios';
 
+//사용자 정보 조회
+export const fetchUserData = async (userId, token) => {
+    try {
+        const response = await axios.get(`http://domain.com/users/${userId}/mypage`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'charset': 'utf-8',
+                'access': token
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error:", error);
+        if (error.response && error.response.status === 401) {
+            return { status: 401, message: "접속에 실패했습니다." };
+        } else {
+            return { status: error.response?.status || 500, message: error.message };
+        }
+    }
+};
+
+
+//회원 탈퇴
+
+
+
 //리뷰 등록
 export const ReviewAPI = async (userId, reviewData) => {
     try {
@@ -64,4 +90,13 @@ export const getUserReviewsAPI = async (userId, token) => {
     }
   };
 
-
+//참여 중인 스터디 불러오기
+export const getStudies = async (userId) => {
+    try {
+        const response = await axios.get(`/study/myStudy/${userId}`);
+        return response.data;
+    } catch (error) {
+        console.error('스터디 정보를 불러오는 중 오류 발생:', error);
+        throw error;
+    }
+};

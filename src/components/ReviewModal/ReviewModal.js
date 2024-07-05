@@ -3,8 +3,7 @@ import ModalPage from './ModalPage';
 import { ReviewAPI } from '../../api/MyPageAPI';
 import "./ReviewModal.css";
 
-const ReviewModal = ({ closeReviewModal, currentPage, nextPage, prevPage }) => {
-    const totalPages = 4; 
+const ReviewModal = ({ closeReviewModal, currentPage, nextPage, prevPage, totalPages }) => {
     const [pageState, setPageState] = useState({});
     const [submissionStatus, setSubmissionStatus] = useState('');
 
