@@ -26,7 +26,7 @@ export const addCommentRequest = async (recruit_id, commentInfo) => {
 // 댓글 삭제
 export const deleteCommentRequest = async (commentId, userId) => {
     try {
-        const response = await client.delete(`/comments/${commentId}`, userId);
+        const response = await client.delete(`/comments/${commentId}`, {data: {userId: userId}});
         return response.data;
     } catch (error) {
         console.log("댓글 삭제에 실패했습니다.", error);
@@ -49,7 +49,7 @@ export const addReplyRequest = async (parnetId, replyInfo) => {
 // 대댓글 삭제
 export const deleteReplyRequest = async (childCommentId, userId) => {
     try {
-        const response = await client.delete(`/child-comments/${childCommentId}`, userId);
+        const response = await client.delete(`/child-comments/${childCommentId}`, {data: {userId: userId}});
         return response.data;
     } catch (error) {
         console.log('대댓글 삭제에 실패했습니다.', error);

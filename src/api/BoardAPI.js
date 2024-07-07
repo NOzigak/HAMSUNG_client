@@ -92,9 +92,9 @@ export const getApplicants = async (recruit_id) => {
 }
 
 // 스터디 멤버 승인
-export const approveMember = async (memberId) => {
+export const approveMember = async (memberId, user_id) => {
     try {
-        const response = await client.patch(`/recruits/${memberId}/members`);
+        const response = await client.patch(`/recruits/${memberId}/members/${user_id}`);
         return response.data;
     } catch (error) {
         console.log("멤버 승인에 실패했습니다.", error);

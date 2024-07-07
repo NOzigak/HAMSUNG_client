@@ -55,6 +55,7 @@ const Comments = ({boardId}) => {
                         comment={rootComment} 
                         replies={getReplies(comments, rootComment.id)}
                         onSubmit={submitComment}
+                        boardId={boardId}
                     />                                   
                 </div>
             ))}

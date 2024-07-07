@@ -9,7 +9,7 @@ import { deleteBoard } from "../../actions/boardList";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import RecruitModal from "../../components/RecruitModal/RecruitModal";
-import { deleteBoardRequest, getTargetBoard } from "../../api/BoardAPI";
+import { deleteBoardRequest, getTargetBoard, toggleRecruitmentStatus } from "../../api/BoardAPI";
 
 
 const ViewBoardPage = () => {
@@ -23,6 +23,7 @@ const ViewBoardPage = () => {
     const showModal = () => {
         setModalOpen(true);
     }
+    const [recruitStatus, setRecruitStatus] = useState("모집중");
 
     // 마운트될 때 게시글 상세 정보 요청 api 호출
     // useEffect(()=> {
@@ -60,6 +61,20 @@ const ViewBoardPage = () => {
         }
     }
 
+    const changeStatus =  async () => {
+        try {
+            const response = await toggleRecruitmentStatus(params.id);
+            console.log("모집 전환 완료", response)
+            if (recruitStatus === "모집중"){
+                setRecruitStatus("모집완료");
+            } else if(recruitStatus === "모집완료") {
+                setRecruitStatus("모집중");
+            }
+        } catch (error) {
+            console.log("모집전환 실패", error);
+        }
+    }
+
     return(
         <div>
             <Navbar />
@@ -79,15 +94,15 @@ const ViewBoardPage = () => {
                 {/* 작성자만 바꿀수 있음 <아래 이름은 로그인으로 받아온 유저 정보로 바꿀예정>*/}
                 {curBoardItem.writer==="노성균" ? 
                     <div className="writeBtn">
-                        <BoardBtn title="모집중" /> 
+                        <BoardBtn title={recruitStatus} onClick={changeStatus}/> 
                         <BoardBtn title="신청자 리스트" onClick={showModal}/>
                         <BoardBtn title="수정하기" onClick={()=>nav(`/editBoard/${params.id}`)}/>
                         <BoardBtn title="삭제하기" onClick={onClickDelete}/>
-                        {modalOpen && <RecruitModal setModalOpen={setModalOpen}/>}
+                        {modalOpen && <RecruitModal setModalOpen={setModalOpen} boardId={params.id}/>}
                     </div> 
                     :
                     <div className="readBtn">
-                        <BoardBtn title="신청하기"/> {/* 신청하기 버튼은 열람자에게만 보임 */}
+                        {recruitStatus === "모집중" ? <BoardBtn title="신청하기"/> : ""}
                     </div>                             
                 }
 
