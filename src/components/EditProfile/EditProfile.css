@@ -124,3 +124,38 @@
     font-weight: 600;
     margin-left: 21vw;
   }
+
+  .close-profile-button {
+    position: absolute;
+    top: 2.2vh;
+    margin-left: 19.5vw;
+    font-size: 1.5vw;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.tag-container{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tag-item{
+  display: flex;
+  background-color: #d5ffde;
+  border-radius: 10px;
+  width: 12vw;
+  height: 5vh;
+}
+
+.tag-icon{
+  width: 3vw;
+  height: 3vh;
+  margin-left: 8vw;
+}
+
+.end-container{
+  display: column;
+  margin-top: 22vh;
+}

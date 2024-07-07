@@ -39,6 +39,22 @@
     font-weight: 600;
    }
 
+   .confirm-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 3vw;
+    border: 1px solid #888;
+    width: 36.2vw;
+    height: 40vh;
+    border-radius: 8px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.confirm-modal-content p{ 
+  margin: 5vw 3vh 1vw;
+}
+
 
   .ok-button {
     background-color: #a3cead;

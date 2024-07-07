@@ -14,7 +14,7 @@ const mockNotice = {
         title: "<필독> 함성 면접 스터디 기본 규칙 설명",
         writer: "노성균",
         created_at: "2023-06-22",
-        description: "면접 스터디 기본 규칙입니다."
+        description: "함성 면접 스터디 기본 규칙을 공유합니다.\n앞으로 스터디 진행하는 동안 지켜주시기 바랍니다!"
     }
 };
 

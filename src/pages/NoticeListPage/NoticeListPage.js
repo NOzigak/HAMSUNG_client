@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./NoticeListPage.css";
 import { useSelector } from "react-redux";
 
-// 날짜 형식 변환 함수
+
 const formatDate = (dateString) => {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
     return new Date(dateString).toLocaleDateString('ko-KR', options).replace(/\./g, '.').replace(/\s/g, '');
