@@ -24,6 +24,7 @@ const LoginPage = () => {
     e.preventDefault();
     // login action
     dispatch(login({email, password}));
+    
   }
   
   // 로그인 시 토큰 정보를 쿠키에 저장.
@@ -31,15 +32,15 @@ const LoginPage = () => {
     if(auth.user){
       nav('/');
       try {
-        //localStorage.setItem('token', JSON.stringify(auth.user));
-        setCookie("accessToken", auth.user.access, {
-          path:'/',
-          secure: true
-        });
-        setCookie("refreshToken", auth.user.refresh, {
-          path: '/',
-          secure: true
-        })
+        localStorage.setItem('accessToken', JSON.stringify(auth.user));
+        //setCookie("accessToken", auth.user.access, {
+          //path:'/',
+          //secure: true
+        //});
+        //setCookie("refreshToken", auth.user.refresh, {
+        //  path: '/',
+        //  secure: true
+        //})
       } catch(e){
         console.log("cookie not working", e);
       }

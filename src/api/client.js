@@ -10,9 +10,9 @@ const client = axios.create({
 // 요청 인터셉터 설정
 client.interceptors.request.use(
     config => {
-        // 요청 성공 시 특정 작업 수행
-        //const token = localStorage.getItem("token");
-        const token = getCookie("accessToken");
+        // 액세스 토큰을 로컬 스토리지에서 가져옴
+        const token = localStorage.getItem("accessToken");
+        //const token = getCookie("accessToken");
         if (token) {
             config.headers.Authorization = {access: token};
         } 

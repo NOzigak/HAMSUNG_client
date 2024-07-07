@@ -10,7 +10,7 @@ import { signup } from "../../actions/authActions";
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
-    userName: '',
+    username: '',
     email: '',
     password: '',
     passwordConfirm: '',
@@ -26,7 +26,7 @@ const SignupPage = () => {
     setModalOpen(true);
   };
 
-  const {userName, email, password, passwordConfirm} = formData;
+  const {username, email, password, passwordConfirm} = formData;
 
   useEffect(() => {
     setErrors(validateUser(formData))
@@ -61,7 +61,7 @@ const SignupPage = () => {
       console.log("오류 발생", auth.error);
       return;
     }
-    if(auth.isAuthenticate){
+    if(auth.isAuthenticated){
       console.log("회원가입 성공")
       showModal()
       console.log("회원가입 성공");
@@ -81,9 +81,9 @@ const SignupPage = () => {
           onChange={onChange} 
           text="닉네임을 입력하세요" 
           type="text" 
-          value={userName}
-          error={errors.userName}
-          name="userName"
+          value={username}
+          error={errors.username}
+          name="username"
         />
 
         <AuthInput

@@ -8,7 +8,7 @@ function SignupModal({ setModalOpen, id, title, content, writer }) {
     // 모달 끄기 
     const closeModal = (e) => {
         setModalOpen(false);
-        nav("/");
+        nav("/login");
         e.preventDefault();
     };
 
