@@ -1,11 +1,10 @@
-import axios from 'axios';
+import client from "./client";
 
 //사용자 정보 조회
 export const fetchUserData = async (userId, token) => {
     try {
-        const response = await axios.get(`http://domain.com/users/${userId}/mypage`, {
+        const response = await client.get(`http://domain.com/users/${userId}/mypage`, {
             headers: {
-                'Content-Type': 'application/json',
                 'charset': 'utf-8',
                 'access': token
             }
@@ -29,10 +28,8 @@ export const fetchUserData = async (userId, token) => {
 //리뷰 등록
 export const ReviewAPI = async (userId, reviewData) => {
     try {
-        const response = await axios.post(`/api/reviews/${userId}`, reviewData, {
-            headers: {
-                'Content-Type': 'application/json',
-            },
+        const response = await client.post(`/api/reviews/${userId}`, reviewData, {
+
         });
 
         if (response.status !== 200) {
@@ -51,12 +48,11 @@ export const ReviewAPI = async (userId, reviewData) => {
 //프로필 수정
 export const EditProfileAPI = async (userId, newNickname, token) => {
     try {
-        const response = await axios.put(
+        const response = await client.put(
             `http://domain.com/users/${userId}`,
             { username: newNickname },
             {
                 headers: {
-                    'Content-Type': 'application/json',
                     'charset': 'utf-8',
                     'Authorization': `Bearer ${token}`
                 }
@@ -78,9 +74,8 @@ export const EditProfileAPI = async (userId, newNickname, token) => {
 //전체 리뷰 조회
 export const getUserReviewsAPI = async (userId, token) => {
     try {
-      const response = await axios.get(`http://domain.com/users/${userId}/reviews`, {
+      const response = await client.get(`http://domain.com/users/${userId}/reviews`, {
         headers: {
-          'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         }
       });
@@ -90,10 +85,11 @@ export const getUserReviewsAPI = async (userId, token) => {
     }
   };
 
+  
 //참여 중인 스터디 불러오기
 export const getStudies = async (userId) => {
     try {
-        const response = await axios.get(`/study/myStudy/${userId}`);
+        const response = await client.get(`/study/myStudy/${userId}`);
         return response.data;
     } catch (error) {
         console.error('스터디 정보를 불러오는 중 오류 발생:', error);
