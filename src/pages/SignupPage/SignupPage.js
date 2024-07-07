@@ -10,7 +10,7 @@ import { signup } from "../../actions/authActions";
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
-    userName: '',
+    username: '',
     email: '',
     password: '',
     passwordConfirm: '',
@@ -26,7 +26,7 @@ const SignupPage = () => {
     setModalOpen(true);
   };
 
-  const {userName, email, password, passwordConfirm} = formData;
+  const {username, email, password, passwordConfirm} = formData;
 
   useEffect(() => {
     setErrors(validateUser(formData))
@@ -81,9 +81,9 @@ const SignupPage = () => {
           onChange={onChange} 
           text="닉네임을 입력하세요" 
           type="text" 
-          value={userName}
-          error={errors.userName}
-          name="userName"
+          value={username}
+          error={errors.username}
+          name="username"
         />
 
         <AuthInput

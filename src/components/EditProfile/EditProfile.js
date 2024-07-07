@@ -41,7 +41,7 @@ const EditProfile = ({ show, handleEdit, userId, token, point, onUpdateNickname,
   const closeProfileModal = () => {
     handleEdit();
   };
-
+  
   return (
     <div className={`profile-modal ${show ? "show" : ""}`}>
       <div className="profile-modal-content">

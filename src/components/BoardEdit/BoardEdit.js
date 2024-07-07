@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import "./BoardEdit.css";
 import { useNavigate } from "react-router-dom";
 
-export default function BoardEdit({name, initData, onSubmit}){
-
+export default function BoardEdit({name, initData, onSubmit, mode}){
+    //mode는 생성, 수정에 맞는 api를 호출해 사용하는데 이용된다.
     const selectList = ["어학","취업", "고시", "프로그래밍", "기타"]
     const [inputData, setInputData] = useState({
         title : "",
@@ -33,7 +33,7 @@ export default function BoardEdit({name, initData, onSubmit}){
         nav("/")
     }
 
-    const onClickSubmit = () => {
+    const onClickSubmit = () => { //여기서 mode에 따른 작업을 처리한다.
         onSubmit(inputData);
     }
     return (
