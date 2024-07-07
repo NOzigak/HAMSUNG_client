@@ -107,15 +107,7 @@ const StudyGroupPage = () => {
 
       {studyInfo && (
         <div className="study-info">
-          <p>ID: {studyInfo.id}</p>
-          <p>Category: {studyInfo.category}</p>
-          <p>Place: {studyInfo.place}</p>
-          <p>Member Number: {studyInfo.member_num}</p>
-          <p>Status: {studyInfo.status}</p>
-          <p>Start Date: {studyInfo.startDate}</p>
-          <p>End Date: {studyInfo.endDate}</p>
           <p>Score: {studyInfo.score}</p>
-          <p>Leader ID: {studyInfo.leader_id}</p>
         </div>
       )}
     </div>
