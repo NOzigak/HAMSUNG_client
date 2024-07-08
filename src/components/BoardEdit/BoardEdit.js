@@ -38,6 +38,11 @@ export default function BoardEdit({name, initData, onSubmit, mode}){
 
     const onClickSubmit = () => { //여기서 mode에 따른 작업을 처리한다.
         onSubmit(inputData);
+        // if (mode === "생성") {
+        //     onSubmit(inputData);
+        // } else if (mode ==="수정") {
+        //     onSubmit(inputData.id, inputData);
+        // }
     }
     return (
         <div className="boardWrapper">
@@ -68,7 +73,7 @@ export default function BoardEdit({name, initData, onSubmit, mode}){
                 </div>   
             </div>
             <div className="btnSection">
-                <button className="createBtn" onClick={onClickSubmit}>생성</button>
+                <button className="createBtn" onClick={onClickSubmit}>{mode === "생성" ? "생성" : "수정"}</button>
                 <button className="cancleBtn" onClick={cancleEdit}>취소</button>
             </div>
         </div>
