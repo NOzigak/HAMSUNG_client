@@ -12,7 +12,7 @@ const NewBoard = () => {
     const dispatch = useDispatch();
     const onClickSubmitBtn = async (input) => {
         console.log("create this : ", input)
-        dispatch(createBoard(input)); // 함수명 뒤에 API붙이면 redux-thunk로 api요청
+        dispatch(createBoardAPI(input)); // 함수명 뒤에 API붙이면 redux-thunk로 api요청
         nav("/", {replace : true});
     }
 

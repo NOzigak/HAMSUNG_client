@@ -9,7 +9,8 @@ import { deleteBoard } from "../../actions/boardList";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import RecruitModal from "../../components/RecruitModal/RecruitModal";
-import { deleteBoardRequest, getTargetBoard, toggleRecruitmentStatus } from "../../api/BoardAPI";
+import { applyForStudy, deleteBoardRequest, getTargetBoard, getUserReview, toggleRecruitmentStatus } from "../../api/BoardAPI";
+import getUserInfo from "../../utils/get-userInfo";
 
 
 const ViewBoardPage = () => {
@@ -18,12 +19,15 @@ const ViewBoardPage = () => {
     const nav = useNavigate();
     const curBoardItem = useBoard(params.id);
     //const [curBoardItem, setCurBoardItem] = useState(null);
+    //const user = getUserInfo();
+    //const [review, setReview] = useState(null);
     const dispatch = useDispatch();
     const [modalOpen, setModalOpen] = useState(false);
     const showModal = () => {
         setModalOpen(true);
     }
-    const [recruitStatus, setRecruitStatus] = useState("모집중");
+    const [recruitStatus, setRecruitStatus] = useState("모집중"); // api 연동 시 ""로 바꾸기
+    
 
     // 마운트될 때 게시글 상세 정보 요청 api 호출
     // useEffect(()=> {
@@ -31,6 +35,7 @@ const ViewBoardPage = () => {
     //         try{
     //             const data = await getTargetBoard(params.id);
     //             setCurBoardItem(data); //가져온 데이터로 상태 업데이트
+    //             setRecruitStatus(data.isRecruit ? "모집중" : "모집완료");
     //         } catch (error) {
     //             console.log("게시글 상세 정보 불러오기 실패", error);
     //         }
@@ -63,16 +68,34 @@ const ViewBoardPage = () => {
 
     const changeStatus =  async () => {
         try {
-            const response = await toggleRecruitmentStatus(params.id);
+            const response = await toggleRecruitmentStatus(params.id); // {isRecruit: curBoarditem.isRecruit}도 넣어주기
             console.log("모집 전환 완료", response)
-            if (recruitStatus === "모집중"){
-                setRecruitStatus("모집완료");
-            } else if(recruitStatus === "모집완료") {
-                setRecruitStatus("모집중");
-            }
+            setRecruitStatus(state => state === "모집중" ? "모집완료" : "모집중");
         } catch (error) {
             console.log("모집전환 실패", error);
         }
+    }
+
+    const applyStudy = async () => {
+        // try {
+        //     const reviewData = await getUserReview(user.id);
+        //     setReview(reviewData);
+        // } catch (error) {
+        //     console.log("리뷰를 가져오는데 실패했습니다.");
+        // }
+        // const userInfo = {
+        //     study_id: params.id,
+        //     user: {
+        //         user_id: user.id,
+        //         user_name: user.name,
+        //     },
+        //     review: review,
+        // }
+        // try {
+        //     const response = await applyForStudy(params.id, userInfo);
+        // } catch (error) {
+        //     console.log("신청실패", error);
+        // }
     }
 
     return(
@@ -91,7 +114,7 @@ const ViewBoardPage = () => {
                         description = {curBoardItem.description}
                     />
                 </div>
-                {/* 작성자만 바꿀수 있음 <아래 이름은 로그인으로 받아온 유저 정보로 바꿀예정>*/}
+                {/* 모집글 리더 정보와 사용자 이름과 일치 시 권한*/}
                 {curBoardItem.writer==="노성균" ? 
                     <div className="writeBtn">
                         <BoardBtn title={recruitStatus} onClick={changeStatus}/> 
@@ -102,7 +125,7 @@ const ViewBoardPage = () => {
                     </div> 
                     :
                     <div className="readBtn">
-                        {recruitStatus === "모집중" ? <BoardBtn title="신청하기"/> : ""}
+                        {recruitStatus === "모집중" ? <BoardBtn title="신청하기" onClick={applyStudy}/> : ""}
                     </div>                             
                 }
 
