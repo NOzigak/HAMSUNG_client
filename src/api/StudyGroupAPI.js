@@ -1,9 +1,9 @@
-import axios from 'axios';
+import client from "./client"
 
 //스터디 기본 정보 호출
 export const getStudyInfoAPI = async (studyId) => {
   try {
-    const response = await axios.get(`http://domain.com/study/${studyId}`, {
+    const response = await client.get(`/study/${studyId}`, {
 
     });
     return response;
@@ -21,7 +21,7 @@ export const getStudyInfoAPI = async (studyId) => {
 //스터디 종료
 export const finishStudyAPI = async (studyId) => {
     try {
-        const response = await axios.patch(`/api/study/${studyId}/end`, {}, {
+        const response = await client.patch(`/api/study/${studyId}/end`, {}, {
 
         });
 
@@ -36,7 +36,7 @@ export const finishStudyAPI = async (studyId) => {
 // study manage 주차별 생성
 export const saveWeeklyStudyData = async (studyId, weekIndex, attendance, late, absent, homework) => {
     try {
-      const response = await axios.post(
+      const response = await client.post(
         `/study/${studyId}/manage`,
         {
           weekIndex: weekIndex,
@@ -51,4 +51,54 @@ export const saveWeeklyStudyData = async (studyId, weekIndex, attendance, late, 
       console.error("스터디 관리 정보 저장 오류:", error);
       throw error;
     }
+};
+
+// Todo 생성
+export const createTodo = async (todoData) => {
+    try {
+      const response = await client.post(`/study/${todoData.study_id}/posts`, todoData);
+      
+      return response.data;
+    } catch (error) {
+      if (error.response) {
+        console.error('이 필드는 필수항목입니다.', error.response.data);
+        throw new Error(`일정 생성 실패: ${error.response.data}`);
+      } else {
+        console.error('일정 생성 오류', error.message);
+        throw error;
+      }
+    }
   };
+
+// Todo 조회
+export const getTodo = async (studyId, due_date) => {
+  try {
+    const response = await client.get(`/study/${studyId}/${due_date}`);
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 404) {
+      return { status: "200 OK", message: "해당 날짜로 기록된 일정이 없습니다." };
+    } else {
+      throw error;
+    }
+  }
+};
+
+// Todo 삭제
+export const deleteTodo = async (postId, token) => {
+  try {
+    const response = await client.delete(`/posts/${postId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 403) {
+      return { detail: "이 작업을 수행할 권한(permission)이 없습니다." };
+    } else {
+      console.error('일정 삭제 실패:', error.message);
+      throw error;
+    }
+  }
+};

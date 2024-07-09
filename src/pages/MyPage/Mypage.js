@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { Navbar } from "../../components/Navbar/Navbar";
 import DeleteID from "../../components/DeleteID/DeleteID";
 import DeleteConfirm from "../../components/DeleteConfirm/DeleteConfirm";
@@ -28,10 +29,14 @@ const MyPage = () => {
     const [review, setReview] = useState({});
     const [topReviews, setTopReviews] = useState([]);
     const [studies, setStudies] = useState([]);
+    const [selectedStudyId, setSelectedStudyId] = useState(null);
+    
     const navigate = useNavigate();
+    const token = useSelector(state => state.auth.token);
 
     useEffect(() => {
         loadUserData();
+       // loadUserStudies();
     }, []);
 
     const loadUserData = () => {
@@ -77,6 +82,34 @@ const MyPage = () => {
                 }
             ]
         };
+
+        //const loadUserData = async () => {
+        //    try {
+        //        const userData = await fetchUserData(token); // 토큰을 이용해 사용자 데이터 가져오기
+        //        const { username, point, review, studies } = userData;
+        //        const topReviews = findTopTwoReviews(review); 
+        //        setUsername(username);
+        //        setPoint(point);
+        //        setReview(review);
+        //        setTopReviews(topReviews);
+        //        setStudies(studies);
+        //      } else {
+        //          console.error(response.message);
+        //      }
+        //  } catch (error) {
+        //      console.error('접속에 실패했습니다.', error);
+        //  }
+        //};
+
+        //const loadUserStudies = async () => {
+        //    try {
+        //      const response = await getStudies(userId);
+        //      setStudies(response);
+        //  } catch (error) {
+        //      console.error('스터디 정보를 불러오는 중 오류 발생:', error);
+        //  }
+        //};
+
         const { username, point, review, studies } = data;
         const topReviews = findTopTwoReviews(review);
         setUsername(username);
@@ -134,6 +167,7 @@ const MyPage = () => {
     const handleStudyClick = async (studyId) => {
         try {
             const studyInfo = await getStudyInfoAPI(studyId);
+            setSelectedStudyId(studyId);
             navigate('/studyGroup', { state: { studyInfo } });
         } catch (error) {
             console.error('스터디 정보를 불러오는 중 오류 발생:', error);
@@ -229,14 +263,10 @@ const MyPage = () => {
             <EditProfile
                 show={showEditProfileModal}
                 handleEdit={handleCloseEditProfileModal}
-                userId={this.state.userId}
-                token={this.state.token}
-                point={this.state.point}
-                onUpdateNickname={handleUpdateNickname}
-                initialNickname={username}
+                handleUpdateNickname={handleUpdateNickname}
             />
         </div>
     );
-}
+};
 
 export default MyPage;
