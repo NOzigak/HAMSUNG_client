@@ -21,7 +21,7 @@ export const getBoards = () => async (dispatch) => {
     dispatch({type: GET_BOARD_REQUEST});
     try{
         const response = await getBoardsRequest();
-        const data = await response.json();
+        const data = await response
         dispatch({
             type: GET_BOARD_SUCCESS,
             payload: data,

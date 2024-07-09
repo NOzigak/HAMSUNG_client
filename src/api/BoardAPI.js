@@ -70,7 +70,7 @@ export const toggleRecruitmentStatus = async (boardId, isRecruit) => {
 // 개인 리뷰 조회
 export const getUserReview = async (user_id) => {
     try{
-        const response = await client.get(`/users/${user_id}`);
+        const response = await client.get(`/myPage/${user_id}`);
         return response.data.review;
     } catch (error) {
         console.log("리뷰조회 실패", error);

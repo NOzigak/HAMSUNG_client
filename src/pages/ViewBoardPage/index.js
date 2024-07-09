@@ -18,9 +18,10 @@ const ViewBoardPage = () => {
     const params = useParams();
     const nav = useNavigate();
     const curBoardItem = useBoard(params.id);
-    //const [curBoardItem, setCurBoardItem] = useState(null);
-    //const user = getUserInfo();
-    //const [review, setReview] = useState(null);
+    console.log(params.id);
+    // const [curBoardItem, setCurBoardItem] = useState(null);
+    const user = getUserInfo();
+    // const [review, setReview] = useState(null);
     const dispatch = useDispatch();
     const [modalOpen, setModalOpen] = useState(false);
     const showModal = () => {
@@ -77,12 +78,12 @@ const ViewBoardPage = () => {
     }
 
     const applyStudy = async () => {
-        // try {
-        //     const reviewData = await getUserReview(user.id);
-        //     setReview(reviewData);
-        // } catch (error) {
-        //     console.log("리뷰를 가져오는데 실패했습니다.");
-        // }
+        try {
+            const reviewData = await getUserReview(user.user_id);
+            //setReview(reviewData);
+        } catch (error) {
+            console.log("리뷰를 가져오는데 실패했습니다.");
+        }
         // const userInfo = {
         //     study_id: params.id,
         //     user: {
