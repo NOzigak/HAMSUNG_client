@@ -19,7 +19,7 @@ const initialState = [
         writer : "노성균",
         title : "스터디 요일 및 장소 투표",
         description : "스터디 요일 및 장소를 투표해주세요.",
-        created_at : new Date("2024-06-01").getTime(),
+        created_at : new Date("2024-07-01").getTime(),
     },
     {
         id : 4,

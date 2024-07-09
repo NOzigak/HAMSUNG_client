@@ -7,6 +7,7 @@ export default function NoticeEdit({name,initData,onSubmit}){
 
     const [inputData, setInputData] = useState({
         title : "",
+        place : "",
         description : "",
     })
     const nav = useNavigate();
@@ -44,13 +45,17 @@ export default function NoticeEdit({name,initData,onSubmit}){
                 <div>
                     제목 : <input className="noticeName" name="title" value={inputData.title} onChange={handleinputData}/>
                 </div>
+
+                <div>
+                    장소 : <input className="noticePlace" name="place" value={inputData.place} onChange={handleinputData}/>
+                </div>
                 
                 <div className="descWrapper">
                     내용 : <textarea className="noticeDescription" name="description" placeholder="공지사항을 작성해주세요." value={inputData.description} onChange={handleinputData}/>
                 </div>   
             </div>
             <div className="btnSection">
-                <button className="createBtn" onClick={onClickNoticeSubmit}>생성</button> {/* 수정된 부분 */}
+                <button className="createBtn" onClick={onClickNoticeSubmit}>생성</button>
                 <button className="cancleBtn" onClick={cancelEditNotice}>취소</button>
             </div>
         </div>
