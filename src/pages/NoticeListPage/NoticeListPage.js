@@ -1,8 +1,7 @@
 import React from 'react';
 import { Navbar } from '../../components/Navbar/Navbar';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './NoticeListPage.css';
-import { useSelector } from 'react-redux';
 
 const formatDate = (dateString) => {
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -10,7 +9,8 @@ const formatDate = (dateString) => {
 };
 
 const NoticeListPage = () => {
-  const NoticeData = useSelector(state => state.notice);
+  const location = useLocation();
+  const notices = location.state?.notices || [];
   const nav = useNavigate();
 
   return (
@@ -23,8 +23,8 @@ const NoticeListPage = () => {
 
       <div className="noticeList">
         <p className="notice">공지사항</p>
-        {NoticeData.map((item) => (
-          <div key={item.id} className="noticeItem" onClick={() => nav(`/notice`)}>
+        {notices.map((item) => (
+          <div key={item.id} className="noticeItem" onClick={() => nav(`/notice/${item.id}`)}>
             <div className="noticeContent">
               <p className="notice-title">{item.title}</p>
               <p className="notice-date">{formatDate(item.created_at)}</p>

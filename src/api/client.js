@@ -1,10 +1,9 @@
 import axios from "axios";
 import { getCookie } from "../utils/cookies";
 
-
 const client = axios.create({
     baseURL: process.env.REACT_APP_SERVER_BASE_URL, // 배포 url은 env로 관리
-    headers: {"Content-Type": "application/json"}
+    headers: { "Content-Type": "application/json" }
 });
 
 // 요청 인터셉터 설정
@@ -14,30 +13,28 @@ client.interceptors.request.use(
         const token = localStorage.getItem("accessToken");
         //const token = getCookie("accessToken");
         if (token) {
-            config.headers.Authorization = {access: token};
-        } 
+            config.headers.Authorization = { access: token };
+        }
         return config;
     },
     error => {
         // 요청 실패 시 특정 작업 수행
         return Promise.reject(error);
     }
-)
+);
 
 export const refreshAccessToken = async () => {
-    try{
+    try {
         //const refreshToken = localStorage.getItem("refreshToken");
         const refreshToken = getCookie("refreshToken");
         // 리프레쉬 토큰으로 요청 보내기
-        const response = await axios.post("/reissue", {refreshToken})
+        const response = await axios.post(`${process.env.REACT_APP_SERVER_BASE_URL}/reissue`, { refreshToken });
         const newAccessToken = response.data;
         return newAccessToken;
-
-    } catch(error) {
+    } catch (error) {
         throw error;
     }
-
-}
+};
 
 // 응답 인터셉터
 client.interceptors.response.use(
@@ -46,13 +43,13 @@ client.interceptors.response.use(
     },
     async (error) => {
         const originalConfig = error.config; //기존에 수행하려고 했던 작업
-        if(error.response.status === 401 && !originalConfig._retry){
+        if (error.response.status === 401 && !originalConfig._retry) {
             originalConfig._retry = true;
             try {
                 const newToken = await refreshAccessToken();
-                if (newToken){
-                    client.defaults.headers.common["Authorization"] = {access : newToken};
-                    originalConfig.headers["Authprization"] = {access : newToken};
+                if (newToken) {
+                    client.defaults.headers.common["Authorization"] = { access: newToken };
+                    originalConfig.headers["Authorization"] = { access: newToken };
                     return client(originalConfig);
                 }
             } catch (refreshError) {
@@ -61,6 +58,25 @@ client.interceptors.response.use(
         }
         return Promise.reject(error);
     }
-)
+);
 
 export default client;
+
+export const fetchUserData = async (userId, token) => {
+    try {
+        const response = await client.get(`/users/${userId}/mypage`, {
+            headers: {
+                'charset': 'utf-8',
+                'access': token
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error:", error);
+        if (error.response && error.response.status === 401) {
+            return { status: 401, message: "접속에 실패했습니다." };
+        } else {
+            return { status: error.response?.status || 500, message: error.message };
+        }
+    }
+};
