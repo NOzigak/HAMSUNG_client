@@ -1,13 +1,12 @@
 import base64 from "base-64";
+import { jwtDecode } from "jwt-decode";
 
 const getUserInfo = () => {
-    // 액세스 토큰 정보 가져옴
-    let token = localStorage.getItem("accessToken");
-    // header . payload . signature
-    let payload = token.substring(token.indexOf('.')+1, token.lastIndexOf('.'));
-    let dec = JSON.parse(base64.decode(payload));
-    
-    return dec;
+   // 액세스 토큰 정보 가져옴
+   let token = localStorage.getItem("accessToken");
+   const decoded = jwtDecode(token);
+   const dec = JSON.stringify(decoded, null, 2);
+   return dec;
 }
 
 export default getUserInfo;

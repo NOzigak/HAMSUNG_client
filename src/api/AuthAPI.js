@@ -37,6 +37,7 @@ export const UserLogout = async () => {
     try{
         // 로그아웃 시 토큰도 삭제
         localStorage.removeItem("accessToken");
+        console.log("액세스 토큰 삭제")
         const response = await client.post("/logout");
         return response.data;
     } catch (error) {

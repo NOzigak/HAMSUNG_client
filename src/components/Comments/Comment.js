@@ -52,12 +52,12 @@ const Comment = ({comment, replies, boardId, onSubmit}) => {
 
     const commentDelete = async () => {
         try{
-            if (comment.parentId){
-                dispatch(deleteReply(comment.parentId, comment.id));
+            if (comment.parent_id){
+                dispatch(deleteReply(comment.parent_id, comment.id));
                 // const response = deleteReplyRequest(comment.id, userInfo.id);
                 // console.log("대댓글 삭제 성공", response);
                 // nav(`/viewBoard/${boardId}`);
-            } else if (!comment.parentId){
+            } else if (!comment.parent_id){
                 dispatch(deleteComment(comment.id));
                 // const response = deleteCommentRequest(comment.id, userInfo.id);
                 // console.log("댓글 삭제 성공", response);
@@ -74,10 +74,10 @@ const Comment = ({comment, replies, boardId, onSubmit}) => {
             <div>
                 <p>{comment.username}</p>
                 <p>{comment.text}</p>
-                <p className="insertDate">{new Date(comment.insertDate).toLocaleString()}</p>                
+                <p className="insertDate">{new Date(comment.modifiedDate).toLocaleString()}</p>                
             </div>
             <div className="replyBtn">
-                {!comment.parentId && <BoardBtn title="답글" onClick={onReply}/>}
+                {!comment.parent_id && <BoardBtn title="답글" onClick={onReply}/>}
                 {comment.username === "sungkyun" && <BoardBtn title="삭제하기" onClick={commentDelete}/>} {/*1108을 유저 토큰 정보로 바꿀예정*/}
             </div>
             {isReplying && (
@@ -89,7 +89,7 @@ const Comment = ({comment, replies, boardId, onSubmit}) => {
             {replies.length > 0 && (
                 <div className="replies">
                     {replies.map(reply => (
-                        <div className="replyWrapper" key={reply.id ? `${reply.id}-${reply.parentId}` : Math.random().toString()}>
+                        <div className="replyWrapper" key={reply.id ? `${reply.id}-${reply.parent_id}` : Math.random().toString()}>
                             <Comment key={reply.id} comment={reply} replies={[]}/>                            
                         </div>
 
