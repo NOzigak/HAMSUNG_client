@@ -14,7 +14,7 @@ client.interceptors.request.use(
         const token = localStorage.getItem("accessToken");
         //const token = getCookie("accessToken");
         if (token) {
-            config.headers.Authorization = {access: token};
+            config.headers.Authorization = `access: ${token}`;
         } 
         return config;
     },

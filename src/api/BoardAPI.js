@@ -56,9 +56,9 @@ export const createBoardRequest = async (inputData) => {
 }
 
 // 모집글 모집 상태 변경
-export const toggleRecruitmentStatus = async (boardId) => {
+export const toggleRecruitmentStatus = async (boardId, isRecruit) => {
     try{
-        const response = await client.put(`/recruits/${boardId}/isrecruit`);
+        const response = await client.put(`/recruits/${boardId}/isrecruit`, isRecruit);
         return response.data;
     } catch (error) {
         console.log("모집상태 전환에 실패했습니다.", error);
@@ -67,12 +67,21 @@ export const toggleRecruitmentStatus = async (boardId) => {
 
 }
 
-//스터디 조회수 증가
+// 개인 리뷰 조회
+export const getUserReview = async (user_id) => {
+    try{
+        const response = await client.get(`/users/${user_id}`);
+        return response.data.review;
+    } catch (error) {
+        console.log("리뷰조회 실패", error);
+        throw error;
+    }
+}
 
 //스터디 지원하기
-export const applyForStudy = async (recruit_id) => {
+export const applyForStudy = async (recruit_id, userInfo) => {
     try{
-        const response = await client.post(`/recruits/${recruit_id}`);
+        const response = await client.post(`/recruits/${recruit_id}`, userInfo);
         return response.data;
     } catch (error) {
         console.log("스터디를 지원하는데 실패했습니다.", error);
@@ -92,9 +101,9 @@ export const getApplicants = async (recruit_id) => {
 }
 
 // 스터디 멤버 승인
-export const approveMember = async (memberId) => {
+export const approveMember = async (memberId, user_id) => {
     try {
-        const response = await client.patch(`/recruits/${memberId}/members`);
+        const response = await client.patch(`/recruits/${memberId}/members/${user_id}`);
         return response.data;
     } catch (error) {
         console.log("멤버 승인에 실패했습니다.", error);

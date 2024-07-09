@@ -1,8 +1,10 @@
+import { useEffect, useState } from "react";
 import Applicant from "./Applicant";
 import "./RecruitModal.css";
+import { getApplicants } from "../../api/BoardAPI";
 
 
-const RecruitModal = ({setModalOpen}) => {
+const RecruitModal = ({setModalOpen, boardId}) => {
     const recruitData = [
         {
             user_id : "123e4567-e89b-12d3-a456-426614174000",
@@ -66,6 +68,21 @@ const RecruitModal = ({setModalOpen}) => {
         }
 
     ]
+    const [applicantData, setApplicantData] = useState([]); // recruitData 대체
+
+    // 신청자 리스트 불러오는 api 주석으로 미리 구현해 놓기..
+    useEffect(()=> {
+        const fetchApplicants = async () => {
+            try{
+                const applicants = await getApplicants(boardId);
+                setApplicantData(applicants);
+            } catch (error) {
+                console.log("신청자 정보를 불러오는데 실패함", error);
+            }
+        };
+
+        fetchApplicants();
+    }, []); // 빈 배열로 두어 한 번만 호출되도록 설정
 
     const closeRecruit = (e) => {
         setModalOpen(false);

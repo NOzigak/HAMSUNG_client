@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 import "./BoardEdit.css";
 import { useNavigate } from "react-router-dom";
+import getUserInfo from "../../utils/get-userInfo";
 
 export default function BoardEdit({name, initData, onSubmit, mode}){
     //mode는 생성, 수정에 맞는 api를 호출해 사용하는데 이용된다.
     const selectList = ["어학","취업", "고시", "프로그래밍", "기타"]
+    const userInfo = getUserInfo(); // jwt토큰 디코드해 id 가져오기
     const [inputData, setInputData] = useState({
         title : "",
-        capacity : 1,
+        user_id: userInfo.id,
+        description : "",
         category : "어학",
         place : "",
-        description : "",
+        capacity : 1,
     })
     const nav = useNavigate();
 
@@ -34,7 +37,12 @@ export default function BoardEdit({name, initData, onSubmit, mode}){
     }
 
     const onClickSubmit = () => { //여기서 mode에 따른 작업을 처리한다.
-        onSubmit(inputData);
+        //onSubmit(inputData);
+        if (mode === "생성") {
+            onSubmit(inputData);
+        } else if (mode ==="수정") {
+            onSubmit(inputData.id, inputData);
+        }
     }
     return (
         <div className="boardWrapper">
@@ -65,7 +73,7 @@ export default function BoardEdit({name, initData, onSubmit, mode}){
                 </div>   
             </div>
             <div className="btnSection">
-                <button className="createBtn" onClick={onClickSubmit}>생성</button>
+                <button className="createBtn" onClick={onClickSubmit}>{mode === "생성" ? "생성" : "수정"}</button>
                 <button className="cancleBtn" onClick={cancleEdit}>취소</button>
             </div>
         </div>

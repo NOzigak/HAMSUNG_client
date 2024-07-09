@@ -31,14 +31,17 @@ a{
 li{
     font-size: 2.5vh;
 }
+
 .hamsungIcon {
-    margin-right: 35vw;
+    margin-left: 3vw;
+    margin-right: 30vw;
     width: 13vw;
     height: 15vh;
     cursor: pointer;
 }
 .navBtnSection{
     padding: 8px;
+
 }
 
 .logoutBtn {

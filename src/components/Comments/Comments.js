@@ -50,11 +50,12 @@ const Comments = ({boardId}) => {
     return (
         <div className="commentWrapper">
             {comments.map(rootComment => (
-                <div key={`${rootComment.boardId}-${rootComment.id}`}>
+                <div key={`${rootComment.board_id}-${rootComment.id}`}>
                     <Comment 
                         comment={rootComment} 
                         replies={getReplies(comments, rootComment.id)}
                         onSubmit={submitComment}
+                        boardId={boardId}
                     />                                   
                 </div>
             ))}

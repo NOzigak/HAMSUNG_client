@@ -9,7 +9,8 @@ import { deleteBoard } from "../../actions/boardList";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import RecruitModal from "../../components/RecruitModal/RecruitModal";
-import { deleteBoardRequest, getTargetBoard } from "../../api/BoardAPI";
+import { applyForStudy, deleteBoardRequest, getTargetBoard, getUserReview, toggleRecruitmentStatus } from "../../api/BoardAPI";
+import getUserInfo from "../../utils/get-userInfo";
 
 
 const ViewBoardPage = () => {
@@ -18,11 +19,15 @@ const ViewBoardPage = () => {
     const nav = useNavigate();
     const curBoardItem = useBoard(params.id);
     //const [curBoardItem, setCurBoardItem] = useState(null);
+    //const user = getUserInfo();
+    //const [review, setReview] = useState(null);
     const dispatch = useDispatch();
     const [modalOpen, setModalOpen] = useState(false);
     const showModal = () => {
         setModalOpen(true);
     }
+    const [recruitStatus, setRecruitStatus] = useState("모집중"); // api 연동 시 ""로 바꾸기
+    
 
     // 마운트될 때 게시글 상세 정보 요청 api 호출
     // useEffect(()=> {
@@ -30,6 +35,7 @@ const ViewBoardPage = () => {
     //         try{
     //             const data = await getTargetBoard(params.id);
     //             setCurBoardItem(data); //가져온 데이터로 상태 업데이트
+    //             setRecruitStatus(data.isRecruit ? "모집중" : "모집완료");
     //         } catch (error) {
     //             console.log("게시글 상세 정보 불러오기 실패", error);
     //         }
@@ -60,6 +66,38 @@ const ViewBoardPage = () => {
         }
     }
 
+    const changeStatus =  async () => {
+        try {
+            const response = await toggleRecruitmentStatus(params.id); // {isRecruit: curBoarditem.isRecruit}도 넣어주기
+            console.log("모집 전환 완료", response)
+            setRecruitStatus(state => state === "모집중" ? "모집완료" : "모집중");
+        } catch (error) {
+            console.log("모집전환 실패", error);
+        }
+    }
+
+    const applyStudy = async () => {
+        // try {
+        //     const reviewData = await getUserReview(user.id);
+        //     setReview(reviewData);
+        // } catch (error) {
+        //     console.log("리뷰를 가져오는데 실패했습니다.");
+        // }
+        // const userInfo = {
+        //     study_id: params.id,
+        //     user: {
+        //         user_id: user.id,
+        //         user_name: user.name,
+        //     },
+        //     review: review,
+        // }
+        // try {
+        //     const response = await applyForStudy(params.id, userInfo);
+        // } catch (error) {
+        //     console.log("신청실패", error);
+        // }
+    }
+
     return(
         <div>
             <Navbar />
@@ -76,18 +114,18 @@ const ViewBoardPage = () => {
                         description = {curBoardItem.description}
                     />
                 </div>
-                {/* 작성자만 바꿀수 있음 <아래 이름은 로그인으로 받아온 유저 정보로 바꿀예정>*/}
+                {/* 모집글 리더 정보와 사용자 이름과 일치 시 권한*/}
                 {curBoardItem.writer==="노성균" ? 
                     <div className="writeBtn">
-                        <BoardBtn title="모집중" /> 
+                        <BoardBtn title={recruitStatus} onClick={changeStatus}/> 
                         <BoardBtn title="신청자 리스트" onClick={showModal}/>
                         <BoardBtn title="수정하기" onClick={()=>nav(`/editBoard/${params.id}`)}/>
                         <BoardBtn title="삭제하기" onClick={onClickDelete}/>
-                        {modalOpen && <RecruitModal setModalOpen={setModalOpen}/>}
+                        {modalOpen && <RecruitModal setModalOpen={setModalOpen} boardId={params.id}/>}
                     </div> 
                     :
                     <div className="readBtn">
-                        <BoardBtn title="신청하기"/> {/* 신청하기 버튼은 열람자에게만 보임 */}
+                        {recruitStatus === "모집중" ? <BoardBtn title="신청하기" onClick={applyStudy}/> : ""}
                     </div>                             
                 }
 

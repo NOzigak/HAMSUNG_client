@@ -13,6 +13,7 @@ import StudyGroupPage from './pages/StudyGroupPage/StudyGroupPage';
 import RankPage from './pages/RankPage/RankPage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import EditBoard from './pages/EditBoard';
+import PrivateRoutes from './components/PrivateRoutes';
 
 
 
@@ -24,6 +25,8 @@ function App() {
           <Route path='/'element={<MainPage />}/>
           <Route path='/signup' element={<SignupPage />} />
           <Route path='/login' element={<LoginPage />} />
+          <Route element={<PrivateRoutes />}>
+          </Route>
           <Route path='/newBoard' element={<NewBoard />} />
           <Route path='/editBoard/:id' element={<EditBoard />} /> 
           <Route path='/viewBoard/:id' element={<ViewBoardPage />} />

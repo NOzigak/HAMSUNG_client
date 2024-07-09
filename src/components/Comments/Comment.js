@@ -5,18 +5,19 @@ import { useDispatch } from "react-redux";
 import { addReply, deleteComment, deleteReply } from "../../actions/commentActions";
 import { addReplyRequest, deleteCommentRequest, deleteReplyRequest } from "../../api/CommentAPI";
 import getUserInfo from "../../utils/get-userInfo";
+import { useNavigate } from "react-router-dom";
 
 
-const Comment = ({comment, replies, onSubmit, currentUserId}) => {
+const Comment = ({comment, replies, boardId, onSubmit}) => {
 
-    //const canEdit = currentUserId === comment.userId
     const [activeComment, setActiveComment] = useState(null); // {type : "editing" id: "1"}
     const [text, setText] = useState();
     const isReplying = activeComment &&
         activeComment.type === "replying" &&
         activeComment.id === comment.id;
     const dispatch = useDispatch();
-    // const userInfo = getUserInfo();
+    //const userInfo = getUserInfo();
+    //const nav = useNavigate();
 
     const handleText = (e) => {
         setText(e.target.value);
@@ -41,6 +42,7 @@ const Comment = ({comment, replies, onSubmit, currentUserId}) => {
         //     const response = await addReplyRequest(comment.parentId, replyDetail);
         //     console.log("reply added:", response);
         //     setActiveComment({type:"", id:""});
+        //     nav(`/viewBoard/${boardId}`);
         // } catch (error) {
         //     console.log("대댓글 작성에 실패했습니다.", error);
         // }
@@ -50,14 +52,16 @@ const Comment = ({comment, replies, onSubmit, currentUserId}) => {
 
     const commentDelete = async () => {
         try{
-            if (comment.parentId){
-                dispatch(deleteReply(comment.parentId, comment.id));
+            if (comment.parent_id){
+                dispatch(deleteReply(comment.parent_id, comment.id));
                 // const response = deleteReplyRequest(comment.id, userInfo.id);
                 // console.log("대댓글 삭제 성공", response);
-            } else if (!comment.parentId){
+                // nav(`/viewBoard/${boardId}`);
+            } else if (!comment.parent_id){
                 dispatch(deleteComment(comment.id));
                 // const response = deleteCommentRequest(comment.id, userInfo.id);
                 // console.log("댓글 삭제 성공", response);
+                // nav(`/viewBoard/${boardId}`);
             } 
         } catch (error) {
             console.log("댓글 삭제에 실패", error);
@@ -70,10 +74,10 @@ const Comment = ({comment, replies, onSubmit, currentUserId}) => {
             <div>
                 <p>{comment.username}</p>
                 <p>{comment.text}</p>
-                <p className="insertDate">{new Date(comment.insertDate).toLocaleString()}</p>                
+                <p className="insertDate">{new Date(comment.modifiedDate).toLocaleString()}</p>                
             </div>
             <div className="replyBtn">
-                {!comment.parentId && <BoardBtn title="답글" onClick={onReply}/>}
+                {!comment.parent_id && <BoardBtn title="답글" onClick={onReply}/>}
                 {comment.username === "sungkyun" && <BoardBtn title="삭제하기" onClick={commentDelete}/>} {/*1108을 유저 토큰 정보로 바꿀예정*/}
             </div>
             {isReplying && (
@@ -85,7 +89,7 @@ const Comment = ({comment, replies, onSubmit, currentUserId}) => {
             {replies.length > 0 && (
                 <div className="replies">
                     {replies.map(reply => (
-                        <div className="replyWrapper" key={reply.id ? `${reply.id}-${reply.parentId}` : Math.random().toString()}>
+                        <div className="replyWrapper" key={reply.id ? `${reply.id}-${reply.parent_id}` : Math.random().toString()}>
                             <Comment key={reply.id} comment={reply} replies={[]}/>                            
                         </div>
 

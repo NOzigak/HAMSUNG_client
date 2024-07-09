@@ -14,6 +14,7 @@ const mockNotice = {
         title: "<필독> 함성 면접 스터디 기본 규칙 설명",
         writer: "노성균",
         created_at: "2023-06-22",
+        place: "서울",
         description: "함성 면접 스터디 기본 규칙을 공유합니다.\n앞으로 스터디 진행하는 동안 지켜주시기 바랍니다!"
     }
 };
@@ -34,7 +35,7 @@ const NoticeViewPage = () => {
     const onClickDelete = () => {
         if (window.confirm("게시물을 정말 삭제할까요? 복구되지 않습니다!")) {
             dispatch(deleteNotice(noticeId));
-            nav('/home', { replace: true });
+            nav('/noticeList', { replace: true });
         }
     };
 
@@ -51,11 +52,11 @@ const NoticeViewPage = () => {
                         leader={NoticeItem.writer}
                         created_at={NoticeItem.created_at}
                         description={NoticeItem.description}
+                        place={NoticeItem.place}
                     />
                 </div>
                 {NoticeItem.writer === "노성균" ? 
                     <div className="writeBtn">
-                        <NoticeBtn title="수정하기" onClick={() => nav(`/editNotice/${noticeId}`)} />
                         <NoticeBtn title="삭제하기" onClick={onClickDelete} />
                     </div> 
                     : null                            
