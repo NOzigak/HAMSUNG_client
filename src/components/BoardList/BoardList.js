@@ -22,9 +22,9 @@ export default function BoardList() {
     }
     const nav = useNavigate();
     // redux state 호출
-    const boardData = useSelector(state => state.boards);
-    //const boardsData = useSelector(state => state.board); // 서버 게시글 리스트 가져오기
-
+    //const boardData = useSelector(state => state.boards);
+    const boardData = useSelector(state => state.board.boards); // 서버 게시글 리스트 가져오기
+ 
     const [searchData, setSearchData] = useState(boardData);
 
     const searchClick = () => {

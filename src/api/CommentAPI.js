@@ -1,9 +1,9 @@
 import client from "./client"
 
 // 모집글 댓글 조회
-export const getCommentsRequest = async (recruitId) => {
+export const getCommentsRequest = async (recruit_id) => {
     try {
-        const response = await client.get(`/comments/recruits/${recruitId}`);
+        const response = await client.get(`/comments/recruits/${recruit_id}`);
         return response.data;
     } catch (error) {
         console.log("댓글을 가져오는데 실패했습니다.", error);

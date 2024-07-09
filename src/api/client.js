@@ -4,7 +4,7 @@ import { getCookie } from "../utils/cookies";
 
 const client = axios.create({
     baseURL: process.env.REACT_APP_SERVER_BASE_URL, // 배포 url은 env로 관리
-    headers: {"Content-Type": "application/json"}
+    headers: {"Content-Type": "application/json"},
 });
 
 // 요청 인터셉터 설정
@@ -52,7 +52,7 @@ client.interceptors.response.use(
                 const newToken = await refreshAccessToken();
                 if (newToken){
                     client.defaults.headers.common["Authorization"] = {access : newToken};
-                    originalConfig.headers["Authprization"] = {access : newToken};
+                    originalConfig.headers["Authorization"] = {access : newToken};
                     return client(originalConfig);
                 }
             } catch (refreshError) {

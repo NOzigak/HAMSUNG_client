@@ -10,14 +10,14 @@ import getUserInfo from "../../utils/get-userInfo";
 import { useNavigate } from "react-router-dom";
 
 const Comments = ({boardId}) => {
-    //const [comments, setComments] = useState([]);
-    //const userInfo = getUserInfo()
-    //const nav = useNavigate();
-    const comments = useSelector(state => state.comments);
+    const [comments, setComments] = useState([]);
+    const userInfo = getUserInfo()
+    const nav = useNavigate();
+    //const comments = useSelector(state => state.comments);
 
-    // useEffect(()=> {
-    //     fetchComments(boardId);
-    // }, [boardId]);
+    useEffect(()=> {
+        fetchComments(boardId);
+    }, [boardId]);
 
     const dispatch = useDispatch();
 
@@ -37,14 +37,14 @@ const Comments = ({boardId}) => {
 
     }
 
-    // const fetchComments = async (boardId) => {
-    //     try{
-    //         const response = await getCommentsRequest(boardId);
-    //         setComments(response);
-    //     } catch (error) {
-    //         console.log("댓글을 불러오는데 실패했습니다.", error);
-    //     }
-    // }
+    const fetchComments = async (boardId) => {
+        try{
+            const response = await getCommentsRequest(8);
+            setComments(response);
+        } catch (error) {
+            console.log("댓글을 불러오는데 실패했습니다.", error);
+        }
+    }
 
 
     return (
