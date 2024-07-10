@@ -1,9 +1,9 @@
 import client from "./client"
 
 //스터디 기본 정보 호출
-export const getStudyInfoAPI = async (studyId) => {
+export const getStudyInfoAPI = async (study_id) => {
   try {
-    const response = await client.get(`/study/${studyId}`, {
+    const response = await client.get(`/study/${study_id}`, {
 
     });
     return response;
@@ -19,9 +19,9 @@ export const getStudyInfoAPI = async (studyId) => {
 
 
 //스터디 종료
-export const finishStudyAPI = async (studyId) => {
+export const finishStudyAPI = async (study_id) => {
     try {
-        const response = await client.patch(`/api/study/${studyId}/end`, {}, {
+        const response = await client.patch(`/api/study/${study_id}/end`, {}, {
 
         });
 
@@ -34,10 +34,10 @@ export const finishStudyAPI = async (studyId) => {
 };
 
 // study manage 주차별 생성
-export const saveWeeklyStudyData = async (studyId, weekIndex, attendance, late, absent, homework) => {
+export const saveWeeklyStudyData = async (study_id, weekIndex, attendance, late, absent, homework) => {
     try {
       const response = await client.post(
-        `/study/${studyId}/manage`,
+        `/study/${study_id}/manage`,
         {
           weekIndex: weekIndex,
           attendance: attendance,
@@ -54,9 +54,9 @@ export const saveWeeklyStudyData = async (studyId, weekIndex, attendance, late, 
 };
 
 // Study manage 주차별 조회
-export const getWeeklyStudyData = async (studyId, week) => {
+export const getWeeklyStudyData = async (study_id, week) => {
   try {
-      const response = await client.get(`/study/${studyId}/manage/${week}`);
+      const response = await client.get(`/study/${study_id}/manage/${week}`);
       return response.data;
   } catch (error) {
     if (error.response && error.response.status === 404) {
@@ -85,9 +85,9 @@ export const createTodo = async (todoData) => {
   };
 
 // Todo 조회
-export const getTodo = async (studyId, due_date) => {
+export const getTodo = async (study_id, due_date) => {
   try {
-    const response = await client.get(`/study/${studyId}/${due_date}`);
+    const response = await client.get(`/study/${study_id}/${due_date}`);
     return response.data;
   } catch (error) {
     if (error.response && error.response.status === 404) {

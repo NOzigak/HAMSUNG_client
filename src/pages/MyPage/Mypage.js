@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { ScrollRestoration, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Navbar } from "../../components/Navbar/Navbar";
 import DeleteID from "../../components/DeleteID/DeleteID";
@@ -17,6 +17,7 @@ import { findTopTwoReviews } from "../../utils/findTwoReview";
 import { fetchUserData, getStudies } from '../../api/MyPageAPI';
 import { getStudyInfoAPI } from '../../api/StudyGroupAPI';
 import "./MyPage.css";
+import getUserInfo from '../../utils/get-userInfo';
 
 const MyPage = () => {
     const [showDeleteIDModal, setShowDeleteIDModal] = useState(false);
@@ -32,90 +33,42 @@ const MyPage = () => {
     const [selectedStudyId, setSelectedStudyId] = useState(null);
     
     const navigate = useNavigate();
-    const token = useSelector(state => state.auth.token);
+    const user = getUserInfo();
 
     useEffect(() => {
         loadUserData();
-       // loadUserStudies();
+        loadUserStudies();
     }, []);
-
-    //const loadUserData = () => {
-    //    const data = {
-    //        username: "노성균",
-    //        point: 43,
-    //        review: {
-    //            noLate: 5,
-    //            faithful: 3,
-    //            kind: 10,
-    //            unkind: 1,
-    //            fastAnswer: 7,
-    //            slowAnswer: 2,
-    //            passive: 0,
-    //           absent: 4
-    //        },
-    //        studies: [
-    //            {
-    //                id: 7,
-    //                category: '프로그래밍',
-    //                place: '서울',
-    //                member_num: 5,
-    //                status: true,
-    //                score: 150,
-    //                leader_id: 1,
-    //                start_date: '2024-05-01',
-    //               end_date: null,
-    //                my_role: 'leader',
-    //                study_name: '면접 스터디'
-    //            },
-    //            {
-    //                id: 8,
-    //                category: '프로그래밍',
-    //                place: '서울',
-    //                member_num: 5,
-    //                status: true,
-    //                score: 80,
-    //                leader_id: 21,
-    //                start_date: '2024-05-01',
-    //                end_date: '2024-07-13',
-    //                my_role: 'member',
-    //                study_name: '모각코 스터디'
-    //            }
-    //        ]
-    //    };
 
     const loadUserData = async () => {
         try {
-            const userData = await fetchUserData(token); // 토큰을 이용해 사용자 데이터 가져오기
-            const { username, point, review, studies } = userData;
-            const topReviews = findTopTwoReviews(review); 
+            const userData = await fetchUserData(user.user_id);
+            const { username, point, reviewResponseDto } = userData;
+            const topReviews = findTopTwoReviews(reviewResponseDto);
+    
             setUsername(username);
             setPoint(point);
-            setReview(review);
-            setTopReviews(topReviews);
-            setStudies(studies);
+            if (Array.isArray(topReviews)) {
+                setReview(reviewResponseDto);
+                setTopReviews(topReviews);
+            } else {
+                console.error('리뷰 정보를 불러오는 중 오류 발생:', topReviews);
+            }
         } catch (error) {
             console.error('접속에 실패했습니다.', error);
         }
     };
 
+    const loadUserStudies = async () => {
+            try {
+              const studies = await getStudies(user.user_id);
+              setStudies(studies);
 
-        //const loadUserStudies = async () => {
-        //    try {
-        //      const response = await getStudies(userId);
-        //      setStudies(response);
-        //  } catch (error) {
-        //      console.error('스터디 정보를 불러오는 중 오류 발생:', error);
-        //  }
-        //};
+          } catch (error) {
+              console.error('스터디 정보를 불러오는 중 오류 발생:', error);
+          }
+        };
 
-    //    const { username, point, review, studies } = data;
-    //    const topReviews = findTopTwoReviews(review);
-    //    setUsername(username);
-    //    setPoint(point);
-    //    setReview(review);
-    //    setTopReviews(topReviews);
-    //    setStudies(studies);
-    //};
 
     const handleDeleteClick = () => {
         setShowDeleteIDModal(true);
@@ -162,10 +115,19 @@ const MyPage = () => {
         setCurrentPage(prevPage => prevPage - 1);
     };
 
-    const handleStudyClick = async (studyId) => {
+    const handleStudyClick = async (study_id) => {
         try {
-            const studyInfo = await getStudyInfoAPI(studyId);
-            setSelectedStudyId(studyId);
+            const response = await getStudyInfoAPI(study_id);
+            const studyInfo = {
+                id: response.data.study_id,
+                member_num: response.data.member_num,
+                score: response.data.score,
+                leader_id: response.data.leader_id,
+                title: response.data.title,
+            }
+            console.log(studyInfo);
+            console.log(studyInfo.score);
+            //setSelectedStudyId(study_id);
             navigate('/studyGroup', { state: { studyInfo } });
         } catch (error) {
             console.error('스터디 정보를 불러오는 중 오류 발생:', error);
@@ -173,7 +135,7 @@ const MyPage = () => {
     };
 
     let levelImage;
-    if (point >= 10 && point < 20) {
+    if (point < 20) {
         levelImage = lvBronze;
     } else if (point >= 20 && point < 40) {
         levelImage = lvSilver;
@@ -261,9 +223,12 @@ const MyPage = () => {
             <EditProfile
                 show={showEditProfileModal}
                 handleEdit={handleCloseEditProfileModal}
-                handleUpdateNickname={handleUpdateNickname}
+                user_id={user.user_id}
+                point={point}
+                onUpdateNickname={handleUpdateNickname}
+                initialNickname={username}
             />
-        </div>
+        </div> 
     );
 };
 

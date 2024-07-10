@@ -14,7 +14,7 @@ client.interceptors.request.use(
         //const token = getCookie("accessToken");
         const sanitizedToken = token ? token.replace(/"/g, '') : null;
         if (token) {
-            config.headers.Authorization = {access: token};
+            config.headers.access = sanitizedToken;
         } 
         return config;
     },

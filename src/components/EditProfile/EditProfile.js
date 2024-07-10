@@ -4,14 +4,14 @@ import profileImage from "../../assets/person.png";
 import tagIcon from "../../assets/applicant.png";
 import { EditProfileAPI, getUserReviewsAPI } from '../../api/MyPageAPI';
 
-const EditProfile = ({ show, handleEdit, userId, token, point, onUpdateNickname, initialNickname }) => {
-  const [newNickname, setNewNickname] = useState("");
+const EditProfile = ({ show, handleEdit, user_id, point, onUpdateNickname, initialNickname }) => {
+  const [newNickname, setNewNickname] = useState(initialNickname);
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const result = await getUserReviewsAPI(userId, token);
+        const result = await getUserReviewsAPI(user_id);
         if (result && result.status === 200) {
           setReviews(result.data.data.evaluation);
         } else {
@@ -25,21 +25,25 @@ const EditProfile = ({ show, handleEdit, userId, token, point, onUpdateNickname,
     if (show) {
       fetchReviews();
     }
-  }, [show, userId, token]);
+  }, [show, user_id]);
 
   const handleSave = async () => {
-    const result = await EditProfileAPI(userId, newNickname, token);
-    if (result.status === 200) {
-      onUpdateNickname(newNickname);
-      handleEdit();
-      console.log("update success.");
-    } else {
-      console.error("닉네임 업데이트 실패:", result.message);
+    try {
+      const result = await EditProfileAPI(user_id, newNickname);
+      if (initialNickname !== newNickname) {
+        onUpdateNickname(newNickname); 
+        handleEdit(); 
+        console.log("update success.");
+      } else {
+        console.error("닉네임 업데이트 실패:", result.message);
+      }
+    } catch (error) {
+      console.error("닉네임 업데이트 중 오류 발생:", error.message);
     }
   };
 
   const closeProfileModal = () => {
-    handleEdit();
+    handleEdit(); 
   };
   
   return (
@@ -54,8 +58,8 @@ const EditProfile = ({ show, handleEdit, userId, token, point, onUpdateNickname,
           type="text"
           className="nickname-input"
           value={newNickname}
-          onChange={(e) => setNewNickname(e.target.value)}
-          placeholder={initialNickname}
+          onChange={(e) => setNewNickname(e.target.value)} 
+          placeholder={initialNickname} 
         />
         <p className="tag-message-design">나의 태그</p>
         <div>
@@ -63,7 +67,7 @@ const EditProfile = ({ show, handleEdit, userId, token, point, onUpdateNickname,
             {reviews && Object.entries(reviews).map(([key, value]) => (
               <div key={key} className="tag-item">
                 <span className="tag-name">{key}</span>
-                <img className="tag-icon" src={tagIcon}></img>
+                <img className="tag-icon" src={tagIcon} alt="tag icon" />
                 <span className="tag-number">{value}</span>
               </div>
             ))}
@@ -82,4 +86,3 @@ const EditProfile = ({ show, handleEdit, userId, token, point, onUpdateNickname,
 };
 
 export default EditProfile;
-

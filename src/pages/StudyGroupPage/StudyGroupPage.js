@@ -75,9 +75,9 @@ const StudyGroupPage = () => {
         <div>
             <Navbar />
             <div className="title-container">
-                <p className="title">{studyInfo.title || "페이지"}</p>
+                <p className="title">{studyInfo.title} 페이지</p>
                 <img className="studyPoint" src={studyPoint} alt="StudyPoint" />
-                <p className="studyPoint-text">{studyInfo.score || "P"}</p>
+                <p className="studyPoint-text">{studyInfo.score}P</p>
             </div>
             <button className="finish-button" onClick={handleFinishClick}>스터디 종료</button>
             <div className="outline"></div>
