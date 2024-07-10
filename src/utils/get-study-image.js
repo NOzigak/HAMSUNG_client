@@ -9,7 +9,7 @@ import anything from "./../assets/anything.jpg";
 export function getStudyImage(category){
     if(category === "어학"){
         return studyLang
-    } else if (category === "프로그래밍") {
+    } else if (category === "프로그래밍" || category === "programming") {
         return programming
     } else if (category === "취업") {
         return employmentStudy
