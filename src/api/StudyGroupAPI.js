@@ -53,6 +53,20 @@ export const saveWeeklyStudyData = async (studyId, weekIndex, attendance, late, 
     }
 };
 
+// Study manage 주차별 조회
+export const getWeeklyStudyData = async (studyId, week) => {
+  try {
+      const response = await client.get(`/study/${studyId}/manage/${week}`);
+      return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 404) {
+      return { status: "200 OK", message: "해당 주차의 기록이 없습니다." };
+    } else {
+      throw error;
+    }
+  }
+};
+
 // Todo 생성
 export const createTodo = async (todoData) => {
     try {

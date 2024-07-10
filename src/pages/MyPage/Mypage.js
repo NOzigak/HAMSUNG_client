@@ -39,67 +39,65 @@ const MyPage = () => {
        // loadUserStudies();
     }, []);
 
-    const loadUserData = () => {
-        const data = {
-            username: "노성균",
-            point: 43,
-            review: {
-                noLate: 5,
-                faithful: 3,
-                kind: 10,
-                unkind: 1,
-                fastAnswer: 7,
-                slowAnswer: 2,
-                passive: 0,
-                absent: 4
-            },
-            studies: [
-                {
-                    id: 7,
-                    category: '프로그래밍',
-                    place: '서울',
-                    member_num: 5,
-                    status: true,
-                    score: 150,
-                    leader_id: 1,
-                    start_date: '2024-05-01',
-                    end_date: null,
-                    my_role: 'leader',
-                    study_name: '면접 스터디'
-                },
-                {
-                    id: 8,
-                    category: '프로그래밍',
-                    place: '서울',
-                    member_num: 5,
-                    status: true,
-                    score: 80,
-                    leader_id: 21,
-                    start_date: '2024-05-01',
-                    end_date: '2024-07-13',
-                    my_role: 'member',
-                    study_name: '모각코 스터디'
-                }
-            ]
-        };
+    //const loadUserData = () => {
+    //    const data = {
+    //        username: "노성균",
+    //        point: 43,
+    //        review: {
+    //            noLate: 5,
+    //            faithful: 3,
+    //            kind: 10,
+    //            unkind: 1,
+    //            fastAnswer: 7,
+    //            slowAnswer: 2,
+    //            passive: 0,
+    //           absent: 4
+    //        },
+    //        studies: [
+    //            {
+    //                id: 7,
+    //                category: '프로그래밍',
+    //                place: '서울',
+    //                member_num: 5,
+    //                status: true,
+    //                score: 150,
+    //                leader_id: 1,
+    //                start_date: '2024-05-01',
+    //               end_date: null,
+    //                my_role: 'leader',
+    //                study_name: '면접 스터디'
+    //            },
+    //            {
+    //                id: 8,
+    //                category: '프로그래밍',
+    //                place: '서울',
+    //                member_num: 5,
+    //                status: true,
+    //                score: 80,
+    //                leader_id: 21,
+    //                start_date: '2024-05-01',
+    //                end_date: '2024-07-13',
+    //                my_role: 'member',
+    //                study_name: '모각코 스터디'
+    //            }
+    //        ]
+    //    };
 
-        //const loadUserData = async () => {
-        //    try {
-        //        const userData = await fetchUserData(token); // 토큰을 이용해 사용자 데이터 가져오기
-        //        const { username, point, review, studies } = userData;
-        //        const topReviews = findTopTwoReviews(review); 
-        //        setUsername(username);
-        //        setPoint(point);
-        //        setReview(review);
-        //        setTopReviews(topReviews);
-        //        setStudies(studies);
-        //      } else {
-        //          console.error(response.message);
-        //      }
-        //  } catch (error) {
-        //      console.error('접속에 실패했습니다.', error);
-        //  }
-        //};
+    const loadUserData = async () => {
+        try {
+            const userData = await fetchUserData(token); // 토큰을 이용해 사용자 데이터 가져오기
+            const { username, point, review, studies } = userData;
+            const topReviews = findTopTwoReviews(review); 
+            setUsername(username);
+            setPoint(point);
+            setReview(review);
+            setTopReviews(topReviews);
+            setStudies(studies);
+        } catch (error) {
+            console.error('접속에 실패했습니다.', error);
+        }
+    };
+
 
         //const loadUserStudies = async () => {
         //    try {
@@ -110,14 +108,14 @@ const MyPage = () => {
         //  }
         //};
 
-        const { username, point, review, studies } = data;
-        const topReviews = findTopTwoReviews(review);
-        setUsername(username);
-        setPoint(point);
-        setReview(review);
-        setTopReviews(topReviews);
-        setStudies(studies);
-    };
+    //    const { username, point, review, studies } = data;
+    //    const topReviews = findTopTwoReviews(review);
+    //    setUsername(username);
+    //    setPoint(point);
+    //    setReview(review);
+    //    setTopReviews(topReviews);
+    //    setStudies(studies);
+    //};
 
     const handleDeleteClick = () => {
         setShowDeleteIDModal(true);

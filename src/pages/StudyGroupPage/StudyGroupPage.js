@@ -58,16 +58,13 @@ const StudyGroupPage = () => {
         setShowWeeklyStudyModal(true);
     };
 
-    const handleOkWeeklyStudyModal = async () => {
+    const handleSaveWeeklyStudyModal = (weekScore) => {
+        setWeekScore(weekScore); // week_score를 state에 저장
+        setShowCalculatePoint(true); // CalculatePoint 모달 표시
+    };
+
+    const handleCloseWeeklyStudyModal = () => {
         setShowWeeklyStudyModal(false);
-        try {
-            const response = await saveWeeklyStudyData(selectedWeekIndex + 1, 0, 0, 0, 0);
-            console.log("저장 완료:", response);
-            setWeekScore(response.week_score); // week_score를 state에 저장
-            setShowCalculatePoint(true); // CalculatePoint 모달 표시
-        } catch (error) {
-            console.error("저장 실패:", error);
-        }
     };
 
     const handleCloseCalculatePoint = () => {
@@ -86,12 +83,11 @@ const StudyGroupPage = () => {
             <div className="outline"></div>
 
             <div className="boardList">
-                {/* NoticeBox에 latestNotices 전달 */}
                 <NoticeBox notices={latestNotices} />
             </div>
 
             <div>
-                <StudyCalendar onChange={handleCalendarChange} /> {/* onChange props 전달 */}
+                <StudyCalendar onChange={handleCalendarChange} />
             </div>
 
             <div>
@@ -121,9 +117,9 @@ const StudyGroupPage = () => {
 
             {showWeeklyStudyModal && (
                 <WeeklyStudyModal
-                    onClose={handleOkWeeklyStudyModal}
+                    onClose={handleCloseWeeklyStudyModal}
                     weekIndex={selectedWeekIndex}
-                    handleCalculate={setWeekScore} 
+                    handleCalculate={handleSaveWeeklyStudyModal} 
                 />
             )}
 

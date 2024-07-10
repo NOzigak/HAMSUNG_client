@@ -3,7 +3,7 @@ import { getCookie } from "../utils/cookies";
 
 const client = axios.create({
     baseURL: process.env.REACT_APP_SERVER_BASE_URL, // 배포 url은 env로 관리
-    headers: { "Content-Type": "application/json" }
+    headers: {"Content-Type": "application/json"}
 });
 
 // 요청 인터셉터 설정
@@ -12,9 +12,10 @@ client.interceptors.request.use(
         // 액세스 토큰을 로컬 스토리지에서 가져옴
         const token = localStorage.getItem("accessToken");
         //const token = getCookie("accessToken");
+        const sanitizedToken = token ? token.replace(/"/g, '') : null;
         if (token) {
-            config.headers.Authorization = { access: token };
-        }
+            config.headers.Authorization = {access: token};
+        } 
         return config;
     },
     error => {
@@ -47,9 +48,9 @@ client.interceptors.response.use(
             originalConfig._retry = true;
             try {
                 const newToken = await refreshAccessToken();
-                if (newToken) {
-                    client.defaults.headers.common["Authorization"] = { access: newToken };
-                    originalConfig.headers["Authorization"] = { access: newToken };
+                if (newToken){
+                    client.defaults.headers.common["Authorization"] = {access : newToken};
+                    originalConfig.headers["Authprization"] = {access : newToken};
                     return client(originalConfig);
                 }
             } catch (refreshError) {
@@ -62,21 +63,3 @@ client.interceptors.response.use(
 
 export default client;
 
-export const fetchUserData = async (userId, token) => {
-    try {
-        const response = await client.get(`/users/${userId}/mypage`, {
-            headers: {
-                'charset': 'utf-8',
-                'access': token
-            }
-        });
-        return response.data;
-    } catch (error) {
-        console.error("Error:", error);
-        if (error.response && error.response.status === 401) {
-            return { status: 401, message: "접속에 실패했습니다." };
-        } else {
-            return { status: error.response?.status || 500, message: error.message };
-        }
-    }
-};

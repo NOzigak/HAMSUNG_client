@@ -2,7 +2,7 @@ import { createBoardRequest, deleteBoardRequest, getBoardsRequest, updateBoardRe
 
 const GET_BOARD_REQUEST = "GET_BOARD_REQUEST";
 const GET_BOARD_SUCCESS = "GET_BOARD_SUCCESS";
-const GET_BOARD_FAILURE = "GET_BOARD_FAILRUE";
+const GET_BOARD_FAILURE = "GET_BOARD_FAILURE";
 
 const CREATE_BOARD_REQUEST = "CREATE_BOARD_REQUEST";
 const CREATE_BOARD_SUCCESS = "CREATE_BOARD_SUCCESS";
@@ -21,7 +21,7 @@ export const getBoards = () => async (dispatch) => {
     dispatch({type: GET_BOARD_REQUEST});
     try{
         const response = await getBoardsRequest();
-        const data = await response.json();
+        const data = await response
         dispatch({
             type: GET_BOARD_SUCCESS,
             payload: data,
@@ -36,7 +36,7 @@ export const getBoards = () => async (dispatch) => {
 }
 
 // 모집글 생성 액션
-export const createBoard = (inputData) => async (dispatch) => {
+export const createBoardAPI = (inputData) => async (dispatch) => {
     try{
         dispatch({type: CREATE_BOARD_REQUEST});
         const response = await createBoardRequest(inputData);
@@ -50,7 +50,7 @@ export const createBoard = (inputData) => async (dispatch) => {
 }
 
 // 모집글 수정 액션
-export const updateBoard = (id, inputData) => async (dispatch) => {
+export const updateBoardAPI = (id, inputData) => async (dispatch) => {
     try{
         dispatch({type: UPDATE_BOARD_REQUEST});
         const response = await updateBoardRequest(id, inputData);
@@ -67,7 +67,7 @@ export const updateBoard = (id, inputData) => async (dispatch) => {
 }
 
 // 모집글 삭제 액션
-export const deleteBoard = (id) => async (dispatch) => {
+export const deleteBoardAPI = (id) => async (dispatch) => {
     try {
         dispatch({type: DELETE_BOARD_REQUEST});
         await deleteBoardRequest(id);

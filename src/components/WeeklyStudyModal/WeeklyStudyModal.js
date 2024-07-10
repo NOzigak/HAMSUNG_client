@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./WeeklyStudyModal.css";
-import { saveWeeklyStudyData } from "../../api/StudyGroupAPI";
+import { saveWeeklyStudyData, getWeeklyStudyData } from "../../api/StudyGroupAPI";
 
 const WeeklyStudyModal = ({ onClose, weekIndex, handleCalculate }) => {
   const [attendance, setAttendance] = useState("");
@@ -8,11 +8,28 @@ const WeeklyStudyModal = ({ onClose, weekIndex, handleCalculate }) => {
   const [absent, setAbsent] = useState("");
   const [homework, setHomework] = useState("");
 
+  useEffect(() => {
+    const loadWeeklyData = async () => {
+      try {
+        const data = await getWeeklyStudyData(weekIndex + 1);
+        setAttendance(data.attendance);
+        setLate(data.late);
+        setAbsent(data.absent);
+        setHomework(data.homework);
+      } catch (error) {
+        console.error("Error geting weekly study data:", error);
+      }
+    };
+
+    loadWeeklyData();
+  }, [weekIndex]);
+
   const handleSaveWeekly = async () => {
     try {
       const response = await saveWeeklyStudyData(weekIndex + 1, attendance, late, absent, homework);
       console.log("저장 완료:", response);
       handleCalculate(response.week_score); // 데이터 저장 후 week_score 전달하여 handleCalculate 함수 호출
+      onClose();
     } catch (error) {
       console.error("저장 실패:", error);
     }

@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './NoticeBox.css';
 import plus from "../../assets/plus.png";
-import { getNoticeList } from '../../api/NoticeAPI';
+import { getNoticeListAPI } from '../../api/NoticeAPI';
 
 const formatDate = (dateString) => {
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -14,7 +14,7 @@ const NoticeBox = ({ notices }) => {
 
   const handleMoreButtonClick = async () => {
     try {
-      const allNotices = await getNoticeList(); 
+      const allNotices = await getNoticeListAPI(); 
       nav("/noticeList", { state: { notices: allNotices } }); 
     } catch (error) {
       console.error("공지사항을 가져오는 데 실패했습니다.", error);

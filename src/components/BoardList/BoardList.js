@@ -12,20 +12,21 @@ export default function BoardList() {
     const selectList = ["전체", "어학","취업", "고시", "프로그래밍", "기타"]
     const [category, setCategory] = useState("전체");
     const [search, setSearch] = useState("");
-    // const dispatch = useDispatch();
-    //useEffect(()=> {
-    //    dispatch(getBoards()); //컴포넌트 마운트 시 게시글 목록을 가져옴
-    //}, [dispatch]);
+    const dispatch = useDispatch();
+    useEffect(()=> {
+       dispatch(getBoards()); //컴포넌트 마운트 시 게시글 목록을 가져옴
+    }, [dispatch]);
 
     const handleOption = (e) => {
         setCategory(e.target.value);
     }
     const nav = useNavigate();
     // redux state 호출
-    const boardData = useSelector(state => state.boards);
-    //const boardsData = useSelector(state => state.board); // 서버 게시글 리스트 가져오기
-
-    const [searchData, setSearchData] = useState(boardData);
+    //const boardData = useSelector(state => state.boards);
+    const boardData = useSelector(state => state.board.boards); // 서버 게시글 리스트 가져오기
+    const loading = useSelector(state => state.board.loading); // 로딩 상태 가져오기
+ 
+    const [searchData, setSearchData] = useState([]);
 
     const searchClick = () => {
         const searchFiltered = boardData.filter(item => 
@@ -34,9 +35,10 @@ export default function BoardList() {
         setSearchData(searchFiltered);
     }
 
-    const filteredData = category === "전체" ?
-        searchData
-        : searchData.filter(item => item.category === category);
+    const filteredData = category === "전체" ? (searchData.length > 0 ?
+        searchData : boardData) :
+         (searchData.length > 0 ? searchData.filter(item => item.category === category) :
+             boardData.filter(item => item.category === category));
 
     const searchChange = (e) => {
         setSearch(e.target.value);
@@ -67,7 +69,10 @@ export default function BoardList() {
                 <div className="columnHeaderBasic">상태</div>
                 <div className="columnHeaderBasic">작성일</div>
             </div>
-            {filteredData.map((item)=><BoardItem key={item.id} {...item} />)}
+            {loading ? (
+                <p>로딩중입니다...</p>
+            ) : (filteredData.map((item)=><BoardItem key={item.id} {...item} />))}
+            
 
         </div>
     </div>

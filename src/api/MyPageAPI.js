@@ -22,6 +22,22 @@ export const fetchUserData = async (userId, token) => {
 
 
 //회원 탈퇴
+export const DeleteUserAPI = async (userId, token) => {
+    try {
+        const response = await client.delete(`/users/${userId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}` // 필요한 경우 토큰 추가
+            }
+        });
+
+        return true;
+    } catch (error) {
+        console.error('회원탈퇴 실패', error);
+        return false;
+    }
+};
+
+
 
 
 
