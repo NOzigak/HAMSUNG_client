@@ -10,7 +10,6 @@ export const UserLogin = async (userInfo) => {
         const response = await client.post("/login", formData,
             {
                 headers: {"Content-Type": "multipart/form-data"},
-                withCredentials: true
             }
         );
         return response.headers.access;
@@ -35,13 +34,23 @@ export const UserSignup = async (userInfo) => {
 // 로그아웃
 export const UserLogout = async () => {
     try{
-        // 로그아웃 시 토큰도 삭제
-        localStorage.removeItem("accessToken");
-        console.log("액세스 토큰 삭제")
         const response = await client.post("/logout");
+        // 로그아웃 시 토큰도 삭제
+        console.log("access 삭제")
+        localStorage.removeItem("accessToken");
         return response.data;
     } catch (error) {
         console.log("로그아웃 실패", error);
+        throw error;
+    }
+}
+
+export const UserReissue = async () => {
+    try{
+        const response = await client.post("/reissue");
+        return response.headers;
+    } catch (error) {
+        console.log("재발급 실패", error);
         throw error;
     }
 }

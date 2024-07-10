@@ -71,7 +71,7 @@ export const toggleRecruitmentStatus = async (boardId, isRecruit) => {
 export const getUserReview = async (user_id) => {
     try{
         const response = await client.get(`/myPage/${user_id}`);
-        return response.data.review;
+        return response.data.reviewResponseDto;
     } catch (error) {
         console.log("리뷰조회 실패", error);
         throw error;

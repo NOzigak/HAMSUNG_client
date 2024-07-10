@@ -5,6 +5,7 @@ import { getCookie } from "../utils/cookies";
 const client = axios.create({
     baseURL: process.env.REACT_APP_SERVER_BASE_URL, // 배포 url은 env로 관리
     headers: {"Content-Type": "application/json"},
+    withCredentials: true
 });
 
 // 요청 인터셉터 설정
@@ -28,13 +29,16 @@ client.interceptors.request.use(
 export const refreshAccessToken = async () => {
     try{
         //const refreshToken = localStorage.getItem("refreshToken");
-        const refreshToken = getCookie("refreshToken");
+        //const refreshToken = getCookie("refreshToken");
         // 리프레쉬 토큰으로 요청 보내기
-        const response = await client.post("/reissue")
+        const response = await axios.post("/reissue")
         const newAccessToken = response.data;
+        localStorage.removeItem("accessToken");
+        localStorage.setItem("accessToken", newAccessToken);
         return newAccessToken;
 
     } catch(error) {
+        console.log("토큰 재발급 실패", error);
         throw error;
     }
 
@@ -47,7 +51,7 @@ client.interceptors.response.use(
     },
     async (error) => {
         const originalConfig = error.config; //기존에 수행하려고 했던 작업
-        if(error.response.status === 401 && !originalConfig._retry){
+        if(error.response && error.response.status === 401 && !originalConfig._retry){
             originalConfig._retry = true;
             try {
                 const newToken = await refreshAccessToken();
