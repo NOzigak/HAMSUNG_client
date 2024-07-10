@@ -4,10 +4,12 @@ import "./CardList.css";
 
 export const CardList = (data) => {
 
-    const boardData = useSelector(state => state.boards);
+    //const boardData = useSelector(state => state.boards);
+    const boardDetail = useSelector(state => state.board.boards);
+    //console.log(boardDetail);
     //const boardData = data;
-    console.log(boardData);
-    const sortedData = boardData.slice().sort((a, b) => b.view - a.view);
+    //console.log(boardData);
+    const sortedData = boardDetail.slice().sort((a, b) => b.view - a.view);
 
     return (
         <div className="cardList">

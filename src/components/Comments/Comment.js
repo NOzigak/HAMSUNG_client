@@ -16,8 +16,8 @@ const Comment = ({comment, replies, boardId, onSubmit}) => {
         activeComment.type === "replying" &&
         activeComment.id === comment.id;
     const dispatch = useDispatch();
-    //const userInfo = getUserInfo();
-    //const nav = useNavigate();
+    const userInfo = getUserInfo();
+    const nav = useNavigate();
 
     const handleText = (e) => {
         setText(e.target.value);
@@ -32,20 +32,22 @@ const Comment = ({comment, replies, boardId, onSubmit}) => {
 
     // 대댓글 작성
     const replySubmit = async () => {
-        dispatch(addReply(text, comment.id))
-        // const replyDetail = {
-        //     text: text,
-        //     userId: userInfo.id,
-        //     username: userInfo.name,
-        // }
-        // try {
-        //     const response = await addReplyRequest(comment.parentId, replyDetail);
-        //     console.log("reply added:", response);
-        //     setActiveComment({type:"", id:""});
-        //     nav(`/viewBoard/${boardId}`);
-        // } catch (error) {
-        //     console.log("대댓글 작성에 실패했습니다.", error);
-        // }
+        //dispatch(addReply(text, comment.id))
+        const replyDetail = {
+            text: text,
+            userId: userInfo.user_id,
+            username: userInfo.username,
+        }
+        
+        try {
+            const response = await addReplyRequest(comment.id, replyDetail);
+            console.log("reply added:", response);
+            setActiveComment({type:"", id:""});
+            nav(`/viewBoard/${boardId}`);
+        } catch (error) {
+            console.log("대댓글 작성에 실패했습니다.", error);
+            console.log("대댓글의 부모 댓글 아이디는 : ", comment.id);
+        }
         
 
     }

@@ -26,15 +26,15 @@ function App() {
           <Route path='/signup' element={<SignupPage />} />
           <Route path='/login' element={<LoginPage />} />
           <Route element={<PrivateRoutes />}>
+            <Route path='/newBoard' element={<NewBoard />} />
+            <Route path='/editBoard/:id' element={<EditBoard />} /> 
+            <Route path='/viewBoard/:id' element={<ViewBoardPage />} />
+            <Route path='/myPage' element={<MyPage />} />
+            <Route path='/studyGroup' element={<StudyGroupPage />} />
+            <Route path='/newNotice' element={<NoticeEditPage />} />
+            <Route path='/notice' element={<NoticeViewPage />} />
+            <Route path='/noticeList' element={<NoticeListPage />} />
           </Route>
-          <Route path='/newBoard' element={<NewBoard />} />
-          <Route path='/editBoard/:id' element={<EditBoard />} /> 
-          <Route path='/viewBoard/:id' element={<ViewBoardPage />} />
-          <Route path='/myPage' element={<MyPage />} />
-          <Route path='/studyGroup' element={<StudyGroupPage />} />
-          <Route path='/newNotice' element={<NoticeEditPage />} />
-          <Route path='/notice' element={<NoticeViewPage />} />
-          <Route path='/noticeList' element={<NoticeListPage />} />
           <Route path='/rank' element={<RankPage />} />
           <Route path='*' element={<NotFoundPage />} />
         </Routes>

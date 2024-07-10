@@ -14,8 +14,13 @@ export const getCommentsRequest = async (recruit_id) => {
 // 댓글 작성 
 // commnetInfo : 토큰으로 추출한 유저 id + text
 export const addCommentRequest = async (recruit_id, commentInfo) => {
+    const formData = new FormData();
+    formData.append("user_id", commentInfo.user_id);
+    formData.append("text", commentInfo.text);
     try {
-        const response = await client.post(`/recruits/${recruit_id}/comments`, commentInfo);
+        const response = await client.post(`/recruits/${recruit_id}/comments`, formData, {
+            headers: {"Content-Type": "multipart/form-data"},
+        });
         return response.data;
     } catch (error) {
         console.log("댓글 작성에 실패했습니다.", error);
