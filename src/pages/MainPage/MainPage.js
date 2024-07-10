@@ -16,7 +16,7 @@ const MainPage = () =>{
     dispatch(getBoards());
   }, [])
 
-  const boardData = useSelector(state => state.board); // 서버로부터 받아온 모집글 리스트
+  const boardData = useSelector(state => state.board.boards); // 서버로부터 받아온 모집글 리스트
   
     return(
         <div>

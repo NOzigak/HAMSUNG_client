@@ -18,6 +18,13 @@ const loggerMiddleware = (store) => (next) => (action) => {
 const middleware = applyMiddleware(thunk, loggerMiddleware);
 const store = createStore(RootReducer, middleware);
 
+const handleBeforeUnload = (event) => { // 페이지를 닫을 때 전역적으로 토큰을 제거하는 함수
+  const confirmationMessage = "정말로 페이지를 떠나시겠습니까?";
+  event.returnValue = confirmationMessage; //chrome 설정
+  localStorage.removeItem('accessToken');
+}
+window.addEventListener('beforeunload', handleBeforeUnload);
+
 root.render(
 
   <React.StrictMode>

@@ -13,8 +13,9 @@ client.interceptors.request.use(
         // 액세스 토큰을 로컬 스토리지에서 가져옴
         const token = localStorage.getItem("accessToken");
         //const token = getCookie("accessToken");
+        const sanitizedToken = token ? token.replace(/"/g, '') : null;
         if (token) {
-            config.headers.Authorization = `access: ${token}`;
+            config.headers.access = sanitizedToken;
         } 
         return config;
     },
