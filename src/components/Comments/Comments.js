@@ -29,7 +29,7 @@ const Comments = ({boardId}) => {
         try{
             const response = await addCommentRequest(boardId, commentDetail);
             console.log("댓글 작성 성공", response);
-            nav(`/viewBoard/${boardId}`)      
+            nav(`/viewBoard/${boardId}`);
         } catch (error) {
             console.log("댓글 작성 실패", error);
         }

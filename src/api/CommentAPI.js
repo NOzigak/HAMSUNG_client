@@ -15,7 +15,7 @@ export const getCommentsRequest = async (recruit_id) => {
 // commnetInfo : 토큰으로 추출한 유저 id + text
 export const addCommentRequest = async (recruit_id, commentInfo) => {
     const formData = new FormData();
-    formData.append("user_id", commentInfo.user_id);
+    formData.append("userId", commentInfo.user_id);
     formData.append("text", commentInfo.text);
     try {
         const response = await client.post(`/recruits/${recruit_id}/comments`, formData, {
