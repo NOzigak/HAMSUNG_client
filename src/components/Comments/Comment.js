@@ -18,7 +18,7 @@ const Comment = ({comment, replies, boardId, onSubmit}) => {
     const dispatch = useDispatch();
     const userInfo = getUserInfo();
     const nav = useNavigate();
-
+    
     const handleText = (e) => {
         setText(e.target.value);
     }
@@ -61,9 +61,9 @@ const Comment = ({comment, replies, boardId, onSubmit}) => {
                 // nav(`/viewBoard/${boardId}`);
             } else if (!comment.parent_id){
                 dispatch(deleteComment(comment.id));
-                // const response = deleteCommentRequest(comment.id, userInfo.id);
-                // console.log("댓글 삭제 성공", response);
-                // nav(`/viewBoard/${boardId}`);
+                const response = deleteCommentRequest(comment.id, userInfo.user_id);
+                console.log("댓글 삭제 성공", response);
+                nav(`/viewBoard/${boardId}`);
             } 
         } catch (error) {
             console.log("댓글 삭제에 실패", error);
@@ -80,7 +80,7 @@ const Comment = ({comment, replies, boardId, onSubmit}) => {
             </div>
             <div className="replyBtn">
                 {!comment.parent_id && <BoardBtn title="답글" onClick={onReply}/>}
-                {comment.username === "sungkyun" && <BoardBtn title="삭제하기" onClick={commentDelete}/>} {/*1108을 유저 토큰 정보로 바꿀예정*/}
+                {comment.username === userInfo.username && <BoardBtn title="삭제하기" onClick={commentDelete}/>} {/*1108을 유저 토큰 정보로 바꿀예정*/}
             </div>
             {isReplying && (
                 <div className="commentUpload">

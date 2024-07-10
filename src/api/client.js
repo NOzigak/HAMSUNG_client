@@ -30,7 +30,7 @@ export const refreshAccessToken = async () => {
         //const refreshToken = localStorage.getItem("refreshToken");
         const refreshToken = getCookie("refreshToken");
         // 리프레쉬 토큰으로 요청 보내기
-        const response = await client.post("/reissue", {refreshToken})
+        const response = await client.post("/reissue")
         const newAccessToken = response.data;
         return newAccessToken;
 

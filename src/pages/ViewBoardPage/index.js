@@ -29,7 +29,7 @@ const ViewBoardPage = () => {
     const showModal = () => {
         setModalOpen(true);
     }
-    const [recruitStatus, setRecruitStatus] = useState("모집중"); // api 연동 시 ""로 바꾸기
+    const [recruitStatus, setRecruitStatus] = useState(""); // api 연동 시 ""로 바꾸기
     
 
     // 마운트될 때 게시글 상세 정보 요청 api 호출
@@ -39,7 +39,7 @@ const ViewBoardPage = () => {
                 const data = await getTargetBoard(params.id);
                 console.log("상세정보 가져오기 성공", data);
                 setCurBoardItem(data); //가져온 데이터로 상태 업데이트
-                setRecruitStatus(data.isRecruit ? "모집중" : "모집완료");
+                setRecruitStatus(data.isRecruit ? "모집완료" : "모집중");
             } catch (error) {
                 console.log("게시글 상세 정보 불러오기 실패", error);
             }
