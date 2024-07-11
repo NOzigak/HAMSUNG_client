@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BoardBtn from "../BoardBtn/BoardBtn";
 import "./Comment.css";
 import { useDispatch } from "react-redux";
 import { addReply, deleteComment, deleteReply } from "../../actions/commentActions";
-import { addReplyRequest, deleteCommentRequest, deleteReplyRequest } from "../../api/CommentAPI";
+import { addReplyRequest, deleteCommentRequest, deleteReplyRequest, getCommentsRequest } from "../../api/CommentAPI";
 import getUserInfo from "../../utils/get-userInfo";
 import { useNavigate } from "react-router-dom";
 
 
-const Comment = ({comment, replies, boardId, onSubmit}) => {
+const Comment = ({comment, replies, boardId, onClick}) => {
 
     const [activeComment, setActiveComment] = useState(null); // {type : "editing" id: "1"}
     const [text, setText] = useState();
@@ -18,7 +18,7 @@ const Comment = ({comment, replies, boardId, onSubmit}) => {
     const dispatch = useDispatch();
     const userInfo = getUserInfo();
     const nav = useNavigate();
-    
+
     const handleText = (e) => {
         setText(e.target.value);
     }
@@ -43,7 +43,9 @@ const Comment = ({comment, replies, boardId, onSubmit}) => {
             const response = await addReplyRequest(comment.id, replyDetail);
             console.log("reply added:", response);
             setActiveComment({type:"", id:""});
-            nav(`/viewBoard/${boardId}`);
+            console.log(boardId);
+            //nav(`/viewBoard/${boardId}`);
+            onClick(boardId);
         } catch (error) {
             console.log("대댓글 작성에 실패했습니다.", error);
             console.log("대댓글의 부모 댓글 아이디는 : ", comment.id);
@@ -55,13 +57,16 @@ const Comment = ({comment, replies, boardId, onSubmit}) => {
     const commentDelete = async () => {
         try{
             if (comment.parent_id){
-                dispatch(deleteReply(comment.parent_id, comment.id));
-                // const response = deleteReplyRequest(comment.id, userInfo.id);
-                // console.log("대댓글 삭제 성공", response);
-                // nav(`/viewBoard/${boardId}`);
+                //dispatch(deleteReply(comment.parent_id, comment.id));
+                const response = deleteReplyRequest(comment.id);
+                console.log("대댓글 삭제 성공", response);
+                console.log(boardId)
+                //nav('/');
+                //nav(`/viewBoard/${boardId}`);
+                //onClick(boardId);
             } else if (!comment.parent_id){
-                dispatch(deleteComment(comment.id));
-                const response = deleteCommentRequest(comment.id, userInfo.user_id);
+                //dispatch(deleteComment(comment.id));
+                const response = deleteCommentRequest(comment.id);
                 console.log("댓글 삭제 성공", response);
                 nav(`/viewBoard/${boardId}`);
             } 

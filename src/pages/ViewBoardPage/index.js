@@ -23,7 +23,7 @@ const ViewBoardPage = () => {
 
     const [curBoardItem, setCurBoardItem] = useState(null);
     const user = getUserInfo();
-    // const [review, setReview] = useState(null);
+    const [review, setReview] = useState(null);
     const dispatch = useDispatch();
     const [modalOpen, setModalOpen] = useState(false);
     const showModal = () => {
@@ -42,12 +42,25 @@ const ViewBoardPage = () => {
                 setRecruitStatus(data.isRecruit ? "모집완료" : "모집중");
             } catch (error) {
                 console.log("게시글 상세 정보 불러오기 실패", error);
+                console.log(params.id);
             }
         }
         fetchBoardItem();
 
     }, [params.id]);
+    useEffect(()=> {
+        const fetchReview = async () => {
+            try {
+                const reviewData = await getUserReview(user.user_id);
+                console.log("리뷰를 가져왔습니다", reviewData)
+                setReview(reviewData);
+            } catch (error) {
+                console.log("리뷰를 가져오는데 실패했습니다.");
+            }
+        }
+        fetchReview();
 
+    }, [user.user_id]);
 
     if(!curBoardItem){
         return <div>데이터 로딩중...</div>
@@ -81,25 +94,20 @@ const ViewBoardPage = () => {
     }
 
     const applyStudy = async () => {
-        try {
-            const reviewData = await getUserReview(user.user_id);
-            //setReview(reviewData);
-        } catch (error) {
-            console.log("리뷰를 가져오는데 실패했습니다.");
+        const userInfo = {
+            study_id: params.id,
+            user: {
+                user_id: user.user_id,
+                username: user.username,
+            }
+            //review: review,
         }
-        // const userInfo = {
-        //     study_id: params.id,
-        //     user: {
-        //         user_id: user.id,
-        //         user_name: user.name,
-        //     },
-        //     review: review,
-        // }
-        // try {
-        //     const response = await applyForStudy(params.id, userInfo);
-        // } catch (error) {
-        //     console.log("신청실패", error);
-        // }
+        try {
+            const response = await applyForStudy(params.id, userInfo);
+            console.log("신청성공", response);
+        } catch (error) {
+            console.log("신청실패", error);
+        }
     }
 
     return(
@@ -112,7 +120,7 @@ const ViewBoardPage = () => {
 
                 <div>
                     <Viewer
-                        leader = {curBoardItem.writer}
+                        username = {curBoardItem.username}
                         created_at = {curBoardItem.createdAt}
                         place = {curBoardItem.place}
                         description = {curBoardItem.description}

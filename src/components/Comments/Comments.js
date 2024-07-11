@@ -17,7 +17,6 @@ const Comments = ({boardId}) => {
     useEffect(()=> {
         fetchComments(boardId);
     }, [boardId]);
-
     //const dispatch = useDispatch();
 
     const submitComment = async (boardId, text) => {
@@ -29,7 +28,8 @@ const Comments = ({boardId}) => {
         try{
             const response = await addCommentRequest(boardId, commentDetail);
             console.log("댓글 작성 성공", response);
-            nav(`/viewBoard/${boardId}`);
+            fetchComments(boardId);
+            //nav(`/viewBoard/${boardId}`);
         } catch (error) {
             console.log("댓글 작성 실패", error);
         }
@@ -55,6 +55,7 @@ const Comments = ({boardId}) => {
                         replies={getReplies(comments, rootComment.id)}
                         onSubmit={submitComment}
                         boardId={boardId}
+                        onClick={fetchComments}
                     />                                   
                 </div>
             ))}
