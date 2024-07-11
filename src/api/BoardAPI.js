@@ -81,7 +81,7 @@ export const getUserReview = async (user_id) => {
 //스터디 지원하기
 export const applyForStudy = async (recruit_id, userInfo) => {
     try{
-        const response = await client.post(`/recruits/${recruit_id}`, userInfo);
+        const response = await client.post(`/recruits/${recruit_id}/members`, userInfo);
         return response.data;
     } catch (error) {
         console.log("스터디를 지원하는데 실패했습니다.", error);
@@ -101,9 +101,9 @@ export const getApplicants = async (recruit_id) => {
 }
 
 // 스터디 멤버 승인
-export const approveMember = async (memberId, user_id) => {
+export const approveMember = async (study_id, user_id) => {
     try {
-        const response = await client.patch(`/recruits/${memberId}/members/${user_id}`);
+        const response = await client.patch(`/recruits/${study_id}/members/${user_id}`);
         return response.data;
     } catch (error) {
         console.log("멤버 승인에 실패했습니다.", error);

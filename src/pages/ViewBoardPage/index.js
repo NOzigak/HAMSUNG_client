@@ -99,8 +99,8 @@ const ViewBoardPage = () => {
             user: {
                 user_id: user.user_id,
                 username: user.username,
-            },
-            review: review,
+            }
+            //review: review,
         }
         try {
             const response = await applyForStudy(params.id, userInfo);

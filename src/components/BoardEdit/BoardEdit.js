@@ -20,16 +20,15 @@ export default function BoardEdit({name, initData, onSubmit, mode}){
 
     useEffect(()=>{
         if(initData){
-            const formData = {
-                title: initData.title,
-                user_id: initData.user_id,
-                description : initData.description,
-                category : initData.category,
-                place : initData.place,
-                capacity : initData.capacity,
-            }
-            console.log("초기값이에용", formData)
-            setInputData(formData);
+            // const formData = {
+            //     title: initData.title,
+            //     user_id: initData.user_id,
+            //     description : initData.description,
+            //     category : initData.category,
+            //     place : initData.place,
+            //     capacity : initData.capacity,
+            // }
+            setInputData(initData);
         }
        //console.log(inputData)
     },[initData])

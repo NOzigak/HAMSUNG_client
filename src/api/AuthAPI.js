@@ -1,4 +1,5 @@
-import client from "./client"
+import { getCookie } from "../utils/cookies";
+import client, { refreshAccessToken } from "./client"
 
 
 // 로그인 폼데이터로 전송
@@ -48,6 +49,9 @@ export const UserLogout = async () => {
 export const UserReissue = async () => {
     try{
         const response = await client.post("/reissue");
+        localStorage.removeItem("accessToken"); //기존 액세스 삭제
+        localStorage.setItem("accessToken", response.headers.access); //새로운 액세스 토큰 삽입.
+        console.log("access: ", response.headers.access);
         return response.headers;
     } catch (error) {
         console.log("재발급 실패", error);

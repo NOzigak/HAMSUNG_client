@@ -7,6 +7,7 @@ import BoardItem from "../BoardItem/BoardItem";
 import {useDispatch, useSelector} from "react-redux";
 import { getBoards } from "../../actions/boardAction";
 import { UserReissue } from "../../api/AuthAPI";
+import { getCookie, setCookie } from "../../utils/cookies";
 
 export default function BoardList() {
 
@@ -45,6 +46,8 @@ export default function BoardList() {
         setSearch(e.target.value);
     }   
     const reissue = () => {
+        const refresh = getCookie("refresh");
+        console.log("refresh: ", refresh);
         try{
           const response = UserReissue();
           console.log(response);
