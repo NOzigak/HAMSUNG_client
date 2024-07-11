@@ -76,6 +76,7 @@ const RecruitModal = ({setModalOpen, boardId}) => {
             try{
                 const applicants = await getApplicants(boardId);
                 setApplicantData(applicants);
+                console.log("신청자 정보", applicants);
             } catch (error) {
                 console.log("신청자 정보를 불러오는데 실패함", error);
             }
