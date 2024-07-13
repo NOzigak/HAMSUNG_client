@@ -9,12 +9,13 @@ const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString('ko-KR', options).replace(/\./g, '.').replace(/\s/g, '');
 };
 
-const NoticeBox = ({ notices }) => {
+const NoticeBox = ({ study_id, notices }) => {
   const nav = useNavigate();
 
   const handleMoreButtonClick = async () => {
+    //console.log("버튼 누름:",study_id);
     try {
-      const allNotices = await getNoticeListAPI(); 
+      const allNotices = await getNoticeListAPI(study_id); 
       nav("/noticeList", { state: { notices: allNotices } }); 
     } catch (error) {
       console.error("공지사항을 가져오는 데 실패했습니다.", error);

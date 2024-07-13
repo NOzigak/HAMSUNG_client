@@ -1,7 +1,8 @@
 import client from "./client";
 
 // 공지사항 전체 조회
-export const getNoticeListAPI = async (studyId, type) => {
+export const getNoticeListAPI = async (study_id, type) => {
+    console.log("공지사항 전체조회:",study_id);
     try {
         // 유효하지 않은 type 파라미터 처리
         if (type !== 'announce' && type !== 'schedule') {
@@ -9,7 +10,7 @@ export const getNoticeListAPI = async (studyId, type) => {
         }
 
         // 공지사항 조회 API 호출
-        const response = await client.get(`/study/${studyId}/posts?type=${type}`);
+        const response = await client.get(`/study/${study_id}/posts?type=${type}`);
         return response.data;
     } catch (error) {
         if (error.response) {
@@ -25,7 +26,7 @@ export const getNoticeListAPI = async (studyId, type) => {
             console.error("해당 id의 스터디가 존재하지 않습니다!", error.message);
             throw { status: 500, message: "해당 id의 스터디가 존재하지 않습니다!" };
         }
-    }
+    } 
 };
 
 

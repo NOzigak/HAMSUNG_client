@@ -27,7 +27,7 @@ export const DeleteUserAPI = async (user_id) => {
         console.error('회원탈퇴 실패', error);
         return false;
     }
-};
+}; 
 
 
 
@@ -49,7 +49,6 @@ export const ReviewAPI = async (user_id, reviewData) => {
         return { status: 400, message: "리뷰 등록 실패" };
     }
 };
-
 
 //프로필 수정 
 export const EditProfileAPI = async (user_id, newNickname) => {
@@ -98,6 +97,18 @@ export const getStudies = async (user_id) => {
         return response.data;
     } catch (error) {
         console.error('스터디 정보를 불러오는 중 오류 발생:', error);
+        throw error;
+    }
+};
+
+
+// 스터디 멤버 조회
+export const getMemberName = async (study_id) => {
+    try {
+        const response = await client.get(`/studymember/${study_id}`);
+        return response.data;
+    } catch (error) {
+        console.error('스터디 멤버 조회 중 오류 발생:', error);
         throw error;
     }
 };

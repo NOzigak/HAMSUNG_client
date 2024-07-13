@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useNavigate} from "react-router-dom";
 import './StudyGroupPage.css';
 import FinishStudyModal from "../../components/FinishStudyModal/FinishStudyModal";
 import WeeklyStudyModal from "../../components/WeeklyStudyModal/WeeklyStudyModal";
@@ -12,7 +13,7 @@ import { Navbar } from "../../components/Navbar/Navbar";
 import studyPoint from "../../assets/studyPoint.png";
 import { finishStudyAPI } from "../../api/StudyGroupAPI";
 import { getLatestNotices } from '../../utils/getLatestNotices';
-import ReviewModal from '../../components/ReviewModal/ReviewModal';
+//import ReviewModal from '../../components/ReviewModal/ReviewModal';
 
 const StudyGroupPage = () => {
     const location = useLocation();
@@ -28,6 +29,7 @@ const StudyGroupPage = () => {
     const [showReviewModal, setShowReviewModal] = useState(false); // 리뷰 모달 상태
     const NoticeData = useSelector(state => state.notice);
     const latestNotices = getLatestNotices(NoticeData, 2);
+    const nav = useNavigate();
 
     useEffect(() => {
         if (location.state?.studyInfo) {
@@ -50,6 +52,7 @@ const StudyGroupPage = () => {
 
     const handleCloseFinishStudyModal = () => {
         setShowFinishStudyModal(false);
+        nav("/mypage");
     };
 
     const handleCalendarChange = (newValue) => {
@@ -100,7 +103,9 @@ const StudyGroupPage = () => {
             <div className="outline"></div>
 
             <div className="boardList">
-                <NoticeBox notices={latestNotices} />
+                <NoticeBox 
+                notices={latestNotices}
+                study_id={studyInfo.id} /> 
             </div>
 
             <div>

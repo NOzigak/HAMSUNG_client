@@ -79,6 +79,7 @@ const MyPage = () => {
     };
 
     const handleEvaluateClick = (study_id) => {
+        setSelectedStudyId(study_id); // 선택된 스터디 ID 설정
         setShowReviewModal(true);
     };
 
@@ -96,6 +97,7 @@ const MyPage = () => {
 
     const handleStudyClick = async (study_id) => {
         try {
+            console.log("테스트용:",study_id);
             const response = await getStudyInfoAPI(study_id);
             const studyInfo = {
                 id: response.data.id,
@@ -159,6 +161,7 @@ const MyPage = () => {
                 <ReviewModal
                     closeReviewModal={handleCloseReviewModal}
                     currentPage={currentPage}
+                    study_id={selectedStudyId}
                     nextPage={nextPage}
                     prevPage={prevPage}
                     totalPages={selectedStudyId ? studies.find(study => study.id === selectedStudyId)?.member_num : 1}
@@ -185,7 +188,6 @@ const MyPage = () => {
                 <p>참여 중인 스터디가 없습니다.</p>
             )}
 
-            
             <EditProfile
                 show={showEditProfileModal}
                 handleEdit={handleCloseEditProfileModal}

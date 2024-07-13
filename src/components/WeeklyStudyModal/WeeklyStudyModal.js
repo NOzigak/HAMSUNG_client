@@ -31,7 +31,7 @@ const WeeklyStudyModal = ({ onClose, week, study_id, handleCalculate, showButton
       onClose();
       setShowButtons(false); // 저장 후 버튼 숨기기
     } catch (error) {
-      console.error("저장 실패:", error);
+      alert("이미 저장된 스터디 정보입니다!"); 
     }
   };
 
