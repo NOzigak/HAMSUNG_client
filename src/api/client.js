@@ -48,12 +48,11 @@ let retryCnt = 0;
 //응답 인터셉터
 client.interceptors.response.use(
     response => {
+        retryCnt = 0; // 성공적인 응답을 받으면 0으로 초기화.
         return response;
     },
     async (error) => {
         const originalConfig = error.config; //기존에 수행하려고 했던 작업
-        console.log("originalConfig", originalConfig);
-        console.log("토큰 만료", error.response);
         if(error.response && error.response.status === 401 && !originalConfig._retry && retryCnt<MAX_RETRY){
             originalConfig._retry = true;
             retryCnt++; // 카운터 증가

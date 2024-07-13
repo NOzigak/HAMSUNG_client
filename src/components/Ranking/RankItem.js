@@ -1,6 +1,6 @@
 import "./RankItem.css";
 
-const RankItem = ({rank, studyName, category, score}) => {
+const RankItem = ({rank, title, score}) => {
     return (
         <div>
             <div className="rankItem">
@@ -8,10 +8,7 @@ const RankItem = ({rank, studyName, category, score}) => {
                     {rank}
                 </div>
                 <div className="rankStudyName">
-                    {studyName}
-                </div>
-                <div className="rank">
-                    {category}
+                    {title}
                 </div>
                 <div className="rank">
                     {score}
