@@ -45,16 +45,14 @@ export default function BoardList() {
     const searchChange = (e) => {
         setSearch(e.target.value);
     }   
-    const reissue = () => {
-        const refresh = getCookie("refresh");
-        console.log("refresh: ", refresh);
-        try{
-          const response = UserReissue();
-          console.log(response);
-        } catch(error) {
-          console.log("재발급 실패", error);
-        }
-      }
+    // const reissue = () => {
+    //     try{
+    //       const response = UserReissue();
+    //       console.log(response);
+    //     } catch(error) {
+    //       console.log("직접 재발급 실패", error);
+    //     }
+    //   }
 
 
   return (
@@ -68,7 +66,7 @@ export default function BoardList() {
             <input className="searchBar" type="text" placeholder="제목으로 검색" value={search} onChange={searchChange}/>
             <RecruitBtn text="검색하기" onClick={searchClick}/>
             <RecruitBtn text="스터디 모집하기" onClick={()=>nav("/newBoard")}/>
-            <button onClick={reissue}>재발급</button>
+            {/*<button onClick={reissue}>재발급</button>*/}
         </div>
 
         <div className="tableWrapper">

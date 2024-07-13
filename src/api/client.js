@@ -1,5 +1,4 @@
 import axios from "axios";
-import { getCookie } from "../utils/cookies";
 
 
 const client = axios.create({
@@ -29,10 +28,12 @@ client.interceptors.request.use(
 export const refreshAccessToken = async () => {
     try{
         // 리프레쉬 토큰으로 요청 보내기
+        
         const response = await client.post("/reissue");
         const newAccessToken = response.headers.access;
-        localStorage.removeItem("accessToken"); // 로컬에서 기존의 액세스 토큰을 삭제
-        localStorage.setItem("accessToken", newAccessToken); // 발급받은 토큰을 저장
+        localStorage.removeItem("accessToken"); //기존 액세스 삭제
+        localStorage.setItem("accessToken", newAccessToken); //새로운 액세스 토큰 삽입.
+        console.log("access: ", response.headers.access);
         return newAccessToken;
 
     } catch(error) {
@@ -44,27 +45,29 @@ export const refreshAccessToken = async () => {
 
 const MAX_RETRY = 3;
 let retryCnt = 0;
-// 응답 인터셉터
+//응답 인터셉터
 client.interceptors.response.use(
     response => {
         return response;
     },
     async (error) => {
         const originalConfig = error.config; //기존에 수행하려고 했던 작업
+        console.log("originalConfig", originalConfig);
         console.log("토큰 만료", error.response);
         if(error.response && error.response.status === 401 && !originalConfig._retry && retryCnt<MAX_RETRY){
-            console.log(originalConfig._retry)
             originalConfig._retry = true;
             retryCnt++; // 카운터 증가
             try {
                 const newToken = await refreshAccessToken();
                 if (newToken){
-                    //client.defaults.headers.common["Authorization"] = {access : newToken};
+                    client.defaults.headers.common['access'] = newToken;
                     originalConfig.headers.access = newToken;
-                    return client(originalConfig);
+                    const response = await client(originalConfig);
+                    console.log("재시도 성공", response);
+                    return response;
                 }
             } catch (refreshError) {
-                console.log("토큰 재발급 실패", refreshError);
+                console.log("재발급 실패했어요..", refreshError);
                 return Promise.reject(refreshError);
             }
         }

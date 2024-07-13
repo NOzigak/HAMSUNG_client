@@ -12,6 +12,8 @@ const LOGOUT_REQUEST = "LOGOUT_REQUEST";
 const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 const LOGOUT_FAILUER = "LOGOUT_FAILURE";
 
+const SET_ACCESS_TOKEN = "SET_ACCESS_TOKEN";
+
 export const login = ({email, password}) => async (dispatch) => {
     dispatch({type: LOGIN_REQUEST});
     try{
@@ -47,3 +49,8 @@ export const logout = () => async (dispatch) => {
         dispatch({type: LOGOUT_FAILUER, payload: error.message, error: true});
     }
 }
+
+export const setAccessToken = (accessToken) => ({
+    type: SET_ACCESS_TOKEN,
+    payload: accessToken,
+});

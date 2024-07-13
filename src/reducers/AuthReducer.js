@@ -45,6 +45,11 @@ const AuthReducer = (state = initialState, action) => {
                 isAuthenticated: false,
                 user: null
             }
+        case 'SET_ACCESS_TOKEN':
+            return{
+                ...state,
+                user: action.payload,
+            }
         default:
             return state;
     }
