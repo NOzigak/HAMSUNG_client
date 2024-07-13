@@ -5,9 +5,9 @@ const BoardItem = ({id, category, username, title, place, isRecruit, created_at}
     const nav = useNavigate();
     const recruitStatus = () => {
         if(isRecruit){
-            return "모집중"
-        } else if (!isRecruit){
             return "모집완료"
+        } else if (!isRecruit){
+            return "모집중"
         }
     }
 

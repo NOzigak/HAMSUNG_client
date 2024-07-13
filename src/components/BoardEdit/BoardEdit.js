@@ -20,6 +20,14 @@ export default function BoardEdit({name, initData, onSubmit, mode}){
 
     useEffect(()=>{
         if(initData){
+            // const formData = {
+            //     title: initData.title,
+            //     user_id: initData.user_id,
+            //     description : initData.description,
+            //     category : initData.category,
+            //     place : initData.place,
+            //     capacity : initData.capacity,
+            // }
             setInputData(initData);
         }
        //console.log(inputData)
@@ -42,7 +50,8 @@ export default function BoardEdit({name, initData, onSubmit, mode}){
         if (mode === "생성") {
             onSubmit(inputData);
         } else if (mode ==="수정") {
-            onSubmit(inputData.id, inputData);
+            console.log("수정요청 보냅니다.", inputData)
+            onSubmit(initData.id, inputData);
         }
     }
     return (

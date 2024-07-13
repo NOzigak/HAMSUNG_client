@@ -3,7 +3,6 @@ import "./LoginPage.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../actions/authActions";
-import { setCookie } from "../../utils/cookies";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -23,9 +22,9 @@ const LoginPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // login action
-    dispatch(login({email, password}));
-    
+    dispatch(login({email, password})); 
   }
+
   
   // 로그인 시 토큰 정보를 쿠키에 저장.
   useEffect(() => {

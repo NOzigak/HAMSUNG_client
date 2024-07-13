@@ -30,10 +30,16 @@ const EditProfile = ({ show, handleEdit, user_id, point, onUpdateNickname, initi
   const handleSave = async () => {
     try {
       const result = await EditProfileAPI(user_id, newNickname);
-      if (initialNickname !== newNickname) {
-        onUpdateNickname(newNickname); 
-        handleEdit(); 
-        console.log("update success.");
+      console.log(newNickname);
+      console.log(result.status);
+      if (result && result.status === 200) {
+        if (initialNickname !== newNickname) {
+          onUpdateNickname(newNickname); 
+          handleEdit(); 
+          console.log("닉네임 업데이트 성공.");
+        } else {
+          console.error("닉네임이 변경되지 않았습니다.");
+        }
       } else {
         console.error("닉네임 업데이트 실패:", result.message);
       }

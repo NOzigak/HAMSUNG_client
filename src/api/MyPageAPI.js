@@ -18,13 +18,9 @@ export const fetchUserData = async (user_id) => {
 
 
 //회원 탈퇴
-export const DeleteUserAPI = async (user_id, token) => {
+export const DeleteUserAPI = async (user_id) => {
     try {
-        const response = await client.delete(`/users/${user_id}`, {
-            headers: {
-                'Authorization': `Bearer ${token}` // 필요한 경우 토큰 추가
-            }
-        });
+        const response = await client.delete(`/users/${user_id}`);
 
         return true;
     } catch (error) {
@@ -40,9 +36,7 @@ export const DeleteUserAPI = async (user_id, token) => {
 //리뷰 등록
 export const ReviewAPI = async (user_id, reviewData) => {
     try {
-        const response = await client.post(`/api/reviews/${user_id}`, reviewData, {
-
-        });
+        const response = await client.post(`/api/reviews/${user_id}`, reviewData);
 
         if (response.status !== 200) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -57,25 +51,34 @@ export const ReviewAPI = async (user_id, reviewData) => {
 };
 
 
-//프로필 수정
+//프로필 수정 
 export const EditProfileAPI = async (user_id, newNickname) => {
+    console.log("아이디,닉네임:",user_id, newNickname);
     try {
-        const response = await client.put(
-            `/users/${user_id}`,
-            { username: newNickname },
-        );
+        const response = await client.put(`/users/${user_id}`, { username: newNickname });
 
-        return response.data;
+        return {
+            status: response.status,
+            data: response.data,
+        };
 
     } catch (error) {
         console.error("닉네임 업데이트 오류:", error);
+
         if (error.response) {
-            return { status: error.response.status, message: error.response.data.message };
+            return {
+                status: error.response.status,
+                message: error.response.data.message,
+            };
         } else {
-            return { status: 401, message: "invalid username." };
+            return {
+                status: 500,
+                message: "닉네임 업데이트 중 오류가 발생했습니다.",
+            };
         }
     }
 };
+
 
 //전체 리뷰 조회
 export const getUserReviewsAPI = async (user_id) => {

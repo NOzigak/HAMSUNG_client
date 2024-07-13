@@ -20,8 +20,6 @@ import "./MyPage.css";
 import getUserInfo from '../../utils/get-userInfo';
 
 const MyPage = () => {
-    const [showDeleteIDModal, setShowDeleteIDModal] = useState(false);
-    const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
     const [showEditProfileModal, setShowEditProfileModal] = useState(false);
     const [showReviewModal, setShowReviewModal] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
@@ -31,7 +29,7 @@ const MyPage = () => {
     const [topReviews, setTopReviews] = useState([]);
     const [studies, setStudies] = useState([]);
     const [selectedStudyId, setSelectedStudyId] = useState(null);
-    
+
     const navigate = useNavigate();
     const user = getUserInfo();
 
@@ -45,7 +43,7 @@ const MyPage = () => {
             const userData = await fetchUserData(user.user_id);
             const { username, point, reviewResponseDto } = userData;
             const topReviews = findTopTwoReviews(reviewResponseDto);
-    
+
             setUsername(username);
             setPoint(point);
             if (Array.isArray(topReviews)) {
@@ -60,31 +58,12 @@ const MyPage = () => {
     };
 
     const loadUserStudies = async () => {
-            try {
-              const studies = await getStudies(user.user_id);
-              setStudies(studies);
-
-          } catch (error) {
-              console.error('스터디 정보를 불러오는 중 오류 발생:', error);
-          }
-        };
-
-
-    const handleDeleteClick = () => {
-        setShowDeleteIDModal(true);
-    };
-
-    const handleCloseDeleteIDModal = () => {
-        setShowDeleteIDModal(false);
-    };
-
-    const handleConfirmDelete = () => {
-        setShowDeleteIDModal(false);
-        setShowDeleteConfirmModal(true);
-    };
-
-    const handleCloseDeleteConfirmModal = () => {
-        setShowDeleteConfirmModal(false);
+        try {
+            const studies = await getStudies(user.user_id);
+            setStudies(studies);
+        } catch (error) {
+            console.error('스터디 정보를 불러오는 중 오류 발생:', error);
+        }
     };
 
     const handleEditClick = () => {
@@ -99,7 +78,7 @@ const MyPage = () => {
         setUsername(newNickname);
     };
 
-    const handleEvaluateClick = () => {
+    const handleEvaluateClick = (study_id) => {
         setShowReviewModal(true);
     };
 
@@ -119,16 +98,13 @@ const MyPage = () => {
         try {
             const response = await getStudyInfoAPI(study_id);
             const studyInfo = {
-                id: response.data.study_id,
+                id: response.data.id,
                 member_num: response.data.member_num,
                 score: response.data.score,
                 leader_id: response.data.leader_id,
-                title: response.data.title,
+                title: response.data.title
             }
-            console.log(studyInfo);
-            console.log(studyInfo.score);
-            //setSelectedStudyId(study_id);
-            navigate('/studyGroup', { state: { studyInfo } });
+            navigate('/studyGroup', { state: { studyInfo, totalPages: response.data.member_num } });
         } catch (error) {
             console.error('스터디 정보를 불러오는 중 오류 발생:', error);
         }
@@ -151,7 +127,6 @@ const MyPage = () => {
         <div>
             <Navbar />
             <p className="title">마이페이지</p>
-            <button className="deleteID" onClick={handleDeleteClick}>회원탈퇴</button>
             <div className="outline"></div>
             <div className="circle-container">
                 <img className="profile-image" src={profileImage} alt="Profile" />
@@ -186,6 +161,7 @@ const MyPage = () => {
                     currentPage={currentPage}
                     nextPage={nextPage}
                     prevPage={prevPage}
+                    totalPages={selectedStudyId ? studies.find(study => study.id === selectedStudyId)?.member_num : 1}
                 />
             )}
 
@@ -209,17 +185,7 @@ const MyPage = () => {
                 <p>참여 중인 스터디가 없습니다.</p>
             )}
 
-            <DeleteID
-                show={showDeleteIDModal}
-                handleClose={handleCloseDeleteIDModal}
-                handleConfirm={handleConfirmDelete}
-            />
-
-            <DeleteConfirm
-                show={showDeleteConfirmModal}
-                handleClose={handleCloseDeleteConfirmModal}
-            />
-
+            
             <EditProfile
                 show={showEditProfileModal}
                 handleEdit={handleCloseEditProfileModal}
@@ -228,7 +194,7 @@ const MyPage = () => {
                 onUpdateNickname={handleUpdateNickname}
                 initialNickname={username}
             />
-        </div> 
+        </div>
     );
 };
 

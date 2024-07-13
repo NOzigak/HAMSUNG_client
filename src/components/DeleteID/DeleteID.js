@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import "./DeleteID.css";
 import { DeleteUserAPI } from "../../api/MyPageAPI";
 
-const DeleteID = ({ show, handleClose, handleConfirm, userId, token }) => {
+const DeleteID = ({ show, handleClose, handleConfirm, userId }) => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDelete = async () => {
     setIsDeleting(true);
-    const success = await DeleteUserAPI(userId, token);
+    console.log(userId);
+    const success = await DeleteUserAPI(userId);
     setIsDeleting(false);
 
-    if (success) {
+    if (success == true) {
       handleConfirm();
       handleClose();
     } else {
