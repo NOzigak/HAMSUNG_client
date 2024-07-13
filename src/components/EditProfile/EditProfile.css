@@ -141,19 +141,7 @@
   flex-wrap: wrap;
 }
 
-.tag-item{
-  display: flex;
-  background-color: #d5ffde;
-  border-radius: 10px;
-  width: 12vw;
-  height: 5vh;
-}
 
-.tag-icon{
-  width: 3vw;
-  height: 3vh;
-  margin-left: 8vw;
-}
 
 .end-container{
   display: column;

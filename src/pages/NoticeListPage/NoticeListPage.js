@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Navbar } from '../../components/Navbar/Navbar';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getNotices } from '../../actions/noticeAction';
 import './NoticeListPage.css';
-import { useSelector } from 'react-redux';
 
 const formatDate = (dateString) => {
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -10,21 +11,26 @@ const formatDate = (dateString) => {
 };
 
 const NoticeListPage = () => {
-  const NoticeData = useSelector(state => state.notice);
+  const { studyId } = useParams();  // URL에서 studyId 가져오기
+  const dispatch = useDispatch();
   const nav = useNavigate();
+  const notices = useSelector(state => state.noticeList.notices); // Redux 상태에서 공지사항 목록 가져오기
+
+  useEffect(() => {
+    dispatch(getNotices(studyId)); // GET_NOTICE_REQUEST 액션을 dispatch
+  }, [dispatch, studyId]);
 
   return (
     <div>
       <Navbar />
       <div className="title-container">
-        <p className="title">면접 스터디</p>
+        <p className="title">공지사항 리스트</p>
       </div>
       <div className="outline"></div>
 
       <div className="noticeList">
-        <p className="notice">공지사항</p>
-        {NoticeData.map((item) => (
-          <div key={item.id} className="noticeItem" onClick={() => nav(`/notice`)}>
+        {notices.map((item) => (
+          <div key={item.id} className="noticeItem">
             <div className="noticeContent">
               <p className="notice-title">{item.title}</p>
               <p className="notice-date">{formatDate(item.created_at)}</p>

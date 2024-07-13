@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import './StudyGroupPage.css';
 import FinishStudyModal from "../../components/FinishStudyModal/FinishStudyModal";
 import WeeklyStudyModal from "../../components/WeeklyStudyModal/WeeklyStudyModal";
@@ -9,30 +10,36 @@ import StudyCalendar from "../../components/StudyCalendar/StudyCalendar";
 import TodoBoard from "../../components/TodoBoard/TodoBoard";
 import { Navbar } from "../../components/Navbar/Navbar";
 import studyPoint from "../../assets/studyPoint.png";
-import { finishStudyAPI, saveWeeklyStudyData } from "../../api/StudyGroupAPI";
-import { useSelector } from 'react-redux'; // 공지사항 데이터 가져옴
+import { finishStudyAPI } from "../../api/StudyGroupAPI";
 import { getLatestNotices } from '../../utils/getLatestNotices';
+import ReviewModal from '../../components/ReviewModal/ReviewModal';
 
 const StudyGroupPage = () => {
     const location = useLocation();
-    const studyInfo = location.state?.studyInfo || {}; 
+    const [studyInfo, setStudyInfo] = useState({});
     const [showFinishStudyModal, setShowFinishStudyModal] = useState(false);
     const [showWeeklyStudyModal, setShowWeeklyStudyModal] = useState(false);
     const [showCalculatePoint, setShowCalculatePoint] = useState(false);
     const [value, setValue] = useState(new Date());
     const [weekCount, setWeekCount] = useState(2);
-    const [selectedWeekIndex, setSelectedWeekIndex] = useState(null);
-    const [weekScore, setWeekScore] = useState(null); // 주차 점수 state 추가
+    const [selectedWeek, setSelectedWeek] = useState(null);
+    const [weekScore, setWeekScore] = useState(null);
+    const [showButtons, setShowButtons] = useState(true); // 버튼 보이기/감추기 상태
+    const [showReviewModal, setShowReviewModal] = useState(false); // 리뷰 모달 상태
+    const NoticeData = useSelector(state => state.notice);
+    const latestNotices = getLatestNotices(NoticeData, 2);
 
-    const NoticeData = useSelector(state => state.notice); // 공지사항 데이터 가져오기
-    const latestNotices = getLatestNotices(NoticeData, 2); // 최신 공지 2개 추출
+    useEffect(() => {
+        if (location.state?.studyInfo) {
+            setStudyInfo(location.state.studyInfo);
+        }
+    }, [location.state]);
 
     const handleFinishClick = async () => {
         try {
             const result = await finishStudyAPI(studyInfo.id);
             if (result.status === 200) {
                 setShowFinishStudyModal(true);
-                console.log("스터디 종료 성공");
             } else {
                 console.log("스터디 종료 실패");
             }
@@ -54,48 +61,57 @@ const StudyGroupPage = () => {
     };
 
     const handleWeeklyClick = (index) => {
-        setSelectedWeekIndex(index);
+        setSelectedWeek(index);
         setShowWeeklyStudyModal(true);
+        setShowButtons(true); // 주차별 스터디 모달 열 때 버튼 보이기
     };
 
-    const handleOkWeeklyStudyModal = async () => {
+    const handleSaveWeeklyStudyModal = (weekScore) => {
+        setWeekScore(weekScore);
+        setShowCalculatePoint(true);
+        setShowButtons(false); 
+    };
+
+    const handleCloseWeeklyStudyModal = () => {
         setShowWeeklyStudyModal(false);
-        try {
-            const response = await saveWeeklyStudyData(selectedWeekIndex + 1, 0, 0, 0, 0);
-            console.log("저장 완료:", response);
-            setWeekScore(response.week_score); // week_score를 state에 저장
-            setShowCalculatePoint(true); // CalculatePoint 모달 표시
-        } catch (error) {
-            console.error("저장 실패:", error);
-        }
     };
 
     const handleCloseCalculatePoint = () => {
         setShowCalculatePoint(false);
     };
 
+    const handleReviewClick = () => {
+        setShowReviewModal(true);
+    };
+
+    const handleCloseReviewModal = () => {
+        setShowReviewModal(false);
+    };
+
     return (
         <div>
             <Navbar />
             <div className="title-container">
-                <p className="title">{studyInfo.title || "페이지"}</p>
+                <p className="title">{studyInfo.title} 페이지</p>
                 <img className="studyPoint" src={studyPoint} alt="StudyPoint" />
-                <p className="studyPoint-text">{studyInfo.score || "P"}</p>
+                <p className="studyPoint-text">{studyInfo.score}P</p>
             </div>
             <button className="finish-button" onClick={handleFinishClick}>스터디 종료</button>
             <div className="outline"></div>
 
             <div className="boardList">
-                {/* NoticeBox에 latestNotices 전달 */}
                 <NoticeBox notices={latestNotices} />
             </div>
 
             <div>
-                <StudyCalendar onChange={handleCalendarChange} /> {/* onChange props 전달 */}
+                <StudyCalendar value={value} onChange={handleCalendarChange} />
             </div>
 
             <div>
-                <TodoBoard value={value} />
+                <TodoBoard 
+                currentDate={value}
+                study_id={studyInfo.id}
+                />
             </div>
 
             <div className="weekly-container">
@@ -111,6 +127,7 @@ const StudyGroupPage = () => {
                 <div>
                     <button className="addStudy" onClick={addStudy}>➕</button>
                 </div>
+
             </div>
 
             {showFinishStudyModal && (
@@ -121,9 +138,12 @@ const StudyGroupPage = () => {
 
             {showWeeklyStudyModal && (
                 <WeeklyStudyModal
-                    onClose={handleOkWeeklyStudyModal}
-                    weekIndex={selectedWeekIndex}
-                    handleCalculate={setWeekScore} 
+                    onClose={handleCloseWeeklyStudyModal}
+                    week={selectedWeek}
+                    study_id={studyInfo.id}
+                    handleCalculate={handleSaveWeeklyStudyModal}
+                    showButtons={showButtons}
+                    setShowButtons={setShowButtons}
                 />
             )}
 

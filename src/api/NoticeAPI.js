@@ -1,7 +1,7 @@
 import client from "./client";
 
 // 공지사항 전체 조회
-export const getNoticeList = async (studyId, type) => {
+export const getNoticeListAPI = async (studyId, type) => {
     try {
         // 유효하지 않은 type 파라미터 처리
         if (type !== 'announce' && type !== 'schedule') {
@@ -14,7 +14,6 @@ export const getNoticeList = async (studyId, type) => {
     } catch (error) {
         if (error.response) {
             if (error.response.status === 404 && error.response.data.status === '404 NOT_FOUND') {
-                // 스터디에 등록된 공지사항이 없는 경우
                 console.log('해당 스터디에 등록된 공지사항이 없습니다.');
                 throw { status: 404, message: '해당 스터디에 등록된 공지사항이 없습니다.' };
             } else if (error.response.status === 400 && error.response.data.status === '400 BAD_REQUEST') {
@@ -31,9 +30,44 @@ export const getNoticeList = async (studyId, type) => {
 
 
 // 공지사항 생성
+export const createNoticeAPI = async (inputData, studyId) => {
+    try {
+        const response = await client.post(`/study/${studyId}/posts`, inputData);
+        return response.data;
+    } catch (error) {
+        console.log("공지사항 생성 실패", error);
+        throw error;
+    }
+}
+
 
 
 // 공지사항 삭제
+export const deleteNoticeAPI = async (postId) => {
+    try {
+        const response = await client.delete(`/posts/${postId}`);
+        if (response.status === 200) {
+            return {
+                status: "200 OK",
+                message: "공지사항/일정이 삭제되었습니다."
+            };
+        } else {
+            throw new Error("Unexpected response status");
+        }
+    } catch (error) {
+        console.log("이 작업을 수행할 권한(permission)이 없습니다.", error);
+        throw error;
+    }
+}
 
 
 // 공지사항 상세 조회
+export const getTargetNotice = async (postId) => {
+    try {
+        const response = await client.get(`/posts/${postId}`);
+        return response.data;
+    } catch (error) {
+        console.log("해당 id의 공지사항이 존재하지 않습니다.", error);
+        throw error;
+    }
+}

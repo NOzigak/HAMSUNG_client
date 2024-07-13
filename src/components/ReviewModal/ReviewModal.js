@@ -40,7 +40,7 @@ const ReviewModal = ({ closeReviewModal, currentPage, nextPage, prevPage, totalP
             absent: getSelectedOptions(currentPage, 'NreviewList').includes("지각,결석,과제 미제출이 잦아요"),
         };
 
-        const result = await ReviewAPI(currentPage, reviewData); // 사용자 ID를 전달
+        const result = await ReviewAPI(currentPage, reviewData);
         setSubmissionStatus(result.message);
     };
 
@@ -49,7 +49,6 @@ const ReviewModal = ({ closeReviewModal, currentPage, nextPage, prevPage, totalP
             <div className="review-content">
                 <ModalPage 
                     page={currentPage}
-                    pageState={pageState}
                     handleOptionChange={handleOptionChange}
                     getSelectedOptions={getSelectedOptions}
                 />
@@ -68,4 +67,3 @@ const ReviewModal = ({ closeReviewModal, currentPage, nextPage, prevPage, totalP
 };
 
 export default ReviewModal;
-

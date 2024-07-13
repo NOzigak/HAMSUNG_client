@@ -9,7 +9,7 @@ import BoardsReducer from "./BoardsReducer";
 const RootReducer = combineReducers({
     boards : BoardReducer,
     comments : CommentReducer,
-    notice : NoticeReducer,
+    notices : NoticeReducer,
     auth: AuthReducer,
     board: BoardsReducer,
 
