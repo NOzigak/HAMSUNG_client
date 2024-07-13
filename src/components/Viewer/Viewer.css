@@ -32,10 +32,18 @@
     width: 80vw;
     height:70vh;
     font-weight: 400;
-    font-size: 2.5vh;
+    font-size: 1.0rem;
     line-height: 17px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 8vh;
+    line-height: 2.2rem;
+}
+
+@media  screen and (max-width: 768px) {
+    .descSection{
+        font-size: 2.5vw;
+        line-height: 7vw;
+    }
 }
