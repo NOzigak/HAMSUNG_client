@@ -15,6 +15,7 @@ const TodoBoard = ({ study_id, currentDate }) => {
 
   const fetchTargetTodoByDate = async (date) => {
     try {
+      //console.log("현재 스터디:",study_id);
       setLoading(true);
       const todoData = await getTargetTodo(study_id, moment(date).format("YYYY-MM-DD"));
       console.log("todoData:", todoData);
@@ -55,7 +56,7 @@ const TodoBoard = ({ study_id, currentDate }) => {
   };
 
   const handleDeleteTodo = async (post_id) => {
-    console.log("삭제하려는 post id:", post_id);
+    //console.log("삭제하려는 post id:", post_id);
     try {
       await deleteTodo(post_id);
       console.log("일정 삭제 성공:", post_id);

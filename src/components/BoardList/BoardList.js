@@ -18,7 +18,7 @@ export default function BoardList() {
     useEffect(()=> {
        dispatch(getBoards()); //컴포넌트 마운트 시 게시글 목록을 가져옴
     }, [dispatch]);
-
+ 
     const handleOption = (e) => {
         setCategory(e.target.value);
     }

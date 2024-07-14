@@ -13,14 +13,15 @@ const NoticeBox = ({ study_id, notices }) => {
   const nav = useNavigate();
 
   const handleMoreButtonClick = async () => {
-    //console.log("버튼 누름:",study_id);
     try {
-      const allNotices = await getNoticeListAPI(study_id); 
-      nav("/noticeList", { state: { notices: allNotices } }); 
+        const allNotices = await getNoticeListAPI(study_id); 
+        nav("/noticeList", { state: { notices: allNotices, study_id } });
     } catch (error) {
-      console.error("공지사항을 가져오는 데 실패했습니다.", error);
+        console.error("공지사항을 가져오는 데 실패했습니다.", error);
+        // 공지사항이 없는 경우에도 noticeList 페이지로 이동
+        nav("/noticeList", { state: { notices: [] } });
     }
-  };
+};
 
   return (
     <div className="noticeBox">

@@ -1,5 +1,5 @@
 const initialState = {
-    Notice: [],
+    notices: [],
     loading: false,
     error: null,
 };
@@ -18,14 +18,14 @@ const NoticeReducer = (state = initialState, action) => {
         case "GET_NOTICE_SUCCESS":
             return {
                 ...state,
-                Notice: action.payload,
+                notices: action.payload,
                 loading: false,
                 error: null,
             }
         case "CREATE_NOTICE_SUCCESS":
             return {
                 ...state,
-                Notice: [...state.Notice, action.payload],
+                notices: [...state.notices, action.payload],
                 loading: false,
                 error: null,
             }
@@ -33,7 +33,7 @@ const NoticeReducer = (state = initialState, action) => {
         case "DELETE_NOTICE_SUCCESS":
             return  {
                 ...state,
-                Notice: state.Notice.filter(Notice => Notice.id !== action.payload),
+                notices: state.notices.filter(notice => notice.id !== action.payload),
                 loading: false,
                 error: null,
             };

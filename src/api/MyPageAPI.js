@@ -36,7 +36,7 @@ export const DeleteUserAPI = async (user_id) => {
 //리뷰 등록
 export const ReviewAPI = async (user_id, reviewData) => {
     try {
-        const response = await client.post(`/api/reviews/${user_id}`, reviewData);
+        const response = await client.post(`/reviews/${user_id}`, reviewData);
 
         if (response.status !== 200) {
             throw new Error(`HTTP error! status: ${response.status}`);
