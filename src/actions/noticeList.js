@@ -16,9 +16,9 @@ export const createNotice = (props) => ({
     }
 })
 
-export const deleteNotice = (postId) => ({
+export const deleteNotice = (post_id) => ({
     type:DELETE_NOTICE,
     payload: {
-        postId,
+        post_id,
     }
 })

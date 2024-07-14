@@ -9,17 +9,19 @@ const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString('ko-KR', options).replace(/\./g, '.').replace(/\s/g, '');
 };
 
-const NoticeBox = ({ notices }) => {
+const NoticeBox = ({ study_id, notices }) => {
   const nav = useNavigate();
 
   const handleMoreButtonClick = async () => {
     try {
-      const allNotices = await getNoticeListAPI(); 
-      nav("/noticeList", { state: { notices: allNotices } }); 
+        const allNotices = await getNoticeListAPI(study_id); 
+        nav("/noticeList", { state: { notices: allNotices, study_id } });
     } catch (error) {
-      console.error("공지사항을 가져오는 데 실패했습니다.", error);
+        console.error("공지사항을 가져오는 데 실패했습니다.", error);
+        // 공지사항이 없는 경우에도 noticeList 페이지로 이동
+        nav("/noticeList", { state: { notices: [] } });
     }
-  };
+};
 
   return (
     <div className="noticeBox">

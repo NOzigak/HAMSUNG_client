@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import './StudyGroupPage.css';
 import FinishStudyModal from "../../components/FinishStudyModal/FinishStudyModal";
@@ -12,7 +12,6 @@ import { Navbar } from "../../components/Navbar/Navbar";
 import studyPoint from "../../assets/studyPoint.png";
 import { finishStudyAPI } from "../../api/StudyGroupAPI";
 import { getLatestNotices } from '../../utils/getLatestNotices';
-import ReviewModal from '../../components/ReviewModal/ReviewModal';
 
 const StudyGroupPage = () => {
     const location = useLocation();
@@ -24,10 +23,11 @@ const StudyGroupPage = () => {
     const [weekCount, setWeekCount] = useState(2);
     const [selectedWeek, setSelectedWeek] = useState(null);
     const [weekScore, setWeekScore] = useState(null);
-    const [showButtons, setShowButtons] = useState(true); // 버튼 보이기/감추기 상태
-    const [showReviewModal, setShowReviewModal] = useState(false); // 리뷰 모달 상태
+    const [showButtons, setShowButtons] = useState(true);
+    const [showReviewModal, setShowReviewModal] = useState(false);
     const NoticeData = useSelector(state => state.notice);
     const latestNotices = getLatestNotices(NoticeData, 2);
+    const nav = useNavigate();
 
     useEffect(() => {
         if (location.state?.studyInfo) {
@@ -50,6 +50,7 @@ const StudyGroupPage = () => {
 
     const handleCloseFinishStudyModal = () => {
         setShowFinishStudyModal(false);
+        nav("/mypage");
     };
 
     const handleCalendarChange = (newValue) => {
@@ -63,7 +64,7 @@ const StudyGroupPage = () => {
     const handleWeeklyClick = (index) => {
         setSelectedWeek(index);
         setShowWeeklyStudyModal(true);
-        setShowButtons(true); // 주차별 스터디 모달 열 때 버튼 보이기
+        setShowButtons(true);
     };
 
     const handleSaveWeeklyStudyModal = (weekScore) => {
@@ -100,7 +101,10 @@ const StudyGroupPage = () => {
             <div className="outline"></div>
 
             <div className="boardList">
-                <NoticeBox notices={latestNotices} />
+                <NoticeBox 
+                    notices={latestNotices}
+                    study_id={studyInfo.id} 
+                /> 
             </div>
 
             <div>
@@ -109,9 +113,9 @@ const StudyGroupPage = () => {
 
             <div>
                 <TodoBoard 
-                currentDate={value}
-                study_id={studyInfo.id}
-                />
+                    currentDate={value}
+                    study_id={studyInfo.id}
+                /> 
             </div>
 
             <div className="weekly-container">

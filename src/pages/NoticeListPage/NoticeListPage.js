@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navbar } from '../../components/Navbar/Navbar';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { getNotices } from '../../actions/noticeAction';
 import './NoticeListPage.css';
 
@@ -11,14 +11,29 @@ const formatDate = (dateString) => {
 };
 
 const NoticeListPage = () => {
-  const { studyId } = useParams();  // URL에서 studyId 가져오기
+  const location = useLocation();
+  const study_id = location.state?.study_id; // location state에서 study_id 가져오기
+
   const dispatch = useDispatch();
   const nav = useNavigate();
-  const notices = useSelector(state => state.noticeList.notices); // Redux 상태에서 공지사항 목록 가져오기
+  const noticeData = useSelector(state => state.notices.notices);
+  const loading = useSelector(state => state.notices.loading);
+  const error = useSelector(state => state.notices.error);
 
   useEffect(() => {
-    dispatch(getNotices(studyId)); // GET_NOTICE_REQUEST 액션을 dispatch
-  }, [dispatch, studyId]);
+    console.log("2공지사항 리스트에 아이디:",study_id);
+    if (study_id) {
+      dispatch(getNotices(study_id)); // GET_NOTICE_REQUEST 액션을 dispatch
+    }
+  }, [dispatch, study_id]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div>
@@ -29,7 +44,7 @@ const NoticeListPage = () => {
       <div className="outline"></div>
 
       <div className="noticeList">
-        {notices.map((item) => (
+        {Array.isArray(noticeData) && noticeData.map((item) => (
           <div key={item.id} className="noticeItem">
             <div className="noticeContent">
               <p className="notice-title">{item.title}</p>
@@ -38,7 +53,13 @@ const NoticeListPage = () => {
           </div>
         ))}
       </div>
-      <button className="finish-button" onClick={() => nav("/newNotice")}>새 글 작성</button>
+      <button className="finish-button" 
+      onClick={() => {
+        console.log("study_id:", study_id);
+        nav("/newNotice", { state: { study_id } });
+      }}>
+        새 글 작성
+      </button>
     </div>
   );
 };

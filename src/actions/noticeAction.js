@@ -13,14 +13,15 @@ const DELETE_NOTICE_SUCCESS = "DELETE_NOTICE_SUCCESS";
 const DELETE_NOTICE_FAILURE = "DELETE_NOTICE_FAILURE";
 
 // 공지글 리스트를 불러오는 액션
-export const getNotices = (studyId) => async (dispatch) => {
+export const getNotices = (study_id) => async (dispatch) => {
     dispatch({ type: GET_NOTICE_REQUEST });
     try {
-        const response = await getNoticeListAPI(studyId);
+        const response = await getNoticeListAPI(study_id);
         dispatch({
             type: GET_NOTICE_SUCCESS,
             payload: response,
         });
+        //console.log("공지사항 리스트",response);
     } catch (error) {
         console.log("게시물 목록을 가져오는데 실패했습니다.", error);
         dispatch({
@@ -31,10 +32,10 @@ export const getNotices = (studyId) => async (dispatch) => {
 };
 
 // 공지글 생성 액션
-export const createNotice = (inputData, studyId) => async (dispatch) => {
+export const createNotice = (inputData, study_id) => async (dispatch) => {
     dispatch({ type: CREATE_NOTICE_REQUEST });
     try {
-        const response = await createNoticeAPI(inputData, studyId);
+        const response = await createNoticeAPI(inputData, study_id);
         dispatch({ type: CREATE_NOTICE_SUCCESS, payload: response });
     } catch (error) {
         dispatch({
@@ -45,13 +46,13 @@ export const createNotice = (inputData, studyId) => async (dispatch) => {
 };
 
 // 공지글 삭제 액션
-export const deleteNotice = (id) => async (dispatch) => {
+export const deleteNotice = (post_id) => async (dispatch) => {
     dispatch({ type: DELETE_NOTICE_REQUEST });
     try {
-        await deleteNoticeAPI(id);
+        await deleteNoticeAPI(post_id);
         dispatch({
             type: DELETE_NOTICE_SUCCESS,
-            payload: id,
+            payload: post_id,
         });
     } catch (error) {
         dispatch({
