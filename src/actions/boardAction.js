@@ -56,7 +56,7 @@ export const updateBoardAPI = (id, inputData) => async (dispatch) => {
         const response = await updateBoardRequest(id, inputData);
         dispatch({
             type: UPDATE_BOARD_SUCCESS,
-            payload: {id: id, updatedData: response.data},
+            payload: {id: id, updatedData: response},
         });
     } catch (error) {
         dispatch({

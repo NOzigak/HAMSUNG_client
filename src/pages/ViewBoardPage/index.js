@@ -4,14 +4,11 @@ import Comments from "../../components/Comments/Comments";
 import { Navbar } from "../../components/Navbar/Navbar";
 import Viewer from "../../components/Viewer/Viewer";
 import "./style.css";
-import useBoard from "../../hooks/useBoard";
-import { deleteBoard } from "../../actions/boardList";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { useEffect, useState } from "react";
 import RecruitModal from "../../components/RecruitModal/RecruitModal";
-import { applyForStudy, getTargetBoard, getUserReview, toggleRecruitmentStatus } from "../../api/BoardAPI";
+import { applyForStudy, getTargetBoard, toggleRecruitmentStatus } from "../../api/BoardAPI";
 import getUserInfo from "../../utils/get-userInfo";
-import useTargetBoard from "../../hooks/useTargetBoard";
 import { deleteBoardAPI } from "../../actions/boardAction";
 
 
@@ -19,11 +16,9 @@ const ViewBoardPage = () => {
 
     const params = useParams();
     const nav = useNavigate();
-    //const curBoardItem = useBoard(params.id);
 
     const [curBoardItem, setCurBoardItem] = useState(null);
     const user = getUserInfo();
-    const [review, setReview] = useState(null);
     const dispatch = useDispatch();
     const [modalOpen, setModalOpen] = useState(false);
     const showModal = () => {
@@ -48,19 +43,6 @@ const ViewBoardPage = () => {
         fetchBoardItem();
 
     }, [params.id]);
-    useEffect(()=> {
-        const fetchReview = async () => {
-            try {
-                const reviewData = await getUserReview(user.user_id);
-                console.log("리뷰를 가져왔습니다", reviewData)
-                setReview(reviewData);
-            } catch (error) {
-                console.log("리뷰를 가져오는데 실패했습니다.");
-            }
-        }
-        fetchReview();
-
-    }, [user.user_id]);
 
     if(!curBoardItem){
         return <div>데이터 로딩중...</div>
@@ -71,9 +53,6 @@ const ViewBoardPage = () => {
         if (
             window.confirm("게시물을 정말 삭제할까요? 복구되지 않습니다!")
         ){
-            // dispatch(deleteBoard(params.id));
-            // nav('/', {replace: true});
-            //삭제 api 요청
             try {
                 dispatch(deleteBoardAPI(params.id));
                 nav('/', {replace: true});
@@ -100,7 +79,6 @@ const ViewBoardPage = () => {
                 user_id: user.user_id,
                 username: user.username,
             }
-            //review: review,
         }
         try {
             const response = await applyForStudy(params.id, userInfo);

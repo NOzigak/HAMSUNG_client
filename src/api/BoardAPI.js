@@ -25,7 +25,7 @@ export const getTargetBoard = async (id) => {
 // 모집글 수정
 export const updateBoardRequest = async (id, inputData) => {
     try{
-        const response = await client.put(`/recruits/${id}`, inputData);
+        const response = await client.patch(`/recruits/${id}`, inputData);
         return response.data;
     } catch (error) {
         console.log("모집글을 수정하는데 실패하였습니다.", error);

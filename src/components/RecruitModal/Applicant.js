@@ -2,7 +2,6 @@ import { findMaxReview } from "../../utils/findMaxReview";
 import "./Applicant.css";
 import applicant from "./../../assets/applicant.png";
 import { approveMember } from "../../api/BoardAPI";
-import getUserInfo from "../../utils/get-userInfo";
 import { useState } from "react";
 
 const Applicant = ({username, review, study_id, member_id}) => {

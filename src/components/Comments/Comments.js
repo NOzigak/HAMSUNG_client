@@ -1,26 +1,22 @@
 import "./Comments.css";
 import Comment from "./Comment";
-import { useDispatch, useSelector } from "react-redux";
 import getReplies from "../../utils/getReplies";
-import { addComment } from "../../actions/commentActions";
 import CommentForm from "./CommentForm";
 import { useEffect, useState } from "react";
 import { addCommentRequest, getCommentsRequest } from "../../api/CommentAPI";
 import getUserInfo from "../../utils/get-userInfo";
-import { useNavigate } from "react-router-dom";
+
 
 const Comments = ({boardId}) => {
     const [comments, setComments] = useState([]);
     const userInfo = getUserInfo()
-    const nav = useNavigate();
-    //const comments = useSelector(state => state.comments);
+
     useEffect(()=> {
         fetchComments(boardId);
     }, [boardId]);
-    //const dispatch = useDispatch();
+
 
     const submitComment = async (boardId, text) => {
-        //dispatch(addComment(boardId, text));
         const commentDetail = {
             user_id: userInfo.user_id,
             text: text
@@ -29,7 +25,6 @@ const Comments = ({boardId}) => {
             const response = await addCommentRequest(boardId, commentDetail);
             console.log("댓글 작성 성공", response);
             fetchComments(boardId);
-            //nav(`/viewBoard/${boardId}`);
         } catch (error) {
             console.log("댓글 작성 실패", error);
         }

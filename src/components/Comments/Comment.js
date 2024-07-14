@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BoardBtn from "../BoardBtn/BoardBtn";
 import "./Comment.css";
-import { useDispatch } from "react-redux";
-import { addReply, deleteComment, deleteReply } from "../../actions/commentActions";
 import { addReplyRequest, deleteCommentRequest, deleteReplyRequest, getCommentsRequest } from "../../api/CommentAPI";
 import getUserInfo from "../../utils/get-userInfo";
-import { useNavigate, useParams } from "react-router-dom";
+
 
 
 const Comment = ({comment, replies, boardId, onClick}) => {
@@ -15,9 +13,7 @@ const Comment = ({comment, replies, boardId, onClick}) => {
     const isReplying = activeComment &&
         activeComment.type === "replying" &&
         activeComment.id === comment.id;
-    const dispatch = useDispatch();
     const userInfo = getUserInfo();
-    const nav = useNavigate();
 
     const handleText = (e) => {
         setText(e.target.value);
@@ -32,7 +28,7 @@ const Comment = ({comment, replies, boardId, onClick}) => {
 
     // 대댓글 작성
     const replySubmit = async () => {
-        //dispatch(addReply(text, comment.id))
+
         const replyDetail = {
             text: text,
             userId: userInfo.user_id,

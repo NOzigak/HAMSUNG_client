@@ -32,14 +32,6 @@ const LoginPage = () => {
       nav('/');
       try {
         localStorage.setItem('accessToken', JSON.stringify(auth.user));
-        //setCookie("accessToken", auth.user.access, {
-          //path:'/',
-          //secure: true
-        //});
-        //setCookie("refreshToken", auth.user.refresh, {
-        //  path: '/',
-        //  secure: true
-        //})
       } catch(e){
         console.log("cookie not working", e);
       }

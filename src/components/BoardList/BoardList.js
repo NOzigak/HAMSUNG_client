@@ -24,7 +24,6 @@ export default function BoardList() {
     }
     const nav = useNavigate();
     // redux state 호출
-    //const boardData = useSelector(state => state.boards);
     const boardData = useSelector(state => state.board.boards); // 서버 게시글 리스트 가져오기
     const loading = useSelector(state => state.board.loading); // 로딩 상태 가져오기
  
@@ -45,14 +44,7 @@ export default function BoardList() {
     const searchChange = (e) => {
         setSearch(e.target.value);
     }   
-    // const reissue = () => {
-    //     try{
-    //       const response = UserReissue();
-    //       console.log(response);
-    //     } catch(error) {
-    //       console.log("직접 재발급 실패", error);
-    //     }
-    //   }
+
 
 
   return (
@@ -66,7 +58,6 @@ export default function BoardList() {
             <input className="searchBar" type="text" placeholder="제목으로 검색" value={search} onChange={searchChange}/>
             <RecruitBtn text="검색하기" onClick={searchClick}/>
             <RecruitBtn text="스터디 모집하기" onClick={()=>nav("/newBoard")}/>
-            {/*<button onClick={reissue}>재발급</button>*/}
         </div>
 
         <div className="tableWrapper">

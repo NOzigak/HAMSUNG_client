@@ -1,12 +1,10 @@
 import { useNavigate, useParams } from "react-router-dom";
 import BoardEdit from "../../components/BoardEdit/BoardEdit";
 import { Navbar } from "../../components/Navbar/Navbar";
-import useBoard from "../../hooks/useBoard";
 import { useDispatch } from "react-redux";
-import { updateBoard } from "../../actions/boardList";
 import useTargetBoard from "../../hooks/useTargetBoard";
 import { updateBoardAPI } from "../../actions/boardAction";
-import { useEffect, useState } from "react";
+
 
 const EditBoard = () => {
     const params = useParams();
