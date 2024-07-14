@@ -12,12 +12,11 @@ import { useNavigate } from "react-router-dom";
 const Comments = ({boardId}) => {
     const [comments, setComments] = useState([]);
     const userInfo = getUserInfo()
-    const nav = useNavigate();
-    //const comments = useSelector(state => state.comments);
+
     useEffect(()=> {
         fetchComments(boardId);
     }, [boardId]);
-    //const dispatch = useDispatch();
+
 
     const submitComment = async (boardId, text) => {
         //dispatch(addComment(boardId, text));

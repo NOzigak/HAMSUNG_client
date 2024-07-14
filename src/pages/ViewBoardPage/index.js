@@ -48,19 +48,19 @@ const ViewBoardPage = () => {
         fetchBoardItem();
 
     }, [params.id]);
-    useEffect(()=> {
-        const fetchReview = async () => {
-            try {
-                const reviewData = await getUserReview(user.user_id);
-                console.log("리뷰를 가져왔습니다", reviewData)
-                setReview(reviewData);
-            } catch (error) {
-                console.log("리뷰를 가져오는데 실패했습니다.");
-            }
-        }
-        fetchReview();
+    // useEffect(()=> {
+    //     const fetchReview = async () => {
+    //         try {
+    //             const reviewData = await getUserReview(user.user_id);
+    //             console.log("리뷰를 가져왔습니다", reviewData)
+    //             setReview(reviewData);
+    //         } catch (error) {
+    //             console.log("리뷰를 가져오는데 실패했습니다.");
+    //         }
+    //     }
+    //     fetchReview();
 
-    }, [user.user_id]);
+    // }, [user.user_id]);
 
     if(!curBoardItem){
         return <div>데이터 로딩중...</div>
