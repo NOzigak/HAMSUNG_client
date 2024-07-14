@@ -20,17 +20,8 @@ export default function BoardEdit({name, initData, onSubmit, mode}){
 
     useEffect(()=>{
         if(initData){
-            // const formData = {
-            //     title: initData.title,
-            //     user_id: initData.user_id,
-            //     description : initData.description,
-            //     category : initData.category,
-            //     place : initData.place,
-            //     capacity : initData.capacity,
-            // }
             setInputData(initData);
         }
-       //console.log(inputData)
     },[initData])
 
     const handleinputData = (e) => {
@@ -46,7 +37,6 @@ export default function BoardEdit({name, initData, onSubmit, mode}){
     }
 
     const onClickSubmit = () => { //여기서 mode에 따른 작업을 처리한다.
-        //onSubmit(inputData);
         if (mode === "생성") {
             onSubmit(inputData);
         } else if (mode ==="수정") {
@@ -90,4 +80,3 @@ export default function BoardEdit({name, initData, onSubmit, mode}){
     )
 }
 
-//스터디명, 인원, 종류, 스터디 장소, 스터디 소개 =>생성 or 취소

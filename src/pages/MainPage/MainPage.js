@@ -9,7 +9,6 @@ import { getBoards } from "../../actions/boardAction";
 const MainPage = () =>{
 
 
-  //const boardData = useSelector(state => state.boards);
   const dispatch = useDispatch();
   // 메인페이지 접속시 전체 스터디 리스트를 조회하는 요청
   useEffect(()=> {
