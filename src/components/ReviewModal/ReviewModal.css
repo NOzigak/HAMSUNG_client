@@ -15,10 +15,17 @@
     padding: 5vw;
     border: 1px solid #888;
     width: 36.2vw;
-    height: 65vh;
+    height: 70vh;
     border-radius: 8px;
     box-sizing: border-box;
     text-align: center;
+    transition: all 0.3s ease; /* 크기 전환을 위한 트랜지션 추가 */
+}
+
+.review-content.initial-page {
+    width: 30vw; 
+    height: 30vh; 
+    margin: 29vh 35vw; /* 초기 페이지에서 작게 보이도록 마진 수정 */
 }
 
 .review-message-design {
@@ -37,10 +44,15 @@
     text-align: left;
 }
 
+.initial-review{
+    width: 20vw;
+    height: 10vh;
+}
+
 .close-review-button {
     position: absolute;
     top: 31.5vh;
-    margin-left: 13.5vw;
+    left: 61vw;
     font-size: 1.5vw;
     background: none;
     border: none;
@@ -53,7 +65,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 4vh;
+    margin-top: 3vh;
 }
 
 .checkbox-button {
@@ -120,3 +132,14 @@
     background-color: rgb(0, 68, 0);
 }
 
+.memberSelectBox{
+    width: 14vw;
+    padding: 2vh;
+    border: 1px solid black;
+    margin-top: 2vh;
+}
+
+
+.hide {
+    display: none; 
+}

@@ -12,13 +12,13 @@ const NoticeEditPage = () => {
     const dispatch = useDispatch();
 
     const onClickNoticeSubmitBtn = (input) => {
-        console.log("스터디 아이디:",study_id);
+        console.log("공지 올리려는 스터디id",study_id);
         if (study_id) {
             dispatch(createNotice(input, study_id));
             navigate("/noticeList", { state: { study_id }, replace: true });
         } else { 
             console.error("study_id가 없습니다.");
-        }
+        } 
     };
 
     return (

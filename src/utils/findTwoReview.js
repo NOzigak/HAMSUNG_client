@@ -25,9 +25,9 @@ export function findTopTwoReviews(reviewResponseDto) {
     const topTwoReviews = reviewArray.slice(0, 2);
 
     // 상위 두 개 리뷰가 모두 0일 경우 '리뷰가 없습니다' 반환
-    if (topTwoReviews.every(review => review.count === 0)) {
-        return "리뷰가 없습니다.";
-    }
+    //if (topTwoReviews.every(review => review.count === 0)) {
+    //    return "리뷰가 없습니다.";
+    //}
 
     // 리뷰가 있는 경우, 리뷰 타입을 매핑하고 반환
     return topTwoReviews.map(review => ({
