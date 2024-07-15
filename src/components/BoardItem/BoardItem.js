@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom"
 import "./BoardItem.css";
 
-const BoardItem = ({id, category, writer, title, place, isRecruit, created_at}) => {
+const BoardItem = ({id, category, username, title, place, isRecruit, created_at}) => {
     const nav = useNavigate();
     const recruitStatus = () => {
         if(isRecruit){
-            return "모집중"
-        } else if (!isRecruit){
             return "모집완료"
+        } else if (!isRecruit){
+            return "모집중"
         }
     }
 
@@ -19,7 +19,7 @@ const BoardItem = ({id, category, writer, title, place, isRecruit, created_at}) 
                     {category}
                 </div>
                 <div className="columnBasic">
-                    {writer}
+                    {username}
                 </div>
                 <div className="columnTitle">
                     {title}

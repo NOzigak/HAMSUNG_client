@@ -3,36 +3,38 @@ import "../BoardEdit/BoardEdit.css";
 import "./NoticeEdit.css"
 import { useNavigate } from "react-router-dom";
 
-export default function NoticeEdit({name,initData,onSubmit}){
-
+export default function NoticeEdit({ name, study_id, initData, onSubmit }) {
     const [inputData, setInputData] = useState({
-        title : "",
-        place : "",
-        description : "",
-    })
+        title: "",
+        place: "",
+        description: "",
+        study_id: study_id, 
+        type: "announcement"
+    });
     const nav = useNavigate();
 
-    useEffect(()=>{
-        if(initData){
+    useEffect(() => {
+        if (initData) {
+            console.log(inputData);
             setInputData(initData);
         }
-    },[initData])
+    }, [initData]);
 
-    const handleinputData = (e) => {
-        const {name, value} = e.target
+    const handleInputData = (e) => {
+        const { name, value } = e.target;
         setInputData({
             ...inputData,
-            [name] : value
-        })
-    }
+            [name]: value
+        });
+    };
 
     const cancelEditNotice = () => {
-        nav("/noticeList")
-    }
+        nav("/noticeList");
+    };
 
     const onClickNoticeSubmit = () => {
         onSubmit(inputData);
-    }
+    };
 
     return (
         <div className="boardWrapper">
@@ -43,21 +45,19 @@ export default function NoticeEdit({name,initData,onSubmit}){
             </div>
             <div className="boardInput">
                 <div>
-                    제목 : <input className="noticeName" name="title" value={inputData.title} onChange={handleinputData}/>
+                    제목 : <input className="noticeName" name="title" value={inputData.title} onChange={handleInputData} />
                 </div>
-
                 <div>
-                    장소 : <input className="noticePlace" name="place" value={inputData.place} onChange={handleinputData}/>
+                    장소 : <input className="noticePlace" name="place" value={inputData.place} onChange={handleInputData} />
                 </div>
-                
                 <div className="descWrapper">
-                    내용 : <textarea className="noticeDescription" name="description" placeholder="공지사항을 작성해주세요." value={inputData.description} onChange={handleinputData}/>
+                    내용 : <textarea className="noticeDescription" name="description" placeholder="공지사항을 작성해주세요." value={inputData.description} onChange={handleInputData} />
                 </div>   
             </div>
-            <div className="btnSection">
+            <div className="btnSection"> 
                 <button className="createBtn" onClick={onClickNoticeSubmit}>생성</button>
                 <button className="cancleBtn" onClick={cancelEditNotice}>취소</button>
             </div>
         </div>
-    )
+    );
 }

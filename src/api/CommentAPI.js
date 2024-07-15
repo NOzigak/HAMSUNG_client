@@ -1,9 +1,9 @@
 import client from "./client"
 
 // 모집글 댓글 조회
-export const getCommentsRequest = async (recruitId) => {
+export const getCommentsRequest = async (recruit_id) => {
     try {
-        const response = await client.get(`/comments/recruits/${recruitId}`);
+        const response = await client.get(`/comments/recruits/${recruit_id}`);
         return response.data;
     } catch (error) {
         console.log("댓글을 가져오는데 실패했습니다.", error);
@@ -14,8 +14,13 @@ export const getCommentsRequest = async (recruitId) => {
 // 댓글 작성 
 // commnetInfo : 토큰으로 추출한 유저 id + text
 export const addCommentRequest = async (recruit_id, commentInfo) => {
+    const formData = new FormData();
+    formData.append("userId", commentInfo.user_id);
+    formData.append("text", commentInfo.text);
     try {
-        const response = await client.post(`/recruits/${recruit_id}/comments`, commentInfo);
+        const response = await client.post(`/recruits/${recruit_id}/comments`, formData, {
+            headers: {"Content-Type": "multipart/form-data"},
+        });
         return response.data;
     } catch (error) {
         console.log("댓글 작성에 실패했습니다.", error);
@@ -24,9 +29,9 @@ export const addCommentRequest = async (recruit_id, commentInfo) => {
 }
 
 // 댓글 삭제
-export const deleteCommentRequest = async (commentId, userId) => {
+export const deleteCommentRequest = async (commentId) => {
     try {
-        const response = await client.delete(`/comments/${commentId}`, {data: {userId: userId}});
+        const response = await client.delete(`/comments/${commentId}`);
         return response.data;
     } catch (error) {
         console.log("댓글 삭제에 실패했습니다.", error);
@@ -47,9 +52,9 @@ export const addReplyRequest = async (parnetId, replyInfo) => {
 }
 
 // 대댓글 삭제
-export const deleteReplyRequest = async (childCommentId, userId) => {
+export const deleteReplyRequest = async (childCommentId) => {
     try {
-        const response = await client.delete(`/child-comments/${childCommentId}`, {data: {userId: userId}});
+        const response = await client.delete(`/child-comments/${childCommentId}`);
         return response.data;
     } catch (error) {
         console.log('대댓글 삭제에 실패했습니다.', error);

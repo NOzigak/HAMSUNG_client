@@ -4,7 +4,6 @@ import icon from "./../../assets/hamsungIcon.png";
 import menu from "./../../assets/menu.png";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { UserLogout } from "../../api/AuthAPI";
 import { logout } from "../../actions/authActions";
 
 export const Navbar = () => {
@@ -20,13 +19,6 @@ export const Navbar = () => {
     const onClickLogout = async () => {
         dispatch(logout());
         nav("/") //메인페이지로 리디렉션
-        // try{
-        //     const response = await UserLogout();
-        //     console.log("로그아웃 성공", response);
-        //     nav("/") // 메인페이지로 리다이렉트
-        // } catch (error) {
-        //     console.log("로그아웃 실패", error);
-        // }
     }
     const [isOpen, setIsOpen] = useState(false);
     const onClickToggle = () => {

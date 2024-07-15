@@ -1,69 +1,73 @@
-import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import NoticeBtn from "../../components/BoardBtn/BoardBtn";
-import { Navbar } from "../../components/Navbar/Navbar";
-import Viewer from "../../components/Viewer/Viewer";
-import "../../pages/NoticeViewPage/NoticeViewPage.css";
-import { useDispatch } from "react-redux";
-import { deleteNotice } from "../../actions/noticeList";
-
-
-const mockNotice = {
-    1: {
-        id: 1,
-        title: "<필독> 함성 면접 스터디 기본 규칙 설명",
-        writer: "노성균",
-        created_at: "2023-06-22",
-        place: "서울",
-        description: "함성 면접 스터디 기본 규칙을 공유합니다.\n앞으로 스터디 진행하는 동안 지켜주시기 바랍니다!"
-    }
-};
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import BoardBtn from '../../components/BoardBtn/BoardBtn';
+import { Navbar } from '../../components/Navbar/Navbar';
+import Viewer from '../../components/Viewer/Viewer';
+import '../NoticeViewPage/NoticeViewPage.css';
+import { deleteNotice } from '../../actions/noticeAction';
+import { getTargetNotice } from '../../api/NoticeAPI';
 
 const NoticeViewPage = () => {
-    const params = useParams();
-    const nav = useNavigate();
-    const dispatch = useDispatch();
+  const params = useParams();
+  const nav = useNavigate();
 
-    // ID를 기본적으로 1로 설정하고, URL 파라미터에 따라 ID 변경
-    const noticeId = params.id || 1;
-    const NoticeItem = mockNotice[noticeId];
+  const [noticeItem, setNoticeItem] = useState(null);
+  const dispatch = useDispatch();
 
-    if (!NoticeItem) {
-        return <div>데이터 로딩중...</div>;
-    }
-
-    const onClickDelete = () => {
-        if (window.confirm("게시물을 정말 삭제할까요? 복구되지 않습니다!")) {
-            dispatch(deleteNotice(noticeId));
-            nav('/noticeList', { replace: true });
-        }
+  useEffect(() => {
+    const fetchNoticeItem = async () => {
+      try {
+        const data = await getTargetNotice(params.id);
+        console.log("공지정보 가져오기 성공", data);
+        setNoticeItem(data);
+      } catch (error) {
+        console.log("게시글 상세 정보 불러오기 실패", error);
+        console.log(params.id);
+      }
     };
+    fetchNoticeItem();
+  }, [params.id]);
 
-    return (
-        <div>
-            <Navbar />
-            <div className="detailWrapper">
-                <div className="detailTitle">
-                    {NoticeItem.title}
-                </div>
+  if (!noticeItem) {
+    return <div>데이터 로딩중...</div>;
+  }
 
-                <div>
-                    <Viewer
-                        leader={NoticeItem.writer}
-                        created_at={NoticeItem.created_at}
-                        description={NoticeItem.description}
-                        place={NoticeItem.place}
-                    />
-                </div>
-                {NoticeItem.writer === "노성균" ? 
-                    <div className="writeBtn">
-                        <NoticeBtn title="삭제하기" onClick={onClickDelete} />
-                    </div> 
-                    : null                            
-                }
-            </div>
+  const onClickDelete = async () => {
+    if (window.confirm("게시물을 정말 삭제할까요? 복구되지 않습니다!")) {
+      try {
+        await dispatch(deleteNotice(params.id));
+        nav('/noticeList', { state: { deleted: true } });
+      } catch (error) {
+        console.log("게시글을 삭제하는데 실패했습니다.", error);
+      }
+    }
+  };
+
+  return (
+    <div>
+      <Navbar />
+      <div className="detailWrapper">
+        <div className="detailTitle">
+          {noticeItem.title}
         </div>
-    );
+
+        <div>
+          <Viewer
+            leader={noticeItem.username}
+            created_at={noticeItem.created_at}
+            description={noticeItem.description}
+            place={noticeItem.place}
+            mode={"notice"}
+          />
+        </div>
+
+        <div className="writeBtn">
+          <BoardBtn title="삭제하기" onClick={onClickDelete} />
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default NoticeViewPage;

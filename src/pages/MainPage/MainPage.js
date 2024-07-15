@@ -9,14 +9,13 @@ import { getBoards } from "../../actions/boardAction";
 const MainPage = () =>{
 
 
-  //const boardData = useSelector(state => state.boards);
   const dispatch = useDispatch();
   // 메인페이지 접속시 전체 스터디 리스트를 조회하는 요청
   useEffect(()=> {
     dispatch(getBoards());
   }, [])
 
-  const boardData = useSelector(state => state.board); // 서버로부터 받아온 모집글 리스트
+  const boardData = useSelector(state => state.board.boards); // 서버로부터 받아온 모집글 리스트
   
     return(
         <div>

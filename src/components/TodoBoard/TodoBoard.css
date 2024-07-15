@@ -1,8 +1,9 @@
 .Todo-container{
   margin-top: -35vh;
   margin-left: 45vw;
-  width: 46.7vw;
-  height: 45.5vh;
+  padding: 4vh;
+  width: 43vw;
+  height: 38vh;
   border: #115d0ed5 1.5px solid;
 }
 
@@ -17,7 +18,7 @@
 .todo-input{
 border: none;
 border-bottom: 0.5px solid #000;
-margin-left: 12.5vw;
+margin-left: 10.5vw;
 padding: 1vw;
 width: 20vw;
 text-align: center;

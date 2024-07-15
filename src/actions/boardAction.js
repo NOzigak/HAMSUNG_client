@@ -21,7 +21,7 @@ export const getBoards = () => async (dispatch) => {
     dispatch({type: GET_BOARD_REQUEST});
     try{
         const response = await getBoardsRequest();
-        const data = await response.json();
+        const data = await response
         dispatch({
             type: GET_BOARD_SUCCESS,
             payload: data,
@@ -56,7 +56,7 @@ export const updateBoardAPI = (id, inputData) => async (dispatch) => {
         const response = await updateBoardRequest(id, inputData);
         dispatch({
             type: UPDATE_BOARD_SUCCESS,
-            payload: {id: id, updatedData: response.data},
+            payload: {id: id, updatedData: response},
         });
     } catch (error) {
         dispatch({

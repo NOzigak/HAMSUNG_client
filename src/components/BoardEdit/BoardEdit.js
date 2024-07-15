@@ -7,9 +7,10 @@ export default function BoardEdit({name, initData, onSubmit, mode}){
     //mode는 생성, 수정에 맞는 api를 호출해 사용하는데 이용된다.
     const selectList = ["어학","취업", "고시", "프로그래밍", "기타"]
     const userInfo = getUserInfo(); // jwt토큰 디코드해 id 가져오기
+
     const [inputData, setInputData] = useState({
         title : "",
-        user_id: userInfo.id,
+        user_id: userInfo.user_id,
         description : "",
         category : "어학",
         place : "",
@@ -21,7 +22,6 @@ export default function BoardEdit({name, initData, onSubmit, mode}){
         if(initData){
             setInputData(initData);
         }
-       //console.log(inputData)
     },[initData])
 
     const handleinputData = (e) => {
@@ -37,11 +37,11 @@ export default function BoardEdit({name, initData, onSubmit, mode}){
     }
 
     const onClickSubmit = () => { //여기서 mode에 따른 작업을 처리한다.
-        //onSubmit(inputData);
         if (mode === "생성") {
             onSubmit(inputData);
         } else if (mode ==="수정") {
-            onSubmit(inputData.id, inputData);
+            console.log("수정요청 보냅니다.", inputData)
+            onSubmit(initData.id, inputData);
         }
     }
     return (
@@ -80,4 +80,3 @@ export default function BoardEdit({name, initData, onSubmit, mode}){
     )
 }
 
-//스터디명, 인원, 종류, 스터디 장소, 스터디 소개 =>생성 or 취소

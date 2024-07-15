@@ -1,25 +1,27 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getTargetNotice } from "../api/NoticeAPI";
 
 const useNotice = (id) => {
-    const data = useSelector(state => state.Notices);
-    const [NoticeItem, setNoticeItem] = useState(null);
-    const navigate = useNavigate();
+    const [noticeItem, setNoticeItem] = useState(null);
+    const nav = useNavigate();
 
     useEffect(() => {
-        const NoticeItem = data.find(
-            (item) => String(item.id) === String(id)
-        );
-        if (!NoticeItem) {
-            window.alert("잘못된 요청입니다.");
-            navigate("/home", { replace: true });
-        } else {
-            setNoticeItem(NoticeItem);
-        }
-    }, [id, data, navigate]);
+        const fetchNoticeData = async () => {
+            try {
+                const response = await getTargetNotice (id);
+                setNoticeItem(response); // API에서 받아온 데이터 설정
+                
+            } catch (error) {
+                console.error("게시글 조회 오류:", error);
+                nav("/home", { replace: true });
+            }
+        };
 
-    return NoticeItem;
+        fetchNoticeData();
+    }, [id, nav]);
+
+    return noticeItem;
 };
 
 export default useNotice;

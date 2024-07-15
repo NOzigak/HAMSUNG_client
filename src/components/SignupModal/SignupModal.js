@@ -2,7 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import "./SignupModal.css";
 
-function SignupModal({ setModalOpen, id, title, content, writer }) {
+function SignupModal({ setModalOpen }) {
     
     const nav = useNavigate();
     // 모달 끄기 

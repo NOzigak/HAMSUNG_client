@@ -2,10 +2,10 @@ import { useSelector } from "react-redux";
 import { PostCard } from "../PostCard/PostCard";
 import "./CardList.css";
 
-export const CardList = () => {
+export const CardList = (data) => {
 
-    const boardData = useSelector(state => state.boards);
-    const sortedData = boardData.slice().sort((a, b) => b.view - a.view);
+    const boardDetail = useSelector(state => state.board.boards);
+    const sortedData = boardDetail.slice().sort((a, b) => b.view - a.view);
 
     return (
         <div className="cardList">

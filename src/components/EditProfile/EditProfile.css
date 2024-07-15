@@ -141,21 +141,19 @@
   flex-wrap: wrap;
 }
 
-.tag-item{
+.whole-tag-box{
   display: flex;
+  align-items: center;
+  margin-left: 1.5vw;
+  padding: 1vh 1vw;
+  border-radius: 20px;
   background-color: #d5ffde;
-  border-radius: 10px;
-  width: 12vw;
-  height: 5vh;
+  margin-bottom: 2vh;
 }
 
-.tag-icon{
-  width: 3vw;
-  height: 3vh;
-  margin-left: 8vw;
-}
+
 
 .end-container{
   display: column;
-  margin-top: 22vh;
+  margin-top:-7vh;
 }

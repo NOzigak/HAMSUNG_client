@@ -2,7 +2,6 @@
 import { useDispatch } from "react-redux";
 import { Navbar } from "../../components/Navbar/Navbar";
 import BoardEdit from "../../components/BoardEdit/BoardEdit";
-import { createBoard } from "../../actions/boardList";
 import { useNavigate } from "react-router-dom";
 import { createBoardAPI } from "../../actions/boardAction";
 
