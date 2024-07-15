@@ -24,6 +24,7 @@ const NoticeListPage = () => {
 
   // navigation 상태 변화 감지 및 공지사항 재불러오기
   useEffect(() => {
+    console.log("지금 id:", study_id);
     if (study_id) {
       dispatch(getNotices(study_id));
     }
