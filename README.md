@@ -1,5 +1,5 @@
 
-![페이지](https://github.com/user-attachments/assets/c046f0a1-6a5d-4cca-93a6-368b41393c4a)
+![hamsungInfo](https://github.com/user-attachments/assets/0bf3b7f7-a023-4b4a-a6cc-343cf8b18ea9)
 
 ## 링크
 
