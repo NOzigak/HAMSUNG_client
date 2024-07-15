@@ -71,7 +71,7 @@ const TodoBoard = ({ study_id, currentDate }) => {
       <input
         type="text"
         className="todo-input"
-        placeholder="내용을 추가해주세요."
+        placeholder="날짜 선택 후 내용을 추가해주세요."
         value={description}
         onChange={handleInputChange}
       />

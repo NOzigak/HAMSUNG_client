@@ -21,7 +21,7 @@ const NoticeListPage = () => {
   const error = useSelector(state => state.notices.error);
 
   useEffect(() => {
-    console.log("2공지사항 리스트에 아이디:",study_id);
+    console.log("공지사항 리스트에 아이디:", study_id);
     if (study_id) {
       dispatch(getNotices(study_id)); // GET_NOTICE_REQUEST 액션을 dispatch
     }
@@ -45,7 +45,11 @@ const NoticeListPage = () => {
 
       <div className="noticeList">
         {Array.isArray(noticeData) && noticeData.map((item) => (
-          <div key={item.id} className="noticeItem">
+          <div 
+            key={item.id} 
+            className="noticeItem" 
+            onClick={() => nav(`/notice/${item.id}`)}
+          >
             <div className="noticeContent">
               <p className="notice-title">{item.title}</p>
               <p className="notice-date">{formatDate(item.created_at)}</p>
@@ -54,10 +58,11 @@ const NoticeListPage = () => {
         ))}
       </div>
       <button className="finish-button" 
-      onClick={() => {
-        console.log("study_id:", study_id);
-        nav("/newNotice", { state: { study_id } });
-      }}>
+        onClick={() => {
+          console.log("study_id:", study_id);
+          nav("/newNotice", { state: { study_id } });
+        }}
+      >
         새 글 작성
       </button>
     </div>
@@ -65,3 +70,5 @@ const NoticeListPage = () => {
 };
 
 export default NoticeListPage;
+
+

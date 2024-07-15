@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollRestoration, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { Navbar } from "../../components/Navbar/Navbar";
-import DeleteID from "../../components/DeleteID/DeleteID";
-import DeleteConfirm from "../../components/DeleteConfirm/DeleteConfirm";
 import EditProfile from "../../components/EditProfile/EditProfile";
 import profileImage from '../../assets/person.png';
 import lvSilver from "../../assets/silver.png";
@@ -41,7 +38,10 @@ const MyPage = () => {
     const loadUserData = async () => {
         try {
             const userData = await fetchUserData(user.user_id);
-            const { username, point, reviewResponseDto } = userData;
+            console.log("유저 데이터1:",userData.data);
+            const { username, point, reviewResponseDto } = userData.data;
+            console.log("유저 데이터2:",point);
+
             const topReviews = findTopTwoReviews(reviewResponseDto);
 
             setUsername(username);
@@ -49,7 +49,7 @@ const MyPage = () => {
             if (Array.isArray(topReviews)) {
                 setReview(reviewResponseDto);
                 setTopReviews(topReviews);
-            } else {
+            } else { 
                 console.error('리뷰 정보를 불러오는 중 오류 발생:', topReviews);
             }
         } catch (error) {
@@ -97,7 +97,7 @@ const MyPage = () => {
 
     const handleStudyClick = async (study_id) => {
         try {
-            console.log("테스트용:",study_id);
+            console.log("현재 스터디 id:",study_id);
             const response = await getStudyInfoAPI(study_id);
             const studyInfo = {
                 id: response.data.id,
