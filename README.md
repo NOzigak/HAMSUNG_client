@@ -45,8 +45,6 @@
 <br>
 
 ## 기술 스택
-<img src="https://img.shields.io/badge/react-#61DAFB?style=for-the-badge&logo=React&logoColor=white">
-<img src="https://img.shields.io/badge/Redex-#764ABC?style=for-the-badge&logo=Redux&logoColor=white">
 
 
 #### 서버 배포
