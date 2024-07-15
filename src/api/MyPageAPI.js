@@ -41,7 +41,7 @@ export const ReviewAPI = async (user_id, reviewData) => {
         if (response.status !== 200) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-
+        alert("리뷰가 등록되었습니다!");
         return { status: response.status, message: response.data.message };
 
     } catch (error) {
