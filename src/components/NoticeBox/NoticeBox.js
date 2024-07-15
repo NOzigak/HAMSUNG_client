@@ -8,7 +8,7 @@ const formatDate = (dateString) => {
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
   return new Date(dateString).toLocaleDateString('ko-KR', options).replace(/\./g, '.').replace(/\s/g, '');
 };
-
+ 
 const NoticeBox = ({ study_id, notices }) => {
   const nav = useNavigate();
 

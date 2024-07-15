@@ -32,7 +32,7 @@ function App() {
             <Route path='/myPage' element={<MyPage />} />
             <Route path='/studyGroup' element={<StudyGroupPage />} />
             <Route path='/newNotice' element={<NoticeEditPage />} />
-            <Route path='/notice' element={<NoticeViewPage />} />
+            <Route path='/notice/:id' element={<NoticeViewPage />} />
             <Route path='/noticeList' element={<NoticeListPage />} />
           </Route>
           <Route path='/rank' element={<RankPage />} />

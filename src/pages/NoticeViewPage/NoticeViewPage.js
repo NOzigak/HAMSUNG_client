@@ -1,73 +1,72 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import NoticeBtn from "../../components/BoardBtn/BoardBtn";
-import { Navbar } from "../../components/Navbar/Navbar";
-import Viewer from "../../components/Viewer/Viewer";
-import "../../pages/NoticeViewPage/NoticeViewPage.css";
-import { useDispatch } from "react-redux";
-import { deleteNotice } from "../../actions/noticeList";
-import { getTargetNotice, deleteNoticeAPI } from "../../api/NoticeAPI";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import BoardBtn from '../../components/BoardBtn/BoardBtn';
+import { Navbar } from '../../components/Navbar/Navbar';
+import Viewer from '../../components/Viewer/Viewer';
+import '../NoticeViewPage/NoticeViewPage.css';
+import { deleteNotice } from '../../actions/noticeAction';
+import { getTargetNotice } from '../../api/NoticeAPI';
 
 const NoticeViewPage = () => {
-    const params = useParams();
-    const nav = useNavigate();
-    const dispatch = useDispatch();
-    const [noticeItem, setNoticeItem] = useState(null);
+  const params = useParams();
+  const nav = useNavigate();
 
-    useEffect(() => {
-        const fetchNotice = async () => {
-            try {
-                const data = await getTargetNotice(params.id);
-                setNoticeItem(data);
-            } catch (error) {
-                console.error("공지사항을 불러오는 중 오류 발생:", error);
-            }
-        };
+  const [noticeItem, setNoticeItem] = useState(null);
+  const dispatch = useDispatch();
 
-        fetchNotice();
-    }, [params.id]);
-
-    if (!noticeItem) {
-        return <div>데이터 로딩 중...</div>;
-    }
-
-    const onClickDelete = async () => {
-        if (window.confirm("게시물을 정말 삭제할까요? 복구되지 않습니다!")) {
-            try {
-                await deleteNoticeAPI(params.id);
-                dispatch(deleteNotice(params.id));
-                nav('/noticeList', { replace: true });
-            } catch (error) {
-                console.error("공지사항 삭제 중 오류 발생:", error);
-            }
-        }
+  useEffect(() => {
+    const fetchNoticeItem = async () => {
+      try {
+        const data = await getTargetNotice(params.id);
+        console.log("공지정보 가져오기 성공", data);
+        setNoticeItem(data);
+      } catch (error) {
+        console.log("게시글 상세 정보 불러오기 실패", error);
+        console.log(params.id);
+      }
     };
+    fetchNoticeItem();
+  }, [params.id]);
 
-    return (
-        <div>
-            <Navbar />
-            <div className="detailWrapper">
-                <div className="detailTitle">
-                    {noticeItem.title}
-                </div>
+  if (!noticeItem) {
+    return <div>데이터 로딩중...</div>;
+  }
 
-                <div>
-                    <Viewer
-                        leader={noticeItem.writer}
-                        created_at={noticeItem.created_at}
-                        description={noticeItem.description}
-                        place={noticeItem.place}
-                    />
-                </div>
-                {noticeItem.writer === "노성균" ? 
-                    <div className="writeBtn">
-                        <NoticeBtn title="삭제하기" onClick={onClickDelete} />
-                    </div> 
-                    : null                            
-                }
-            </div>
+  const onClickDelete = () => {
+    if (window.confirm("게시물을 정말 삭제할까요? 복구되지 않습니다!")) {
+      try {
+        dispatch(deleteNotice(params.id));
+        nav('/noticeList');
+      } catch (error) {
+        console.log("게시글을 삭제하는데 실패했습니다.", error);
+      }
+    }
+  };
+
+  return (
+    <div>
+      <Navbar />
+      <div className="detailWrapper">
+        <div className="detailTitle">
+          {noticeItem.title}
         </div>
-    );
+
+        <div>
+          <Viewer
+            leader={noticeItem.username}
+            created_at={noticeItem.created_at}
+            description={noticeItem.description}
+            place={noticeItem.place}
+          />
+        </div>
+
+        <div className="writeBtn">
+          <BoardBtn title="삭제하기" onClick={onClickDelete} />
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default NoticeViewPage;

@@ -25,8 +25,8 @@ const StudyGroupPage = () => {
     const [weekScore, setWeekScore] = useState(null);
     const [showButtons, setShowButtons] = useState(true);
     const [showReviewModal, setShowReviewModal] = useState(false);
-    const NoticeData = useSelector(state => state.notice);
-    const latestNotices = getLatestNotices(NoticeData, 2);
+    const noticeData = useSelector(state => state.notices.notices);
+    const latestNotices = getLatestNotices(noticeData, 2);
     const nav = useNavigate();
 
     useEffect(() => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import "./ReviewModal.css";
 
-const ModalPage = ({ page, memberName, handleOptionChange, getSelectedOptions }) => {
+const ModalPage = ({ memberName, handleOptionChange, getSelectedOptions }) => {
     const PreviewList = ["지각하지 않아요", "성실하게 참여해요", "연락을 빠르게 확인해요", "친절해요"];
     const NreviewList = ["불친절해요", "소극적으로 참여해요", "지각,결석,과제 미제출이 잦아요", "답장이 느려요"];
 
@@ -13,14 +13,14 @@ const ModalPage = ({ page, memberName, handleOptionChange, getSelectedOptions })
                     <div key={index}>
                         <input
                             type="checkbox"
-                            id={`preview-${page}-${item}`}
-                            name={`preview-${page}`}
+                            id={`preview-${item}`}
+                            name={`preview`}
                             value={item}
-                            checked={getSelectedOptions(page, 'PreviewList').includes(item)}
-                            onChange={() => handleOptionChange(page, 'PreviewList', item)}
+                            checked={getSelectedOptions('PreviewList').includes(item)}
+                            onChange={() => handleOptionChange('PreviewList', item)}
                             className="checkbox-button"
                         />
-                        <label htmlFor={`preview-${page}-${item}`} className="checkbox-label">{item}</label>
+                        <label htmlFor={`preview-${item}`} className="checkbox-label">{item}</label>
                     </div>
                 ))}
             </div>
@@ -29,14 +29,14 @@ const ModalPage = ({ page, memberName, handleOptionChange, getSelectedOptions })
                     <div key={index}>
                         <input
                             type="checkbox"
-                            id={`nreview-${page}-${item}`}
-                            name={`nreview-${page}`}
+                            id={`nreview-${item}`}
+                            name={`nreview`}
                             value={item}
-                            checked={getSelectedOptions(page, 'NreviewList').includes(item)}
-                            onChange={() => handleOptionChange(page, 'NreviewList', item)}
+                            checked={getSelectedOptions('NreviewList').includes(item)}
+                            onChange={() => handleOptionChange('NreviewList', item)}
                             className="checkbox-button"
                         />
-                        <label htmlFor={`nreview-${page}-${item}`} className="checkbox-label">{item}</label>
+                        <label htmlFor={`nreview-${item}`} className="checkbox-label">{item}</label>
                     </div>
                 ))}
             </div>

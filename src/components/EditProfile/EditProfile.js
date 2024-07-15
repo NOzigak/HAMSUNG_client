@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./EditProfile.css";
 import profileImage from "../../assets/person.png";
 import tagIcon from "../../assets/applicant.png";
-import { EditProfileAPI, getUserReviewsAPI } from '../../api/MyPageAPI';
+import { EditProfileAPI, fetchUserData } from '../../api/MyPageAPI';
 
 const EditProfile = ({ show, handleEdit, user_id, point, onUpdateNickname, initialNickname }) => {
   const [newNickname, setNewNickname] = useState(initialNickname);
@@ -10,25 +10,30 @@ const EditProfile = ({ show, handleEdit, user_id, point, onUpdateNickname, initi
 
   useEffect(() => {
     const fetchReviews = async () => {
-      try {
-        const result = await getUserReviewsAPI(user_id);
-        if (result && result.status === 200) {
-          setReviews(result.data.data.evaluation);
-        } else {
-          console.error("리뷰 조회 실패:", result.message);
+        try {
+            const result = await fetchUserData(user_id);
+            //console.log("현재 사용자 정보", result);
+
+            if (result.status === 200) {
+                console.log("현재 사용자 정보", result.data.reviewResponseDto);
+                setReviews(result.data.reviewResponseDto);
+                //console.log("전체 리뷰", reviews);
+            } else {
+                console.error("리뷰 조회 실패:", result.message);
+            }
+        } catch (error) {
+            console.error("리뷰 조회 중 오류 발생:", error.message);
         }
-      } catch (error) {
-        console.error("리뷰 조회 중 오류 발생:", error.message);
-      }
     };
 
-    if (show) {
-      fetchReviews();
-    }
-  }, [show, user_id]);
+    fetchReviews();
+}, [user_id]);
+
+
 
   const handleSave = async () => {
     try {
+      console.log("내 아이디:",user_id);
       const result = await EditProfileAPI(user_id, newNickname);
       console.log(newNickname);
       console.log(result.status);
@@ -71,7 +76,7 @@ const EditProfile = ({ show, handleEdit, user_id, point, onUpdateNickname, initi
         <div>
           <div className="tag-container">
             {reviews && Object.entries(reviews).map(([key, value]) => (
-              <div key={key} className="tag-item">
+              <div key={key} className="whole-tag-box">
                 <span className="tag-name">{key}</span>
                 <img className="tag-icon" src={tagIcon} alt="tag icon" />
                 <span className="tag-number">{value}</span>

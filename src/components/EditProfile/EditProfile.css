@@ -141,9 +141,19 @@
   flex-wrap: wrap;
 }
 
+.whole-tag-box{
+  display: flex;
+  align-items: center;
+  margin-left: 1.5vw;
+  padding: 1vh 1vw;
+  border-radius: 20px;
+  background-color: #d5ffde;
+  margin-bottom: 2vh;
+}
+
 
 
 .end-container{
   display: column;
-  margin-top: 22vh;
+  margin-top:-7vh;
 }

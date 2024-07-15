@@ -5,7 +5,7 @@ export const fetchUserData = async (user_id) => {
     console.log(user_id);
     try {
         const response = await client.get(`/myPage/${user_id}`);
-        return response.data;
+        return response;
     } catch (error) {
         console.error("Error:", error);
         if (error.response && error.response.status === 401) {
@@ -36,7 +36,7 @@ export const DeleteUserAPI = async (user_id) => {
 //리뷰 등록
 export const ReviewAPI = async (user_id, reviewData) => {
     try {
-        const response = await client.post(`/reviews/${user_id}`, reviewData);
+        const response = await client.post(`/review/${user_id}`, reviewData);
 
         if (response.status !== 200) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -51,11 +51,9 @@ export const ReviewAPI = async (user_id, reviewData) => {
 };
 
 //프로필 수정 
-export const EditProfileAPI = async (user_id, newNickname) => {
-    console.log("아이디,닉네임:",user_id, newNickname);
+export const EditProfileAPI = async (user_id, newNickname) => {;
     try {
         const response = await client.put(`/users/${user_id}`, { username: newNickname });
-
         return {
             status: response.status,
             data: response.data,
@@ -79,15 +77,34 @@ export const EditProfileAPI = async (user_id, newNickname) => {
 };
 
 
-//전체 리뷰 조회
-export const getUserReviewsAPI = async (user_id) => {
-    try {
-      const response = await client.get(`users/${user_id}/reviews`);
-      return response;
+// 사용자 한 명 조회(리뷰 조회)
+export const getReviewDataAPI = async (user_id) => {
+    try { 
+        const response = await client.get(`/users/${user_id}`);
+        return response.data;
     } catch (error) {
-      return error.response;
+        if (error.response && error.response.status === 400) {
+            return {
+                status: 400,
+                message: "해당 사용자가 없습니다."
+            };
+        } else {
+            throw error;
+        }
     }
-  };
+}
+
+
+
+//전체 리뷰 조회
+//export const getUserReviewsAPI = async (user_id) => {
+//    try {
+//      const response = await client.get(`users/${user_id}/reviews`);
+//      return response;
+//    } catch (error) {
+//      return error.response;
+//    }
+//  };
 
   
 //참여 중인 스터디 불러오기

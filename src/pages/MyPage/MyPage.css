@@ -18,6 +18,8 @@
   }
   
   .studyList-button {
+    position:absolute;
+    left: 68vw;
     padding: 1vw 3vw;
     background-color: white;
     color: #4caf50;
@@ -184,13 +186,11 @@
 }
  
 .tag-name {
-  margin-right: -7.5vw;
   color: black;
   font-size: 1vw;
 }
 
 .tag-icon {
-  margin-right: 0.5vw;
   width: 2vw;
   height: 3vh;
 }

@@ -24,6 +24,7 @@ export const getNoticeListAPI = async (study_id) => {
 
 // 공지사항 생성 
 export const createNoticeAPI = async (inputData, study_id) => {
+    
     try {
         const response = await client.post(`/study/${study_id}/posts`, inputData);
         return response.data;

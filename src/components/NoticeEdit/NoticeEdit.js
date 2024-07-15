@@ -3,17 +3,20 @@ import "../BoardEdit/BoardEdit.css";
 import "./NoticeEdit.css"
 import { useNavigate } from "react-router-dom";
 
-export default function NoticeEdit({name,initData,onSubmit}){
+export default function NoticeEdit({name,studyId,initData,onSubmit}){
 
     const [inputData, setInputData] = useState({
         title : "",
         place : "",
         description : "",
+        study_id: studyId,
+        type: "announcement"
     })
     const nav = useNavigate();
 
     useEffect(()=>{
         if(initData){
+            console.log(inputData);
             setInputData(initData);
         }
     },[initData])
@@ -54,7 +57,7 @@ export default function NoticeEdit({name,initData,onSubmit}){
                     내용 : <textarea className="noticeDescription" name="description" placeholder="공지사항을 작성해주세요." value={inputData.description} onChange={handleinputData}/>
                 </div>   
             </div>
-            <div className="btnSection">
+            <div className="btnSection"> 
                 <button className="createBtn" onClick={onClickNoticeSubmit}>생성</button>
                 <button className="cancleBtn" onClick={cancelEditNotice}>취소</button>
             </div>
