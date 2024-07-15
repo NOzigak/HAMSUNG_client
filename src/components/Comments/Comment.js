@@ -1,7 +1,7 @@
 import { useState } from "react";
 import BoardBtn from "../BoardBtn/BoardBtn";
 import "./Comment.css";
-import { addReplyRequest, deleteCommentRequest, deleteReplyRequest, getCommentsRequest } from "../../api/CommentAPI";
+import { addReplyRequest, deleteCommentRequest, deleteReplyRequest} from "../../api/CommentAPI";
 import getUserInfo from "../../utils/get-userInfo";
 
 
@@ -39,7 +39,6 @@ const Comment = ({comment, replies, boardId, onClick}) => {
             const response = await addReplyRequest(comment.id, replyDetail);
             console.log("reply added:", response);
             setActiveComment({type:"", id:""});
-            //nav(`/viewBoard/${boardId}`);
             onClick(boardId);
         } catch (error) {
             console.log("대댓글 작성에 실패했습니다.", error);
@@ -52,19 +51,13 @@ const Comment = ({comment, replies, boardId, onClick}) => {
     const commentDelete = async () => {
         try{
             if (comment.parent_id){
-                //dispatch(deleteReply(comment.parent_id, comment.id));
                 const response = deleteReplyRequest(comment.id);
                 console.log("대댓글 삭제 성공", response);
-                //nav('/');
             } else if (!comment.parent_id){
-                //dispatch(deleteComment(comment.id));
                 const response = deleteCommentRequest(comment.id);
                 console.log("댓글 삭제 성공", response);
                 console.log(comment.recruit_id);
- 
             }
-            //nav(`/viewBoard/${boardId}`)
-            console.log(boardId);
             window.location.reload();
             
         } catch (error) {

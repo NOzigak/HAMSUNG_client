@@ -58,6 +58,7 @@ const NoticeViewPage = () => {
             created_at={noticeItem.created_at}
             description={noticeItem.description}
             place={noticeItem.place}
+            mode={"notice"}
           />
         </div>
 
