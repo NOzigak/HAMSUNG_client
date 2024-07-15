@@ -4,6 +4,20 @@ import profileImage from "../../assets/person.png";
 import tagIcon from "../../assets/applicant.png";
 import { EditProfileAPI, fetchUserData } from '../../api/MyPageAPI';
 
+const mapReviewType = (type) => {
+  const reviewTypeMapping = {
+      "noLate": "지각하지 않아요",
+      "faithful": "성실하게 참여해요",
+      "kind": "친절해요",
+      "unkind": "불친절해요",
+      "fastAnswer": "연락을 빠르게 확인해요",
+      "slowAnswer": "답장이 느려요",
+      "passive": "소극적으로 참여해요",
+      "absent": "지각,결석,과제 미제출이 잦아요"        
+  };
+  return reviewTypeMapping[type] || type; // 매핑되지 않은 경우 원래 타입 반환
+};
+
 const EditProfile = ({ show, handleEdit, user_id, point, onUpdateNickname, initialNickname }) => {
   const [newNickname, setNewNickname] = useState(initialNickname);
   const [reviews, setReviews] = useState([]);
@@ -77,7 +91,7 @@ const EditProfile = ({ show, handleEdit, user_id, point, onUpdateNickname, initi
           <div className="tag-container">
             {reviews && Object.entries(reviews).map(([key, value]) => (
               <div key={key} className="whole-tag-box">
-                <span className="tag-name">{key}</span>
+                <span className="tag-name">{mapReviewType(key)}</span> {/* 여기서 매핑 */}
                 <img className="tag-icon" src={tagIcon} alt="tag icon" />
                 <span className="tag-number">{value}</span>
               </div>

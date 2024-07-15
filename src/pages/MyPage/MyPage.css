@@ -179,7 +179,7 @@
 .tag-box {
   display: flex;
   align-items: center;
-  margin-left: 1vw;
+  margin-left: 0.5vw;
   padding: 1vh 1vw;
   border-radius: 20px;
   background-color: #d5ffde;
@@ -191,11 +191,11 @@
 }
 
 .tag-icon {
-  width: 2vw;
-  height: 3vh;
+  width: 1.5vw;
+  height: 2.5vh;
 }
 
 .tag-number{
   color: black;
-  font-size: 1.1vw;
+  font-size: 1vw;
 }
