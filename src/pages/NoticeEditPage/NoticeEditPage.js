@@ -12,7 +12,8 @@ const NoticeEditPage = () => {
     const dispatch = useDispatch();
 
     const onClickNoticeSubmitBtn = (input) => {
-        console.log("공지 올리려는 스터디id",study_id);
+        console.log("공지 올리려는 스터디id", study_id);
+        console.log("공지 내용:", input);
         if (study_id) {
             dispatch(createNotice(input, study_id));
             navigate("/noticeList", { state: { study_id }, replace: true });
@@ -24,7 +25,7 @@ const NoticeEditPage = () => {
     return (
         <div>
             <Navbar />
-            <NoticeEdit name="작성" onSubmit={onClickNoticeSubmitBtn} />
+            <NoticeEdit name="작성" study_id={study_id} onSubmit={onClickNoticeSubmitBtn} />
         </div>
     );
 };

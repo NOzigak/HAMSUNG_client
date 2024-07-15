@@ -35,6 +35,7 @@ export const getNotices = (study_id) => async (dispatch) => {
 export const createNotice = (inputData, study_id) => async (dispatch) => {
     dispatch({ type: CREATE_NOTICE_REQUEST });
     try {
+        console.log("noticeAction id", study_id);
         const response = await createNoticeAPI(inputData, study_id);
         dispatch({ type: CREATE_NOTICE_SUCCESS, payload: response });
     } catch (error) {
