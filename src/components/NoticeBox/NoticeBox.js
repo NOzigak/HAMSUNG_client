@@ -4,12 +4,9 @@ import './NoticeBox.css';
 import plus from "../../assets/plus.png";
 import { getNoticeListAPI } from '../../api/NoticeAPI';
 
-const formatDate = (dateString) => {
-  const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-  return new Date(dateString).toLocaleDateString('ko-KR', options).replace(/\./g, '.').replace(/\s/g, '');
-};
+
  
-const NoticeBox = ({ study_id, notices }) => {
+const NoticeBox = ({ study_id }) => {
   const nav = useNavigate();
 
   const handleMoreButtonClick = async () => {
@@ -29,14 +26,6 @@ const NoticeBox = ({ study_id, notices }) => {
       <button className="more-button" onClick={handleMoreButtonClick}>
         <img className="plus" src={plus} alt="plus" />
       </button>
-      {notices.map((item) => (
-        <div key={item.id} className="noticeItem" onClick={() => nav(`/notice/${item.id}`)}>
-          <div className="noticeContent">
-            <p className="notice-title">{item.title}</p>
-            <p className="notice-date">{formatDate(item.created_at)}</p>
-          </div>
-        </div>
-      ))}
     </div>
   );
 };

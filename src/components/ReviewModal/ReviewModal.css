@@ -27,12 +27,12 @@
     height: 30vh; 
     margin: 29vh 35vw; /* 초기 페이지에서 작게 보이도록 마진 수정 */
 }
-
+ 
 .review-message-design {
     background-color: #bad9c1;
     position: absolute;
     left: 31vw;
-    top: 26vh;
+    top: 26vh; 
     width: 30.45vw;
     height: 3vh;
     border-top-left-radius: 8px;
