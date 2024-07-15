@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import BoardBtn from '../../components/BoardBtn/BoardBtn';
 import { Navbar } from '../../components/Navbar/Navbar';
@@ -33,11 +33,11 @@ const NoticeViewPage = () => {
     return <div>데이터 로딩중...</div>;
   }
 
-  const onClickDelete = () => {
+  const onClickDelete = async () => {
     if (window.confirm("게시물을 정말 삭제할까요? 복구되지 않습니다!")) {
       try {
-        dispatch(deleteNotice(params.id));
-        nav('/noticeList');
+        await dispatch(deleteNotice(params.id));
+        nav('/noticeList', { state: { deleted: true } });
       } catch (error) {
         console.log("게시글을 삭제하는데 실패했습니다.", error);
       }
@@ -71,3 +71,4 @@ const NoticeViewPage = () => {
 };
 
 export default NoticeViewPage;
+

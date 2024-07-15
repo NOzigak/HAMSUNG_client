@@ -20,12 +20,14 @@ const NoticeListPage = () => {
   const loading = useSelector(state => state.notices.loading);
   const error = useSelector(state => state.notices.error);
 
+
+
+  // navigation 상태 변화 감지 및 공지사항 재불러오기
   useEffect(() => {
-    console.log("공지사항 리스트에 아이디:", study_id);
     if (study_id) {
-      dispatch(getNotices(study_id)); // GET_NOTICE_REQUEST 액션을 dispatch
+      dispatch(getNotices(study_id));
     }
-  }, [dispatch, study_id]);
+  }, [location, dispatch, study_id]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -59,10 +61,10 @@ const NoticeListPage = () => {
       </div>
       <button className="finish-button" 
         onClick={() => {
-          console.log("study_id:", study_id);
+          console.log("notice edit으로 전달:", study_id);
           nav("/newNotice", { state: { study_id } });
         }}
-      >
+      > 
         새 글 작성
       </button>
     </div>
@@ -70,5 +72,3 @@ const NoticeListPage = () => {
 };
 
 export default NoticeListPage;
-
-
