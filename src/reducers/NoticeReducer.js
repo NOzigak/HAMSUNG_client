@@ -2,7 +2,7 @@ const initialState = {
     notices: [],
     loading: false,
     error: null,
-};
+}; 
 
 const NoticeReducer = (state = initialState, action) => {
     switch (action.type) {
