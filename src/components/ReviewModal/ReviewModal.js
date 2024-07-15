@@ -58,7 +58,7 @@ const ReviewModal = ({ closeReviewModal, study_id }) => {
                 slowAnswer: getSelectedOptions('NreviewList').includes("답장이 느려요"),
                 passive: getSelectedOptions('NreviewList').includes("소극적으로 참여해요"),
                 absent: getSelectedOptions('NreviewList').includes("지각,결석,과제 미제출이 잦아요"),
-            };
+            }; 
         
             const result = await ReviewAPI(selectedMember.id, reviewData);
             console.log(`리뷰 등록 결과 (${selectedMember.username}):`, result.message);

@@ -41,7 +41,7 @@ const MyPage = () => {
             console.log("유저 데이터1:",userData.data);
             const { username, point, reviewResponseDto } = userData.data;
             console.log("유저 데이터2:",point);
-
+ 
             const topReviews = findTopTwoReviews(reviewResponseDto);
 
             setUsername(username);
