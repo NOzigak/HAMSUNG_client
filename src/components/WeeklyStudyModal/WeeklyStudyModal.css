@@ -1,4 +1,4 @@
-.weekly-modal {
+.weekly-modal { 
     position: fixed;
     z-index: 1;
     left: 0;
@@ -7,30 +7,30 @@
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
+    
   }
 
-  .weekly-message-design {
+  .weeklyTitle {
     background-color: #f7e49f;
-    position: absolute;
-    left: 32.95vw;
-    top: 28.5vh;
-    width: 30.5vw;
-    height: 4vh;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     padding: 2.5vh;
     font-weight: 600;
+    margin-top: 0vh;
    }
 
-   .weekly-modal-content {
+   .weeklyWrapper{
     background-color: #fefefe;
     margin: 28.5vh 32.9vw;
-    padding: 90px;
     border: 1px solid #888;
     width: 33vw;
-    height: 56vh;
+    height: 51vh;
     border-radius: 8px;
     box-sizing: border-box;
+   }
+
+   .weeklyContent {
+    
     text-align: center;
 }
 
@@ -49,7 +49,7 @@
 }
 
 .weeklyInputList{
-    margin-bottom: 2vh;
+    margin-top: 3vh;
 }
 
 .weeklyInput{

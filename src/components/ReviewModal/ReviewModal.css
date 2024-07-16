@@ -14,8 +14,8 @@
     margin: 28.5vh 30.9vw;
     padding: 5vw;
     border: 1px solid #888;
-    width: 36.2vw;
-    height: 70vh;
+    width: 36vw;
+    height: 68vh;
     border-radius: 8px;
     box-sizing: border-box;
     text-align: center;
@@ -31,9 +31,9 @@
 .review-message-design {
     background-color: #bad9c1;
     position: absolute;
-    left: 31vw;
+    left: 30.95vw;
     top: 26vh; 
-    width: 30.45vw;
+    width: 30.3vw;
     height: 3vh;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
@@ -81,9 +81,9 @@
     border-radius: 4px;
     background-color: #f0f0f0;
     flex: 0 1 auto; 
-    font-size: 2.5vh;
+    font-size: 2.2vh;
+    white-space: nowrap;
 }
-
 .checkbox-button:checked + .checkbox-label {
     background-color: #089136c5;
     color: white;
