@@ -3,7 +3,7 @@
 
 ## 링크
 
-[💻hamsung 사이트](https://www.hamsungstudy.com/)<br>
+[💻hamsung 사이트](https://youtu.be/7vShzHDJooo)<br>
 [📔hamsung 노션](https://educated-eggplant-a88.notion.site/a80b0466baa84367ab63f50015ab11b8)<br>
 [🎥hamsung 데모영상](https://youtu.be/le5Bur7kdVE)
 
