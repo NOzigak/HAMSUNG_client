@@ -35,10 +35,12 @@ const WeeklyStudyModal = ({ onClose, week, study_id, handleCalculate, showButton
     }
   };
 
+
   return (
     <div className="weekly-modal">
-      <div className="weekly-message-design">{`${week + 1}주차 스터디 관리`}</div>
-      <div className="weekly-modal-content">
+      <div className="weeklyWrapper">
+      <p className="weeklyTitle">{`${week + 1}주차 스터디 관리`}</p>
+      <div className="weeklyContent">
         <div className={`weeklyInputList ${showButtons ? "" : "hide-buttons"}`}>
           출석
           <input 
@@ -84,6 +86,8 @@ const WeeklyStudyModal = ({ onClose, week, study_id, handleCalculate, showButton
           <button className="weekly-ok-button" onClick={handleSaveWeekly}>저장</button>
         )}
       </div>
+      </div>
+      
     </div>
   );
 };

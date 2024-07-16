@@ -9,28 +9,27 @@
     background-color: rgba(0, 0, 0, 0.4);
   }
 
-  .cal-message-design {
+  .calTitle {
     background-color: #f7e49f;
-    position: absolute;
-    left: 32.95vw;
-    top: 28.5vh;
-    width: 30.5vw;
-    height: 4vh;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     padding: 2.5vh;
     font-weight: 600;
+    margin-top: 0vh;
    }
 
-   .cal-modal-content {
+   .calWrapper{
     background-color: #fefefe;
     margin: 28.5vh 32.9vw;
-    padding: 90px;
     border: 1px solid #888;
     width: 33vw;
-    height: 40vh;
+    height: 34vh;
     border-radius: 8px;
     box-sizing: border-box;
+   }
+
+   .calContent {
+    margin-top: 5vh;
     text-align: center;
 }
 

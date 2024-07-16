@@ -10,28 +10,27 @@
     background-color: rgba(0, 0, 0, 0.4);
   }
 
-  .finish-message-design {
+  .finishTitle {
     background-color: #bad9c1;
-    position: absolute;
-    left: 31vw;
-    top: 28.5vh;
-    width: 32.9vw;
-    height: 4vh;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
-    padding: 20px;
+    padding: 2.5vh;
     font-weight: 600;
+    margin-top: 0vh;
    }
 
-   .finish-modal-content {
+   .finishWrapper{
     background-color: #fefefe;
-    margin: 28.5vh 30.9vw;
-    padding: 90px;
+    margin: 28.5vh 32.9vw;
     border: 1px solid #888;
-    width: 36.2vw;
-    height: 40vh;
+    width: 33vw;
+    height: 34vh;
     border-radius: 8px;
     box-sizing: border-box;
+   }
+
+   .finishContent {
+    margin-top: 5vh;
     text-align: center;
 }
 
